@@ -1,0 +1,1797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manjil's Cafe — Artisan Coffee House</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  :root {
+    --bg: #0D0907;
+    --bg-raised: #141010;
+    --card: #1A1410;
+    --card-hover: #211A14;
+    --border: #2E241C;
+    --fg: #F5EDE3;
+    --fg-dim: #D4C8B8;
+    --muted: #9A8B7A;
+    --accent: #C8956C;
+    --accent-dark: #A07450;
+    --accent-light: #DDB896;
+    --accent-glow: rgba(200, 149, 108, 0.12);
+    --warm: #C27C4E;
+    --cream: #F5E6D0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--accent-dark) var(--bg); }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg); color: var(--fg);
+    overflow-x: hidden;
+  }
+  h1,h2,h3,h4,h5,h6,.font-display { font-family: 'Playfair Display', serif; }
+
+  /* ===== PRELOADER ===== */
+  .preloader {
+    position: fixed; inset: 0; z-index: 9999;
+    background: var(--bg);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+  }
+  .preloader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+  .preloader-cup {
+    width: 50px; height: 50px;
+    border: 2.5px solid var(--border);
+    border-radius: 0 0 12px 12px;
+    position: relative;
+    animation: preloader-fill 2s ease-in-out infinite;
+  }
+  .preloader-cup::before {
+    content: ''; position: absolute;
+    top: -3px; left: -8px;
+    width: 14px; height: 22px;
+    border: 2.5px solid var(--border);
+    border-left: none; border-radius: 0 8px 8px 0;
+  }
+  .preloader-cup::after {
+    content: ''; position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 0%; background: var(--accent);
+    border-radius: 0 0 9px 9px;
+    animation: fill-anim 2s ease-in-out infinite;
+  }
+  @keyframes preloader-fill { 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-6px); } }
+  @keyframes fill-anim { 0%{ height: 0%; } 60%{ height: 85%; } 100%{ height: 85%; } }
+  .preloader-text {
+    margin-top: 1.5rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem; color: var(--muted);
+    letter-spacing: 0.15em; text-transform: uppercase;
+  }
+  .preloader-bar {
+    width: 120px; height: 2px;
+    background: var(--border); border-radius: 2px;
+    margin-top: 1rem; overflow: hidden;
+  }
+  .preloader-bar-inner {
+    width: 0%; height: 100%;
+    background: var(--accent); border-radius: 2px;
+    transition: width 0.3s ease;
+  }
+
+  /* ===== SCROLL PROGRESS ===== */
+  .scroll-progress {
+    position: fixed; top: 0; left: 0; height: 3px;
+    background: linear-gradient(90deg, var(--accent-dark), var(--accent), var(--accent-light));
+    z-index: 101; width: 0%;
+    transition: width 0.05s linear;
+  }
+
+  /* ===== BACK TO TOP ===== */
+  .back-to-top {
+    position: fixed; bottom: 2rem; right: 2rem;
+    width: 46px; height: 46px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; z-index: 90;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--accent); font-size: 1rem;
+    cursor: pointer;
+    opacity: 0; visibility: hidden;
+    transform: translateY(12px);
+    transition: all 0.3s ease;
+  }
+  .back-to-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+  .back-to-top:hover {
+    background: var(--accent); color: var(--bg);
+    border-color: var(--accent);
+    box-shadow: 0 4px 20px rgba(200,149,108,0.3);
+  }
+
+  /* ===== COOKIE CONSENT ===== */
+  .cookie-banner {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    z-index: 95; padding: 1rem 2rem;
+    background: rgba(26,20,16,0.95);
+    backdrop-filter: blur(14px);
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    gap: 1.25rem; flex-wrap: wrap;
+    transform: translateY(100%);
+    transition: transform 0.5s ease;
+  }
+  .cookie-banner.show { transform: translateY(0); }
+  .cookie-banner p { font-size: 0.82rem; color: var(--fg-dim); max-width: 600px; }
+  .cookie-banner a { color: var(--accent); text-decoration: underline; }
+  .cookie-btn {
+    padding: 0.5rem 1.2rem; border-radius: 8px;
+    font-size: 0.8rem; font-weight: 600;
+    cursor: pointer; border: none;
+    font-family: 'DM Sans', sans-serif;
+    transition: transform 0.2s, box-shadow 0.3s;
+  }
+  .cookie-btn:hover { transform: translateY(-1px); }
+  .cookie-accept { background: var(--accent); color: var(--bg); }
+  .cookie-decline { background: transparent; color: var(--muted); border: 1px solid var(--border) !important; }
+
+  /* ===== LIGHTBOX ===== */
+  .lightbox {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,0.92);
+    backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+    cursor: zoom-out;
+  }
+  .lightbox.open { opacity: 1; visibility: visible; }
+  .lightbox img {
+    max-width: 90vw; max-height: 85vh;
+    object-fit: contain; border-radius: 12px;
+    transform: scale(0.9); transition: transform 0.4s ease;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+  .lightbox.open img { transform: scale(1); }
+  .lightbox-close {
+    position: absolute; top: 1.5rem; right: 1.5rem;
+    width: 44px; height: 44px;
+    background: rgba(255,255,255,0.1); border: none;
+    border-radius: 50%; color: #fff; font-size: 1.1rem;
+    cursor: pointer; display: flex;
+    align-items: center; justify-content: center;
+    transition: background 0.3s;
+  }
+  .lightbox-close:hover { background: rgba(255,255,255,0.2); }
+  .lightbox-nav {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 44px; height: 44px;
+    background: rgba(255,255,255,0.08); border: none;
+    border-radius: 50%; color: #fff; font-size: 1rem;
+    cursor: pointer; display: flex;
+    align-items: center; justify-content: center;
+    transition: background 0.3s;
+  }
+  .lightbox-nav:hover { background: rgba(255,255,255,0.18); }
+  .lightbox-prev { left: 1.5rem; }
+  .lightbox-next { right: 1.5rem; }
+  .lightbox-caption {
+    position: absolute; bottom: 2rem; left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.85rem; color: rgba(255,255,255,0.7);
+    background: rgba(0,0,0,0.5); padding: 0.4rem 1rem;
+    border-radius: 8px; backdrop-filter: blur(6px);
+  }
+
+  /* ===== RESERVATION MODAL ===== */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 150;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(6px);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+    padding: 1rem;
+  }
+  .modal-overlay.open { opacity: 1; visibility: visible; }
+  .modal {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 20px; width: 100%; max-width: 520px;
+    max-height: 90vh; overflow-y: auto;
+    transform: translateY(20px) scale(0.97);
+    transition: transform 0.3s ease;
+    padding: 2.5rem;
+  }
+  .modal-overlay.open .modal { transform: translateY(0) scale(1); }
+  .modal-header {
+    display: flex; justify-content: space-between;
+    align-items: center; margin-bottom: 1.5rem;
+  }
+  .modal-header h3 { font-size: 1.5rem; }
+  .modal-close {
+    width: 36px; height: 36px;
+    background: var(--bg-raised); border: 1px solid var(--border);
+    border-radius: 10px; color: var(--muted);
+    font-size: 0.9rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: color 0.3s, border-color 0.3s;
+  }
+  .modal-close:hover { color: var(--fg); border-color: var(--accent-dark); }
+  .modal form { display: flex; flex-direction: column; gap: 1rem; }
+  .modal .fg { display: flex; flex-direction: column; gap: 0.35rem; }
+  .modal .fg label { font-size: 0.78rem; color: var(--muted); font-weight: 500; }
+  .modal .fg input, .modal .fg select, .modal .fg textarea {
+    padding: 0.75rem 1rem; background: var(--bg-raised);
+    border: 1px solid var(--border); border-radius: 10px;
+    color: var(--fg); font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem; outline: none;
+    transition: border-color 0.3s;
+  }
+  .modal .fg input:focus, .modal .fg select:focus, .modal .fg textarea:focus {
+    border-color: var(--accent);
+  }
+  .modal .fg select { cursor: pointer; }
+  .modal .fg select option { background: var(--bg-raised); color: var(--fg); }
+  .modal .fg textarea { resize: vertical; min-height: 80px; }
+  .modal .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .modal .guest-selector {
+    display: flex; gap: 0.5rem;
+  }
+  .guest-btn {
+    flex: 1; padding: 0.6rem;
+    background: var(--bg-raised); border: 1px solid var(--border);
+    border-radius: 8px; color: var(--muted);
+    font-size: 0.82rem; font-weight: 500; cursor: pointer;
+    text-align: center; transition: all 0.3s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .guest-btn.active { background: var(--accent); border-color: var(--accent); color: var(--bg); font-weight: 600; }
+  .guest-btn:hover:not(.active) { border-color: var(--accent-dark); color: var(--fg-dim); }
+
+  /* ===== THREE.JS CANVAS ===== */
+  #three-canvas {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0; pointer-events: none;
+  }
+  .grain {
+    position: fixed; inset: 0; z-index: 0;
+    pointer-events: none; opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 128px;
+  }
+
+  /* ===== SKIP TO CONTENT (a11y) ===== */
+  .skip-link {
+    position: absolute; top: -100%; left: 1rem;
+    padding: 0.75rem 1.5rem; background: var(--accent);
+    color: var(--bg); font-weight: 600; font-size: 0.85rem;
+    border-radius: 0 0 8px 8px; z-index: 10000;
+    text-decoration: none; transition: top 0.3s;
+  }
+  .skip-link:focus { top: 0; }
+
+  /* ===== NAV ===== */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1.25rem 3rem;
+    display: flex; align-items: center; justify-content: space-between;
+    backdrop-filter: blur(14px);
+    background: rgba(13,9,7,0.5);
+    border-bottom: 1px solid transparent;
+    transition: all 0.4s ease;
+  }
+  nav.scrolled { border-bottom-color: var(--border); background: rgba(13,9,7,0.88); padding: 0.9rem 3rem; }
+  .nav-brand { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--fg); }
+  .nav-brand span { color: var(--accent); }
+  .nav-links { display: flex; gap: 2.25rem; align-items: center; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none;
+    font-size: 0.82rem; font-weight: 500;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    transition: color 0.3s; position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 1.5px; background: var(--accent); transition: width 0.3s;
+  }
+  .nav-links a:hover { color: var(--fg); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta {
+    padding: 0.55rem 1.4rem !important;
+    background: var(--accent) !important;
+    color: var(--bg) !important;
+    border-radius: 8px; font-weight: 600 !important;
+    letter-spacing: 0.03em !important;
+    transition: transform 0.2s, box-shadow 0.3s !important;
+  }
+  .nav-cta::after { display: none !important; }
+  .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(200,149,108,0.25); }
+
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px;
+    cursor: pointer; background: none; border: none; padding: 4px;
+  }
+  .hamburger span { width: 22px; height: 1.5px; background: var(--fg); transition: transform 0.3s, opacity 0.3s; }
+  .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(4px,4px); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+  .mobile-menu {
+    display: none; position: fixed; inset: 0;
+    background: rgba(13,9,7,0.96); backdrop-filter: blur(20px);
+    z-index: 99; flex-direction: column;
+    align-items: center; justify-content: center; gap: 2rem;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 600; color: var(--fg); text-decoration: none; transition: color 0.3s; }
+  .mobile-menu a:hover { color: var(--accent); }
+
+  section { position: relative; z-index: 1; }
+
+  /* ===== HERO ===== */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; padding: 0 2rem; position: relative;
+  }
+  .hero::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+    height: 200px; background: linear-gradient(transparent, var(--bg));
+    pointer-events: none;
+  }
+  .hero-content { max-width: 800px; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.4rem 1.1rem; border: 1px solid var(--border);
+    border-radius: 100px; font-size: 0.75rem; color: var(--accent);
+    margin-bottom: 2rem; background: var(--accent-glow);
+    letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600;
+  }
+  .hero-badge i { font-size: 0.65rem; }
+  .hero h1 {
+    font-size: clamp(3.2rem, 8vw, 6.5rem);
+    font-weight: 700; line-height: 1.0;
+    letter-spacing: -0.02em; margin-bottom: 1.5rem;
+  }
+  .hero h1 em { font-style: italic; color: var(--accent); font-weight: 500; }
+  .hero-sub { font-size: 1.1rem; color: var(--fg-dim); line-height: 1.75; max-width: 500px; margin: 0 auto 2.5rem; }
+  .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .btn-warm {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    padding: 0.85rem 2rem; background: var(--accent); color: var(--bg);
+    font-weight: 600; font-size: 0.88rem; border: none; border-radius: 10px;
+    cursor: pointer; text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.3s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-warm:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(200,149,108,0.3); }
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    padding: 0.85rem 2rem; background: transparent; color: var(--fg);
+    font-weight: 500; font-size: 0.88rem; border: 1px solid var(--border);
+    border-radius: 10px; cursor: pointer; text-decoration: none;
+    transition: border-color 0.3s, background 0.3s;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .btn-ghost:hover { border-color: var(--accent); background: var(--accent-glow); }
+  .scroll-hint {
+    position: absolute; bottom: 3rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.6rem;
+    color: var(--muted); font-size: 0.7rem;
+    text-transform: uppercase; letter-spacing: 0.12em;
+  }
+  .scroll-arrow {
+    width: 20px; height: 20px;
+    border-right: 1.5px solid var(--muted); border-bottom: 1.5px solid var(--muted);
+    transform: rotate(45deg); animation: bounce-arrow 2s ease-in-out infinite;
+  }
+  @keyframes bounce-arrow {
+    0%,100% { transform: rotate(45deg) translateY(0); opacity: 0.5; }
+    50% { transform: rotate(45deg) translateY(6px); opacity: 1; }
+  }
+  .steam-container {
+    position: absolute; top: 45%; right: 12%;
+    width: 60px; height: 120px; pointer-events: none; opacity: 0.25;
+  }
+  .steam {
+    position: absolute; bottom: 0; width: 8px; border-radius: 50%;
+    background: var(--fg); animation: rise-steam 3s ease-out infinite; opacity: 0;
+  }
+  .steam:nth-child(1) { left: 10px; animation-delay: 0s; }
+  .steam:nth-child(2) { left: 25px; animation-delay: 0.8s; }
+  .steam:nth-child(3) { left: 40px; animation-delay: 1.6s; }
+  .steam:nth-child(4) { left: 18px; animation-delay: 2.2s; }
+  @keyframes rise-steam {
+    0% { transform: translateY(0) scaleX(1); opacity: 0; }
+    15% { opacity: 0.4; }
+    50% { transform: translateY(-60px) scaleX(2.5); opacity: 0.15; }
+    100% { transform: translateY(-120px) scaleX(4); opacity: 0; }
+  }
+
+  /* ===== SECTION HELPERS ===== */
+  /* .hero {
+  position: relative;
+  min-height: 100vh;
+
+  background-image: url("Hw");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+} */
+  .sec-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem; text-transform: uppercase;
+    letter-spacing: 0.16em; color: var(--accent);
+    font-weight: 700; margin-bottom: 0.6rem;
+  }
+  .sec-title {
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700; letter-spacing: -0.015em;
+    margin-bottom: 0.8rem; line-height: 1.15;
+  }
+  .sec-desc { color: var(--fg-dim); max-width: 520px; line-height: 1.7; }
+
+  /* ===== STORY ===== */
+  .story {
+    padding: 7rem 3rem; max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 5rem; align-items: center;
+  }
+  .story-img {
+    position: relative; border-radius: 16px; overflow: hidden;
+    aspect-ratio: 4/5; border: 1px solid var(--border);
+  }
+  .story-img img { width: 100%; height: 100%; object-fit: cover; filter: contrast(1.05) brightness(0.9); }
+  .story-img .grad-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgba(13,9,7,0.6) 100%); }
+  .story-img .tag-float {
+    position: absolute; bottom: 1.25rem; left: 1.25rem;
+    background: rgba(26,20,16,0.85); backdrop-filter: blur(10px);
+    border: 1px solid var(--border); border-radius: 10px;
+    padding: 0.8rem 1rem; display: flex; align-items: center; gap: 0.6rem;
+  }
+  .tag-float i { color: var(--accent); }
+  .tag-float span { font-size: 0.78rem; color: var(--fg-dim); font-weight: 500; }
+
+  /* ===== COUNTER STATS ===== */
+  .stats-bar {
+    padding: 3rem; max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem;
+  }
+  .stat-item {
+    text-align: center; padding: 1.5rem;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 14px; transition: border-color 0.3s, transform 0.3s;
+  }
+  .stat-item:hover { border-color: var(--accent-dark); transform: translateY(-2px); }
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem; font-weight: 800;
+    color: var(--accent); line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .stat-number .stat-suffix { font-size: 1.8rem; }
+  .stat-label { font-size: 0.78rem; color: var(--muted); font-weight: 500; }
+
+  .story-values {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem;
+  }
+  .value-item {
+    padding: 1.1rem; background: var(--card);
+    border: 1px solid var(--border); border-radius: 12px;
+    transition: border-color 0.3s;
+  }
+  .value-item:hover { border-color: var(--accent-dark); }
+  .value-item i { color: var(--accent); margin-bottom: 0.5rem; font-size: 1.1rem; display: block; }
+  .value-item h4 { font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.2rem; }
+  .value-item p { font-size: 0.75rem; color: var(--muted); line-height: 1.5; }
+
+  /* ===== MENU ===== */
+  .menu { padding: 7rem 3rem; max-width: 1200px; margin: 0 auto; }
+  .menu-tabs { display: flex; gap: 0.5rem; margin: 2.5rem 0 2rem; flex-wrap: wrap; }
+  .menu-tab {
+    padding: 0.55rem 1.3rem; background: transparent;
+    border: 1px solid var(--border); border-radius: 100px;
+    color: var(--muted); font-size: 0.82rem; font-weight: 500;
+    cursor: pointer; transition: all 0.3s; font-family: 'DM Sans', sans-serif;
+  }
+  .menu-tab:hover { border-color: var(--accent-dark); color: var(--fg-dim); }
+  .menu-tab.active { background: var(--accent); border-color: var(--accent); color: var(--bg); font-weight: 600; }
+  .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .menu-item {
+    display: flex; align-items: center; gap: 1.25rem;
+    padding: 1.25rem 1.5rem; background: var(--card);
+    border: 1px solid var(--border); border-radius: 14px;
+    transition: all 0.3s; position: relative; overflow: hidden;
+  }
+  .menu-item::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 3px; height: 100%; background: var(--accent);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .menu-item:hover { border-color: var(--accent-dark); background: var(--card-hover); transform: translateX(4px); }
+  .menu-item:hover::before { opacity: 1; }
+  .menu-item-img { width: 56px; height: 56px; border-radius: 10px; overflow: hidden; flex-shrink: 0; }
+  .menu-item-img img { width: 100%; height: 100%; object-fit: cover; }
+  .menu-item-info { flex: 1; }
+  .menu-item-info h4 { font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 600; margin-bottom: 0.2rem; }
+  .menu-item-info p { font-size: 0.75rem; color: var(--muted); line-height: 1.4; }
+  .menu-item-price { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; color: var(--accent); white-space: nowrap; }
+  .menu-item .badge-new {
+    position: absolute; top: 0.75rem; right: 0.75rem;
+    font-size: 0.6rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; padding: 0.2rem 0.5rem; border-radius: 6px;
+    background: rgba(200,149,108,0.15); color: var(--accent);
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  /* ===== SPECIALS ===== */
+  .specials { padding: 7rem 3rem; max-width: 1200px; margin: 0 auto; }
+  .specials-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 2rem; margin-top: 3rem; }
+  .special-main {
+    position: relative; border-radius: 18px; overflow: hidden;
+    min-height: 450px; border: 1px solid var(--border);
+  }
+  .special-main img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; filter: brightness(0.7) contrast(1.05); }
+  .special-main .overlay { position: absolute; inset: 0; background: linear-gradient(0deg, rgba(13,9,7,0.9) 0%, rgba(13,9,7,0.2) 60%); }
+  .special-main .content { position: absolute; bottom: 0; left: 0; right: 0; padding: 2.5rem; }
+  .special-main .content .tag {
+    display: inline-block; padding: 0.3rem 0.8rem;
+    background: var(--warm); color: var(--fg);
+    font-size: 0.68rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    border-radius: 6px; margin-bottom: 0.8rem;
+  }
+  .special-main .content h3 { font-size: 2rem; margin-bottom: 0.5rem; }
+  .special-main .content p { font-size: 0.88rem; color: var(--fg-dim); line-height: 1.6; max-width: 400px; }
+  .special-side { display: flex; flex-direction: column; gap: 1rem; }
+  .special-card {
+    flex: 1; display: flex; gap: 1rem;
+    padding: 1.25rem; background: var(--card);
+    border: 1px solid var(--border); border-radius: 14px;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .special-card:hover { border-color: var(--accent-dark); transform: translateY(-2px); }
+  .special-card img { width: 80px; height: 80px; border-radius: 10px; object-fit: cover; flex-shrink: 0; }
+  .special-card h4 { font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.2rem; }
+  .special-card p { font-size: 0.73rem; color: var(--muted); line-height: 1.5; }
+  .special-card .price { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--accent); margin-top: 0.3rem; }
+
+  /* ===== GALLERY ===== */
+  .gallery { padding: 7rem 3rem; max-width: 1200px; margin: 0 auto; }
+  .gallery-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 200px 200px; gap: 0.75rem; margin-top: 3rem;
+  }
+  .gallery-item {
+    border-radius: 12px; overflow: hidden;
+    position: relative; border: 1px solid var(--border); cursor: zoom-in;
+  }
+  .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; filter: brightness(0.85); }
+  .gallery-item:hover img { transform: scale(1.08); }
+  .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+  .gallery-item .gal-overlay {
+    position: absolute; inset: 0; background: rgba(13,9,7,0);
+    transition: background 0.3s;
+    display: flex; align-items: flex-end; justify-content: space-between; padding: 1rem;
+  }
+  .gallery-item:hover .gal-overlay { background: rgba(13,9,7,0.5); }
+  .gallery-item .gal-overlay span {
+    font-size: 0.8rem; font-weight: 600; color: var(--fg);
+    opacity: 0; transform: translateY(8px); transition: all 0.3s;
+  }
+  .gallery-item:hover .gal-overlay span { opacity: 1; transform: translateY(0); }
+  .gallery-item .gal-overlay i {
+    font-size: 0.9rem; color: #fff; opacity: 0;
+    transition: opacity 0.3s; align-self: flex-start;
+  }
+  .gallery-item:hover .gal-overlay i { opacity: 0.8; }
+
+  /* ===== TEAM ===== */
+  .team { padding: 7rem 3rem; max-width: 1200px; margin: 0 auto; }
+  .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 3rem; }
+  .team-card {
+    text-align: center; padding: 2rem 1.5rem;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; transition: all 0.3s;
+  }
+  .team-card:hover { border-color: var(--accent-dark); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+  .team-card img {
+    width: 90px; height: 90px; border-radius: 50%;
+    object-fit: cover; margin: 0 auto 1rem;
+    border: 2px solid var(--border); transition: border-color 0.3s;
+  }
+  .team-card:hover img { border-color: var(--accent); }
+  .team-card h4 { font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 600; margin-bottom: 0.2rem; }
+  .team-card .role { font-size: 0.75rem; color: var(--accent); font-weight: 500; margin-bottom: 0.6rem; }
+  .team-card p { font-size: 0.75rem; color: var(--muted); line-height: 1.5; }
+  .team-socials { display: flex; justify-content: center; gap: 0.5rem; margin-top: 0.8rem; }
+  .team-socials a {
+    width: 30px; height: 30px; border: 1px solid var(--border);
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    color: var(--muted); text-decoration: none; font-size: 0.75rem; transition: all 0.3s;
+  }
+  .team-socials a:hover { color: var(--accent); border-color: var(--accent); }
+
+  /* ===== TESTIMONIALS ===== */
+  .testimonials { padding: 7rem 3rem; max-width: 1200px; margin: 0 auto; }
+  .test-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 3rem; }
+  .test-card {
+    padding: 1.75rem; background: var(--card);
+    border: 1px solid var(--border); border-radius: 16px;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .test-card:hover { border-color: var(--accent-dark); transform: translateY(-3px); }
+  .test-stars { color: var(--accent); font-size: 0.8rem; margin-bottom: 1rem; display: flex; gap: 2px; }
+  .test-card blockquote { font-size: 0.88rem; color: var(--fg-dim); line-height: 1.7; margin-bottom: 1.25rem; font-style: italic; }
+  .test-author { display: flex; align-items: center; gap: 0.75rem; }
+  .test-author img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid var(--border); }
+  .test-author .name { font-size: 0.82rem; font-weight: 600; }
+  .test-author .role { font-size: 0.7rem; color: var(--muted); }
+
+  /* ===== EVENTS ===== */
+  .events { padding: 7rem 3rem; max-width: 1200px; margin: 0 auto; }
+  .events-list { display: flex; flex-direction: column; gap: 1rem; margin-top: 3rem; }
+  .event-card {
+    display: grid; grid-template-columns: 80px 1fr auto;
+    gap: 1.5rem; align-items: center;
+    padding: 1.5rem 2rem; background: var(--card);
+    border: 1px solid var(--border); border-radius: 14px;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .event-card:hover { border-color: var(--accent-dark); transform: translateX(4px); }
+  .event-date {
+    text-align: center; padding: 0.75rem;
+    background: var(--accent-glow); border-radius: 10px;
+    border: 1px solid rgba(200,149,108,0.15);
+  }
+  .event-date .day { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 800; color: var(--accent); line-height: 1; }
+  .event-date .month { font-size: 0.65rem; color: var(--accent-light); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; margin-top: 0.15rem; }
+  .event-info h4 { font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 600; margin-bottom: 0.25rem; }
+  .event-info p { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+  .event-meta { display: flex; flex-direction: column; align-items: flex-end; gap: 0.4rem; }
+  .event-meta .time { font-size: 0.82rem; color: var(--fg-dim); font-weight: 500; }
+  .event-meta .spots {
+    font-size: 0.7rem; padding: 0.2rem 0.6rem;
+    border-radius: 6px; font-weight: 600;
+  }
+  .spots-open { background: rgba(76,175,80,0.12); color: #81C784; }
+  .spots-limited { background: rgba(255,183,77,0.12); color: #FFB74D; }
+  .spots-full { background: rgba(229,83,80,0.12); color: #E57373; }
+
+  /* ===== FAQ ===== */
+  .faq { padding: 7rem 3rem; max-width: 800px; margin: 0 auto; }
+  .faq-list { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 3rem; }
+  .faq-item {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 14px; overflow: hidden;
+    transition: border-color 0.3s;
+  }
+  .faq-item.open { border-color: var(--accent-dark); }
+  .faq-q {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.25rem 1.5rem; cursor: pointer;
+    font-size: 0.92rem; font-weight: 600; color: var(--fg);
+    transition: color 0.3s; user-select: none;
+  }
+  .faq-q:hover { color: var(--accent); }
+  .faq-q i { font-size: 0.75rem; color: var(--muted); transition: transform 0.3s, color 0.3s; }
+  .faq-item.open .faq-q i { transform: rotate(180deg); color: var(--accent); }
+  .faq-a {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.3s ease;
+  }
+  .faq-item.open .faq-a { max-height: 300px; }
+  .faq-a-inner {
+    padding: 0 1.5rem 1.25rem;
+    font-size: 0.85rem; color: var(--muted); line-height: 1.7;
+  }
+
+  /* ===== VISIT ===== */
+  .visit { padding: 7rem 3rem; max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+  .hours-grid { margin-top: 2rem; }
+  .hours-row {
+    display: flex; justify-content: space-between;
+    padding: 0.85rem 0; border-bottom: 1px solid var(--border); font-size: 0.88rem;
+  }
+  .hours-row .day { color: var(--fg-dim); font-weight: 500; }
+  .hours-row .time { color: var(--accent-light); font-weight: 600; font-family: 'Playfair Display', serif; }
+  .hours-row.today { border-color: var(--accent-dark); }
+  .hours-row.today .day { color: var(--accent); }
+  .visit-info { margin-top: 2rem; display: flex; flex-direction: column; gap: 1rem; }
+  .visit-card {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1rem 1.25rem; background: var(--card);
+    border: 1px solid var(--border); border-radius: 12px;
+    transition: border-color 0.3s;
+  }
+  .visit-card:hover { border-color: var(--accent-dark); }
+  .visit-card i { color: var(--accent); font-size: 1rem; width: 20px; text-align: center; }
+  .visit-card .vc-label { font-size: 0.72rem; color: var(--muted); }
+  .visit-card .vc-value { font-size: 0.9rem; font-weight: 500; }
+  .map-placeholder {
+    width: 100%; height: 280px; background: var(--card);
+    border: 1px solid var(--border); border-radius: 16px;
+    overflow: hidden; position: relative; margin-top: 1.5rem;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .map-placeholder img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.5) saturate(0.7) contrast(1.1); position: absolute; inset: 0; }
+  .map-placeholder .map-pin { position: relative; z-index: 1; text-align: center; }
+  .map-placeholder .map-pin i {
+    font-size: 2rem; color: var(--accent); display: block; margin-bottom: 0.5rem;
+    filter: drop-shadow(0 0 12px rgba(200,149,108,0.5));
+    animation: pin-bounce 2s ease-in-out infinite;
+  }
+  @keyframes pin-bounce { 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-6px); } }
+  .map-placeholder .map-pin span {
+    font-size: 0.78rem; color: var(--fg); font-weight: 500;
+    background: rgba(13,9,7,0.7); padding: 0.3rem 0.8rem;
+    border-radius: 6px; backdrop-filter: blur(6px);
+  }
+
+  /* ===== NEWSLETTER ===== */
+  .newsletter {
+    padding: 5rem 3rem; margin: 0 3rem;
+    max-width: 1140px;
+    background: linear-gradient(135deg, var(--card) 0%, rgba(200,149,108,0.08) 100%);
+    border: 1px solid var(--border); border-radius: 24px;
+    text-align: center; position: relative; overflow: hidden; z-index: 1;
+  }
+  .newsletter::before {
+    content: ''; position: absolute; top: -50%; right: -20%;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(200,149,108,0.08), transparent 70%);
+    pointer-events: none;
+  }
+  .newsletter h2 { font-size: clamp(1.8rem, 3vw, 2.5rem); margin-bottom: 0.6rem; }
+  .newsletter p { color: var(--fg-dim); margin-bottom: 2rem; font-size: 0.95rem; }
+  .nl-form { display: flex; gap: 0.75rem; justify-content: center; max-width: 460px; margin: 0 auto; flex-wrap: wrap; }
+  .nl-form input {
+    flex: 1; min-width: 220px; padding: 0.8rem 1.2rem;
+    background: var(--bg-raised); border: 1px solid var(--border);
+    border-radius: 10px; color: var(--fg);
+    font-family: 'DM Sans', sans-serif; font-size: 0.88rem;
+    outline: none; transition: border-color 0.3s;
+  }
+  .nl-form input:focus { border-color: var(--accent); }
+  .nl-form input::placeholder { color: var(--muted); }
+
+  /* ===== FOOTER ===== */
+  footer {
+    position: relative; z-index: 1;
+    padding: 4rem 3rem 2rem; border-top: 1px solid var(--border);
+    max-width: 1200px; margin: 0 auto;
+  }
+  .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+  .footer-brand { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 0.75rem; }
+  .footer-brand span { color: var(--accent); }
+  .footer-about { font-size: 0.82rem; color: var(--muted); line-height: 1.7; max-width: 280px; }
+  .footer-col h4 {
+    font-family: 'DM Sans', sans-serif; font-size: 0.78rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.1em; color: var(--fg); margin-bottom: 1rem;
+  }
+  .footer-col a { display: block; color: var(--muted); text-decoration: none; font-size: 0.82rem; padding: 0.3rem 0; transition: color 0.3s; }
+  .footer-col a:hover { color: var(--accent); }
+  .footer-socials { display: flex; gap: 0.6rem; margin-top: 1.25rem; }
+  .footer-socials a {
+    width: 38px; height: 38px; border: 1px solid var(--border);
+    border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    color: var(--muted); transition: all 0.3s; font-size: 0.9rem;
+  }
+  .footer-socials a:hover { color: var(--accent); border-color: var(--accent); }
+  .footer-bottom {
+    padding-top: 2rem; border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-bottom span { font-size: 0.75rem; color: var(--muted); }
+
+  /* ===== TOAST ===== */
+  .toast {
+    position: fixed; bottom: 2rem; right: 2rem;
+    padding: 1rem 1.5rem; background: var(--card);
+    border: 1px solid var(--accent); border-radius: 12px;
+    color: var(--fg); font-size: 0.88rem; z-index: 300;
+    transform: translateY(120%); opacity: 0;
+    transition: transform 0.4s, opacity 0.4s;
+    display: flex; align-items: center; gap: 0.6rem;
+    pointer-events: none;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+  .toast i { color: var(--accent); }
+
+  /* ===== REVEAL ===== */
+  .reveal { opacity: 0; transform: translateY(35px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-d1 { transition-delay: 0.1s; }
+  .reveal-d2 { transition-delay: 0.2s; }
+  .reveal-d3 { transition-delay: 0.3s; }
+  .reveal-d4 { transition-delay: 0.4s; }
+  .reveal-d5 { transition-delay: 0.5s; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 1024px) {
+    .story { grid-template-columns: 1fr; gap: 3rem; }
+    .story-img { max-width: 400px; }
+    .specials-grid { grid-template-columns: 1fr; }
+    .special-main { min-height: 350px; }
+    .test-cards { grid-template-columns: 1fr 1fr; }
+    .visit { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-grid { grid-template-columns: repeat(2,1fr); grid-template-rows: 180px 180px 180px; }
+    .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 1; }
+    .team-grid { grid-template-columns: repeat(2,1fr); }
+    .stats-bar { grid-template-columns: repeat(2,1fr); }
+    .event-card { grid-template-columns: 70px 1fr; }
+    .event-meta { display: none; }
+  }
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+    .menu-grid { grid-template-columns: 1fr; }
+    .test-cards { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: 160px 160px 160px; }
+    .gallery-item:nth-child(1) { grid-column: span 2; }
+    .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .team-grid { grid-template-columns: 1fr; }
+    .stats-bar { grid-template-columns: 1fr 1fr; }
+    .story,.menu,.specials,.gallery,.team,.testimonials,.events,.faq,.visit,.newsletter {
+      padding-left: 1.5rem; padding-right: 1.5rem;
+    }
+    .newsletter { margin-left: 1.5rem; margin-right: 1.5rem; }
+    footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .scroll-hint { display: none; }
+    .lightbox-nav { display: none; }
+  }
+  @media (max-width: 480px) {
+    .gallery-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
+    .gallery-item:nth-child(1) { grid-column: span 1; }
+    .gallery-item { height: 180px; }
+    .hours-row { font-size: 0.8rem; }
+    .stats-bar { grid-template-columns: 1fr; }
+    .modal .form-row { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,*::before,*::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+</head>
+<body>
+
+<!-- Skip to content -->
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- Preloader -->
+<div class="preloader" id="preloader">
+  <div class="preloader-cup"></div>
+  <div class="preloader-text">Manjil's Cafe</div>
+  <div class="preloader-bar"><div class="preloader-bar-inner" id="preloaderBar"></div></div>
+</div>
+
+<!-- Scroll Progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Back to Top -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top">
+  <i class="fas fa-arrow-up"></i>
+</button>
+
+<!-- Cookie Consent -->
+<div class="cookie-banner" id="cookieBanner">
+  <p>We use cookies to enhance your experience. By continuing, you agree to our <a href="#" onclick="event.preventDefault()">privacy policy</a>.</p>
+  <button class="cookie-btn cookie-accept" onclick="acceptCookies()">Accept</button>
+  <button class="cookie-btn cookie-decline" onclick="declineCookies()">Decline</button>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" role="dialog" aria-label="Image viewer">
+  <button class="lightbox-close" aria-label="Close"><i class="fas fa-times"></i></button>
+  <button class="lightbox-nav lightbox-prev" aria-label="Previous image"><i class="fas fa-chevron-left"></i></button>
+  <button class="lightbox-nav lightbox-next" aria-label="Next image"><i class="fas fa-chevron-right"></i></button>
+  <img src="" alt="Gallery image" id="lightboxImg">
+  <div class="lightbox-caption" id="lightboxCaption"></div>
+</div>
+
+<!-- Reservation Modal -->
+<div class="modal-overlay" id="resModal" role="dialog" aria-label="Reserve a table">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>Reserve a Table</h3>
+      <button class="modal-close" aria-label="Close"><i class="fas fa-times"></i></button>
+    </div>
+    <form id="resForm">
+      <div class="form-row">
+        <div class="fg">
+          <label for="resName">Name</label>
+          <input type="text" id="resName" placeholder="Your name" required>
+        </div>
+        <div class="fg">
+          <label for="resPhone">Phone</label>
+          <input type="tel" id="resPhone" placeholder="(415) 555-0000" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="fg">
+          <label for="resDate">Date</label>
+          <input type="date" id="resDate" required>
+        </div>
+        <div class="fg">
+          <label for="resTime">Time</label>
+          <select id="resTime" required>
+            <option value="">Select time</option>
+            <option>8:00 AM</option><option>8:30 AM</option>
+            <option>9:00 AM</option><option>9:30 AM</option>
+            <option>10:00 AM</option><option>10:30 AM</option>
+            <option>11:00 AM</option><option>11:30 AM</option>
+            <option>12:00 PM</option><option>12:30 PM</option>
+            <option>1:00 PM</option><option>1:30 PM</option>
+            <option>2:00 PM</option><option>2:30 PM</option>
+            <option>3:00 PM</option><option>3:30 PM</option>
+            <option>4:00 PM</option><option>4:30 PM</option>
+            <option>5:00 PM</option><option>5:30 PM</option>
+            <option>6:00 PM</option><option>6:30 PM</option>
+            <option>7:00 PM</option><option>7:30 PM</option>
+            <option>8:00 PM</option>
+          </select>
+        </div>
+      </div>
+      <div class="fg">
+        <label>Number of Guests</label>
+        <div class="guest-selector">
+          <button type="button" class="guest-btn active" data-guests="1">1</button>
+          <button type="button" class="guest-btn" data-guests="2">2</button>
+          <button type="button" class="guest-btn" data-guests="3">3</button>
+          <button type="button" class="guest-btn" data-guests="4">4</button>
+          <button type="button" class="guest-btn" data-guests="5+">5+</button>
+        </div>
+      </div>
+      <div class="fg">
+        <label for="resNotes">Special Requests</label>
+        <textarea id="resNotes" placeholder="Allergies, seating preference, etc."></textarea>
+      </div>
+      <button type="submit" class="btn-warm" style="width: 100%; justify-content: center; margin-top: 0.5rem;">
+        <i class="fas fa-calendar-check"></i> Confirm Reservation
+      </button>
+    </form>
+  </div>
+</div>
+
+<div class="grain"></div>
+<canvas id="three-canvas"></canvas>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#story" onclick="closeMobile()">Our Story</a>
+  <a href="#menu" onclick="closeMobile()">Menu</a>
+  <a href="#specials" onclick="closeMobile()">Specials</a>
+  <a href="#gallery" onclick="closeMobile()">Gallery</a>
+  <a href="#team" onclick="closeMobile()">Our Team</a>
+  <a href="#events" onclick="closeMobile()">Events</a>
+  <a href="#visit" onclick="closeMobile()">Visit Us</a>
+</div>
+
+<!-- Nav -->
+<nav id="navbar">
+  <div class="nav-brand">Manjil <span>&</span> Cafe</div>
+  <div class="nav-links">
+    <a href="#story">Our Story</a>
+    <a href="#menu">Menu</a>
+    <a href="#specials">Specials</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#team">Team</a>
+    <a href="#events">Events</a>
+    <a href="#visit">Visit Us</a>
+    <a href="#" class="nav-cta" id="navResBtn">Reserve</a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Main Content -->
+<main id="main-content">
+
+<!-- Hero -->
+<section class="hero">
+  <div class="steam-container"><div class="steam"></div><div class="steam"></div><div class="steam"></div><div class="steam"></div></div>
+  <div class="hero-content">
+    <div class="hero-badge reveal"><i class="fas fa-mug-hot"></i> Est. 2026 Kathmandu</div>
+    <h1 class="reveal reveal-d1">Where every cup<br>tells a <em>story</em></h1>
+    <p class="hero-sub reveal reveal-d2">Welcome to Manjil's Cafe, your local haven for premium coffee and delightful eats in the heart of Brookfield, Tauranga. Conveniently located near the suburbs of Otumoetai, Judea, and Bethlehem, our cafe is a favourite spot for both locals and visitors.Our journey began with a passion for great coffee, delicious food, and a desire to create a warm, welcoming space for the community. We are dedicated to providing an exceptional dining experience, whether you’re stopping by for a quick coffee or settling in for a leisurely meal.</p>
+    <div class="hero-btns reveal reveal-d3">
+      <a href="#menu" class="btn-warm">Explore the Menu <i class="fas fa-arrow-right"></i></a>
+      <a href="#" class="btn-ghost" id="heroResBtn">Reserve a Table</a>
+    </div>
+  </div>
+  <div class="scroll-hint reveal reveal-d4">Discover<div class="scroll-arrow"></div></div>
+</section>
+
+<!-- Story -->
+<section class="story" id="story">
+  <div class="story-img reveal">
+    <img src="Heyjude.png" alt="Barista at work">
+    <div class="grad-overlay"></div>
+    <div class="tag-float"><i class="fas fa-award"></i><span>Best Specialty Coffee 2024</span></div>
+  </div>
+  <div>
+    <div class="sec-label reveal">Our Story</div>
+    <h2 class="sec-title reveal reveal-d1">Born from obsession, built with purpose</h2>
+    <p class="sec-desc reveal reveal-d2">Manjil's Cafe started in a 200-square-foot garage in the Mission District. Two friends, a second-hand Probat roaster, and an unreasonable belief that coffee could be something more — something personal, transparent, and unforgettable.</p>
+    <p class="sec-desc reveal reveal-d3" style="margin-top: 1rem;">Today, we source directly from farms in Kathmandu, Nepal and New Zealand. Every bag is traceable to the lot. Every roast is profiled for the bean, not the trend.</p>
+    <div class="story-values reveal reveal-d4">
+      <div class="value-item"><i class="fas fa-seedling"></i><h4>Direct Trade</h4><p>Sourced from farms we know by name, paying above fair-trade minimums.</p></div>
+      <div class="value-item"><i class="fas fa-fire-flame-curved"></i><h4>Small Batch Roasted</h4><p>15kg max per batch, profiled individually for peak expression.</p></div>
+      <div class="value-item"><i class="fas fa-hand-sparkles"></i><h4>Hand Crafted</h4><p>Every drink made to order by skilled baristas, never automated.</p></div>
+      <div class="value-item"><i class="fas fa-leaf"></i><h4>Sustainable</h4><p>Compostable packaging, zero-waste kitchen, carbon-offset delivery.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats -->
+<section class="stats-bar" id="statsBar">
+  <div class="stat-item reveal">
+    <div class="stat-number"><span class="counter" data-target="25000">0</span><span class="stat-suffix">+</span></div>
+    <div class="stat-label">Cups Served</div>
+  </div>
+  <div class="stat-item reveal reveal-d1">
+    <div class="stat-number"><span class="counter" data-target="2">0</span></div>
+    <div class="stat-label">Origin Countries</div>
+  </div>
+  <div class="stat-item reveal reveal-d2">
+    <div class="stat-number"><span class="counter" data-target="6">0</span></div>
+    <div class="stat-label">Years Open</div>
+  </div>
+  <div class="stat-item reveal reveal-d3">
+    <div class="stat-number"><span class="counter" data-target="98">0</span><span class="stat-suffix">%</span></div>
+    <div class="stat-label">5-Star Reviews</div>
+  </div>
+</section>
+
+<!-- Menu -->
+<section class="menu" id="menu">
+  <div style="text-align: center;">
+    <div class="sec-label reveal">The Menu</div>
+    <h2 class="sec-title reveal reveal-d1">Crafted with intention</h2>
+    <p class="sec-desc reveal reveal-d2" style="margin: 0 auto;">Every item is made from scratch using seasonal, locally-sourced ingredients alongside our roasted beans.</p>
+  </div>
+  <div class="menu-tabs reveal reveal-d3" id="menuTabs">
+    <button class="menu-tab active" data-cat="coffee">Coffee</button>
+    <button class="menu-tab" data-cat="tea">Tea & Matcha</button>
+    <button class="menu-tab" data-cat="pastry">Pastries</button>
+    <button class="menu-tab" data-cat="brunch">Brunch</button>
+  </div>
+  <div class="menu-grid" id="menuGrid"></div>
+</section>
+
+<!-- Specials -->
+<section class="specials" id="specials">
+  <div class="sec-label reveal">Seasonal Specials</div>
+  <h2 class="sec-title reveal reveal-d1">Limited time, unforgettable flavor</h2>
+  <p class="sec-desc reveal reveal-d2">Our roasters and kitchen team collaborate on rotating specials that highlight the best of each season.</p>
+  <div class="specials-grid">
+    <div class="special-main reveal reveal-d2">
+      <img src="coffee.png" alt="Smoke & Cedar Latte">
+      <div class="overlay"></div>
+      <div class="content">
+        <div class="tag">Winter Feature</div>
+        <h3>Smoke & Cedar Latte</h3>
+        <p>Double-shot espresso infused with cold-smoked cedar essence, steamed oat milk, and a touch of maple. Topped with cedar ash foam and a torched marshmallow.</p>
+      </div>
+    </div>
+    <div class="special-side">
+      <div class="special-card reveal reveal-d3">
+        <img src="https://picsum.photos/seed/special-pastry/160/160.jpg" alt="Cardamom Brioche">
+        <div><h4>Cardamom Brioche</h4><p>Butter-rich brioche with Ethiopian cardamom sugar glaze and rosewater cream.</p><div class="price">$6.50</div></div>
+      </div>
+      <div class="special-card reveal reveal-d4">
+        <img src="https://picsum.photos/seed/special-cold/160/160.jpg" alt="Yuzu Cold Brew">
+        <div><h4>Yuzu Cold Brew</h4><p>24-hour cold brew with fresh yuzu juice, honey syrup, and sparkling water.</p><div class="price">$7.00</div></div>
+      </div>
+      <div class="special-card reveal reveal-d5">
+        <img src="https://picsum.photos/seed/special-mocha/160/160.jpg" alt="Mole Mocha">
+        <div><h4>Mole Mocha</h4><p>Espresso, Oaxacan chocolate, cinnamon, chili, and toasted almond milk.</p><div class="price">$7.50</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Gallery -->
+<section class="gallery" id="gallery">
+  <div style="text-align: center;">
+    <div class="sec-label reveal">The Space</div>
+    <h2 class="sec-title reveal reveal-d1">More than a cafe</h2>
+    <p class="sec-desc reveal reveal-d2" style="margin: 0 auto;">A warm, textured space designed for lingering — whether you're deep in work or deep in conversation.</p>
+  </div>
+  <div class="gallery-grid" id="galleryGrid">
+    <div class="gallery-item reveal" data-full="Reserved.png" data-caption="Main seating area">
+      <img src="Reserved.png" alt="Cafe interior">
+      <div class="gal-overlay"><span>Main seating area</span><i class="fas fa-expand"></i></div>
+    </div>
+    <div class="gallery-item reveal reveal-d1" data-full="Dog.png" data-caption="Amod mero nam">
+      <img src="Dog.png" alt="Amod rey nam kukur ko">
+      <div class="gal-overlay"><span>Dog </span><i class="fas fa-expand"></i></div>
+    </div>
+    <div class="gallery-item reveal reveal-d2" data-full="Cupma.png" data-caption="Coffee">
+      <img src="Cupma.png" alt="Coffee">
+      <div class="gal-overlay"><span>Coffee</span><i class="fas fa-expand"></i></div>
+    </div>
+    <div class="gallery-item reveal reveal-d3" data-full="Lamb.png" data-caption="Nepalese style Lamb">
+      <img src="Lamb.png" alt="Nepalese style lamb">
+      <div class="gal-overlay"><span>Nepalese style Lamb</span><i class="fas fa-expand"></i></div>
+    </div>
+    <div class="gallery-item reveal reveal-d4" data-full="cinnamonroll .png" data-caption="cinnamon roll">
+      <img src="cinnamonroll .png" alt="cinnamon roll ">
+      <div class="gal-overlay"><span>cinnamon roll</span><i class="fas fa-expand"></i></div>
+    </div>
+  </div>
+</section>
+
+<!-- Team -->
+<section class="team" id="team">
+  <div style="text-align: center;">
+    <div class="sec-label reveal">The People</div>
+    <h2 class="sec-title reveal reveal-d1">Meet the crew</h2>
+    <p class="sec-desc reveal reveal-d2" style="margin: 0 auto;">Passionate humans who take coffee very seriously — and themselves, not so much.</p>
+  </div>
+  <div class="team-grid">
+    <div class="team-card reveal reveal-d1">
+      <img src="Manjil.png" alt="Manjil Khatiwada">
+      <h4>Manjil Khatiwada</h4>
+      <div class="role">Head Roaster & Co-Founder</div>
+      <p>Q-Grader certified. Traveled to 14 origin countries. Roasts with intuition and data in equal measure.</p>
+      <div class="team-socials">
+        <a href="#" onclick="event.preventDefault()" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" onclick="event.preventDefault()" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+    <div class="team-card reveal reveal-d2">
+      <img src="Parash.png" alt="Parash Acharya">
+      <h4>Parash Acharya</h4>
+      <div class="role">Head Barista & Co-Founder</div>
+      <p>3x Regional Latte Art Champion. Believes the perfect shot is a conversation, not a formula.</p>
+      <div class="team-socials">
+        <a href="https://www.instagram.com/manjil______/" onclick="event.preventDefault()" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" onclick="event.preventDefault()" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
+      </div>
+    </div>
+    <div class="team-card reveal reveal-d3">
+      <img src="Sunil.png" alt="Sunil Kunwar">
+      <h4>Sunil Kunwar</h4>
+      <div class="role">Pastry Chef</div>
+      <p>Trained in Paris, rooted in the Philippines. Turns seasonal ingredients into pastries you dream about.</p>
+      <div class="team-socials">
+        <a href="#" onclick="event.preventDefault()" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+    <div class="team-card reveal reveal-d4">
+      <img src="Amod.png" alt="Amod Kumar">
+      <h4>Amod K Pudasaini</h4>
+      <div class="role">Floor Manager</div>
+      <p>The person who remembers your name, your drink, and asks about your dog. Keeps the whole ship running.</p>
+      <div class="team-socials">
+        <a href="#" onclick="event.preventDefault()" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" onclick="event.preventDefault()" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="testimonials" id="testimonials">
+  <div style="text-align: center;">
+    <div class="sec-label reveal">What People Say</div>
+    <h2 class="sec-title reveal reveal-d1">Loved by locals and visitors alike</h2>
+  </div>
+  <div class="test-cards">
+    <div class="test-card reveal reveal-d1">
+      <div class="test-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+      <blockquote>"The best pour-over I've had outside of Tokyo. You can taste the intention in every cup. The space itself feels like a warm hug on a foggy SF morning."</blockquote>
+      <div class="test-author">
+        <img src="https://picsum.photos/seed/face-sarah/80/80.jpg" alt="Sarah K.">
+        <div><div class="name">Sarah K.</div><div class="role">Food Writer, SF Chronicle</div></div>
+      </div>
+    </div>
+    <div class="test-card reveal reveal-d2">
+      <div class="test-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+      <blockquote>"I've been coming here every morning for two years. The baristas know my name, my drink, and always make me feel like I'm coming home."</blockquote>
+      <div class="test-author">
+        <img src="https://picsum.photos/seed/face-marcus/80/80.jpg" alt="Marcus T.">
+        <div><div class="name">Marcus T.</div><div class="role">Software Engineer</div></div>
+      </div>
+    </div>
+    <div class="test-card reveal reveal-d3">
+      <div class="test-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-stroke"></i></div>
+      <blockquote>"We held our company offsite here. Custom coffee flights paired with matching pastries. Truly next level — our team is still talking about it."</blockquote>
+      <div class="test-author">
+        <img src="https://picsum.photos/seed/face-elena/80/80.jpg" alt="Elena R.">
+        <div><div class="name">Elena R.</div><div class="role">VP Design, Notion</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Events -->
+<section class="events" id="events">
+  <div style="text-align: center;">
+    <div class="sec-label reveal">Community</div>
+    <h2 class="sec-title reveal reveal-d1">Upcoming events</h2>
+    <p class="sec-desc reveal reveal-d2" style="margin: 0 auto;">From cuppings to latte art throwdowns — come learn, taste, and connect.</p>
+  </div>
+  <div class="events-list">
+    <div class="event-card reveal reveal-d1">
+      <div class="event-date"><div class="day">18</div><div class="month">Jan</div></div>
+      <div class="event-info">
+        <h4>Origin Cupping: Ethiopia Yirgacheffe</h4>
+        <p>Taste through 5 lots from our partner farms in Kochere and Gedeb. Led by Nora Chen, Q-Grader.</p>
+      </div>
+      <div class="event-meta">
+        <span class="time">10:00 AM — 11:30 AM</span>
+        <span class="spots spots-open">8 spots open</span>
+      </div>
+    </div>
+    <div class="event-card reveal reveal-d2">
+      <div class="event-date"><div class="day">25</div><div class="month">Jan</div></div>
+      <div class="event-info">
+        <h4>Latte Art Workshop — Beginners</h4>
+        <p>Learn the fundamentals of milk texturing and pouring hearts, rosettas, and tulips. All materials provided.</p>
+      </div>
+      <div class="event-meta">
+        <span class="time">2:00 PM — 4:00 PM</span>
+        <span class="spots spots-limited">3 spots left</span>
+      </div>
+    </div>
+    <div class="event-card reveal reveal-d3">
+      <div class="event-date"><div class="day">02</div><div class="month">Feb</div></div>
+      <div class="event-info">
+        <h4>Valentine's Pairing Dinner</h4>
+        <p>Four-course dinner with coffee-cocktail pairings. Menu by Maya Santos. Seats are limited.</p>
+      </div>
+      <div class="event-meta">
+        <span class="time">7:00 PM — 10:00 PM</span>
+        <span class="spots spots-full">Sold out</span>
+      </div>
+    </div>
+    <div class="event-card reveal reveal-d4">
+      <div class="event-date"><div class="day">09</div><div class="month">Feb</div></div>
+      <div class="event-info">
+        <h4>Home Brewing Masterclass</h4>
+        <p>AeroPress, V60, Chemex, and French Press — find your perfect method. Take-home guide included.</p>
+      </div>
+      <div class="event-meta">
+        <span class="time">11:00 AM — 1:00 PM</span>
+        <span class="spots spots-open">10 spots open</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div style="text-align: center;">
+    <div class="sec-label reveal">FAQ</div>
+    <h2 class="sec-title reveal reveal-d1">Common questions</h2>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item reveal reveal-d1">
+      <div class="faq-q">Do you take walk-ins or only reservations? <i class="fas fa-chevron-down"></i></div>
+      <div class="faq-a"><div class="faq-a-inner">Both! Walk-ins are always welcome for casual seating. Reservations are recommended for weekends, groups of 4+, and our events. You can reserve right here on the website — it takes 30 seconds.</div></div>
+    </div>
+    <div class="faq-item reveal reveal-d2">
+      <div class="faq-q">Do you have dairy-free and vegan options? <i class="fas fa-chevron-down"></i></div>
+      <div class="faq-a"><div class="faq-a-inner">Absolutely. We offer house-made oat, almond, soy, and coconut milk at no extra charge. Most of our pastries have vegan alternatives — just ask the barista. Our full vegan pastry menu is marked with a leaf icon on the display case.</div></div>
+    </div>
+    <div class="faq-item reveal reveal-d3">
+      <div class="faq-q">Can I buy your beans to brew at home? <i class="fas fa-chevron-down"></i></div>
+      <div class="faq-a"><div class="faq-a-inner">Yes! We sell all our single-origin beans in 250g and 1kg bags, whole bean or ground to your specifications. We also offer a subscription service — choose your roast preference and frequency, and we'll deliver fresh to your door within 48 hours of roasting.</div></div>
+    </div>
+    <div class="faq-item reveal reveal-d4">
+      <div class="faq-q">Is your space wheelchair accessible? <i class="fas fa-chevron-down"></i></div>
+      <div class="faq-a"><div class="faq-a-inner">Yes. Our Valencia Street location is fully ADA accessible with a street-level entrance, accessible restroom, and adjustable-height tables. If you have any specific needs, don't hesitate to reach out and we'll make sure you're comfortable.</div></div>
+    </div>
+    <div class="faq-item reveal reveal-d5">
+      <div class="faq-q">Do you offer Wi-Fi and power outlets? <i class="fas fa-chevron-down"></i></div>
+      <div class="faq-a"><div class="faq-a-inner">We do — fast, free Wi-Fi and power outlets at every table. We're popular with remote workers, especially on weekday mornings. On weekends, we encourage a more social atmosphere, but you're still welcome to plug in.</div></div>
+    </div>
+    <div class="faq-item reveal reveal-d5">
+      <div class="faq-q">Do you cater private events? <i class="fas fa-chevron-down"></i></div>
+      <div class="faq-a"><div class="faq-a-inner">We do! We've hosted everything from product launches to intimate dinners to wedding after-parties. Our catering menu includes custom coffee bars, pastry spreads, and full brunch service. Get in touch at hello@emberandbrew.com and we'll build something special together.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Visit -->
+<section class="visit" id="visit">
+  <div>
+    <div class="sec-label reveal">Visit Us</div>
+    <h2 class="sec-title reveal reveal-d1">Come say hello</h2>
+    <p class="sec-desc reveal reveal-d2">We’d love to hear from you! Whether you have questions about our menu, need catering services, or just want to provide feedback, our team at Hey Jude Cafe is here to assist you.</p>
+    <div class="visit-info reveal reveal-d3">
+      <div class="visit-card"><i class="fas fa-location-dot"></i><div><div class="vc-label">Address</div><div class="vc-value">34 Ohauiti Road, Tauranga</div></div></div>
+      <div class="visit-card"><i class="fas fa-phone"></i><div><div class="vc-label">Phone</div><div class="vc-value">(415) 555-0187</div></div></div>
+      <div class="visit-card"><i class="fas fa-envelope"></i><div><div class="vc-label">Email</div><div class="vc-value">aailaxaiina@gmail.com</div></div></div>
+    </div>
+    <div class="map-placeholder reveal reveal-d4">
+      <img src="Heyjude.png" alt="Map">
+      <div class="map-pin"><i class="fas fa-map-marker-alt"></i><span>34 Ohauiti Road </span></div>
+    </div>
+  </div>
+  <div>
+    <h3 class="font-display reveal" style="font-size: 1.3rem; margin-bottom: 0.3rem;">Opening Hours</h3>
+    <p class="reveal reveal-d1" style="font-size: 0.82rem; color: var(--muted); margin-bottom: 0.5rem;">We're open 7 days a week</p>
+    <div class="hours-grid reveal reveal-d2" id="hoursGrid"></div>
+    <div style="margin-top: 2rem;">
+      <button class="btn-warm reveal reveal-d3" style="width: 100%; justify-content: center;" id="visitResBtn">
+        <i class="fas fa-calendar-check"></i> Reserve a Table
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Newsletter -->
+<section class="newsletter" id="newsletter">
+  <div class="sec-label reveal">Stay Connected</div>
+  <h2 class="font-display reveal reveal-d1">Get first access to new roasts and events</h2>
+  <p class="reveal reveal-d2">Join our newsletter  no spam, just the good stuff. New roast drops, secret menu items, and community events.</p>
+  <form class="nl-form reveal reveal-d3" id="nlForm">
+    <input type="email" placeholder="your@email.com" required id="nlEmail" aria-label="Email address">
+    <button type="submit" class="btn-warm">Subscribe <i class="fas fa-arrow-right"></i></button>
+  </form>
+</section>
+
+</main>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand">Manjil's  <span>&</span> Cafe</div>
+      <p class="footer-about">Artisan coffee house in Tauranga's Mission District. Single-origin beans, small-batch roasting, and a space designed for lingering.</p>
+      <div class="footer-socials">
+        <a href="#" aria-label="Instagram" onclick="event.preventDefault()"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="Twitter" onclick="event.preventDefault()"><i class="fab fa-x-twitter"></i></a>
+        <a href="#" aria-label="TikTok" onclick="event.preventDefault()"><i class="fab fa-tiktok"></i></a>
+        <a href="#" aria-label="Yelp" onclick="event.preventDefault()"><i class="fab fa-yelp"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <a href="#menu">Full Menu</a>
+      <a href="#specials">Seasonal Specials</a>
+      <a href="#" onclick="event.preventDefault()">Buy Beans Online</a>
+      <a href="#" onclick="event.preventDefault()">Gift Cards</a>
+      <a href="#" onclick="event.preventDefault()">Catering</a>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="#story">Our Story</a>
+      <a href="#team">Our Team</a>
+      <a href="#events">Events</a>
+      <a href="#" onclick="event.preventDefault()">Careers</a>
+      <a href="#visit">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Legal</h4>
+      <a href="#" onclick="event.preventDefault()">Privacy Policy</a>
+      <a href="#" onclick="event.preventDefault()">Terms of Service</a>
+      <a href="#" onclick="event.preventDefault()">Accessibility</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>2024 Ember & Brew. All rights reserved.</span>
+    <span>Made with <i class="fas fa-mug-hot" style="color: var(--accent);"></i> in Tauranga</span>
+  </div>
+</footer>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <i class="fas fa-check-circle"></i>
+  <span id="toastMsg">Done!</span>
+</div>
+
+<!-- Three.js -->
+<script type="module">
+import * as THREE from 'three';
+const canvas = document.getElementById('three-canvas');
+const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100);
+camera.position.set(0, 0, 22);
+const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
+document.addEventListener('mousemove', e => { mouse.tx = (e.clientX / window.innerWidth - 0.5) * 2; mouse.ty = (e.clientY / window.innerHeight - 0.5) * 2; });
+scene.add(new THREE.AmbientLight(0x332211, 0.4));
+const dLight = new THREE.DirectionalLight(0xC8956C, 1.0); dLight.position.set(5, 8, 5); scene.add(dLight);
+const fLight = new THREE.DirectionalLight(0x886644, 0.3); fLight.position.set(-5, -3, 3); scene.add(fLight);
+const pLight = new THREE.PointLight(0xC8956C, 0.6, 35); pLight.position.set(0, 0, 12); scene.add(pLight);
+const eps = 0.001;
+const shapes = [];
+const darkMat = new THREE.MeshStandardMaterial({ color: 0x1a1410, metalness: 0.7, roughness: 0.25 });
+const wireMat = new THREE.MeshStandardMaterial({ color: 0xC8956C, metalness: 0.8, roughness: 0.2, wireframe: true });
+const glassMat = new THREE.MeshStandardMaterial({ color: 0xC8956C, metalness: 0.2, roughness: 0.1, transparent: true, opacity: 0.12 });
+function addShape(geom, mat, pos, scale, rSpeed) {
+  const m = new THREE.Mesh(geom, mat);
+  m.position.set(pos.x, pos.y, pos.z);
+  m.scale.setScalar(Math.max(eps, scale));
+  m.rotation.set(Math.random() * Math.PI, Math.random() * Math.PI, Math.random() * Math.PI);
+  m.userData = { bp: { ...pos }, rs: rSpeed, fo: Math.random() * Math.PI * 2, fs: 0.25 + Math.random() * 0.35, fa: 0.3 + Math.random() * 0.5 };
+  scene.add(m); shapes.push(m);
+}
+function coffeeBean(s) { const g = new THREE.SphereGeometry(Math.max(eps, s), 16, 12); g.scale(1, 0.6, 1.3); return g; }
+for (let i = 0; i < 12; i++) {
+  addShape(coffeeBean(0.4 + Math.random() * 0.5), Math.random() > 0.5 ? darkMat : wireMat,
+    { x: (Math.random() - 0.5) * 30, y: (Math.random() - 0.5) * 25, z: -5 - Math.random() * 15 }, 1,
+    { x: (Math.random() - 0.5) * 0.008, y: (Math.random() - 0.5) * 0.006, z: (Math.random() - 0.5) * 0.004 });
+}
+addShape(new THREE.TorusGeometry(Math.max(eps, 3), Math.max(eps, 0.08), 16, 80), wireMat, { x: 6, y: -1, z: -8 }, 1, { x: 0.002, y: 0.003, z: 0.001 });
+addShape(new THREE.TorusGeometry(Math.max(eps, 2.2), Math.max(eps, 0.06), 16, 60), wireMat, { x: -7, y: 3, z: -10 }, 1, { x: -0.002, y: 0.001, z: -0.003 });
+addShape(new THREE.IcosahedronGeometry(Math.max(eps, 2), 1), wireMat, { x: -5, y: -4, z: -7 }, 1, { x: 0.001, y: 0.002, z: 0.001 });
+for (let i = 0; i < 6; i++) {
+  addShape(new THREE.OctahedronGeometry(Math.max(eps, 0.3 + Math.random() * 0.4), 0), glassMat,
+    { x: (Math.random() - 0.5) * 25, y: (Math.random() - 0.5) * 20, z: -6 - Math.random() * 10 }, 1,
+    { x: (Math.random() - 0.5) * 0.005, y: (Math.random() - 0.5) * 0.005, z: (Math.random() - 0.5) * 0.005 });
+}
+const pCount = 500;
+const pGeom = new THREE.BufferGeometry();
+const pPos = new Float32Array(pCount * 3);
+for (let i = 0; i < pCount; i++) { pPos[i * 3] = (Math.random() - 0.5) * 45; pPos[i * 3 + 1] = (Math.random() - 0.5) * 35; pPos[i * 3 + 2] = (Math.random() - 0.5) * 30 - 5; }
+pGeom.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+const pMat = new THREE.PointsMaterial({ color: 0xC8956C, size: 0.035, transparent: true, opacity: 0.4, sizeAttenuation: true });
+const particles = new THREE.Points(pGeom, pMat);
+scene.add(particles);
+let scrollProg = 0;
+window.addEventListener('scroll', () => { const max = document.body.scrollHeight - window.innerHeight; scrollProg = max > 0 ? window.scrollY / max : 0; });
+const clock = new THREE.Clock();
+function animate() {
+  requestAnimationFrame(animate);
+  const t = clock.getElapsedTime();
+  mouse.x += (mouse.tx - mouse.x) * 0.04; mouse.y += (mouse.ty - mouse.y) * 0.04;
+  camera.position.x = mouse.x * 1.2; camera.position.y = -mouse.y * 0.8 - scrollProg * 3;
+  camera.lookAt(0, -scrollProg * 2, -5);
+  shapes.forEach(m => {
+    const d = m.userData;
+    m.rotation.x += d.rs.x; m.rotation.y += d.rs.y; m.rotation.z += d.rs.z;
+    m.position.x = d.bp.x + Math.sin(t * d.fs + d.fo) * d.fa * 0.4 + mouse.x * 0.2;
+    m.position.y = d.bp.y + Math.cos(t * d.fs * 0.7 + d.fo) * d.fa + mouse.y * 0.15;
+  });
+  particles.rotation.y = t * 0.015; particles.rotation.x = Math.sin(t * 0.008) * 0.08;
+  pLight.position.x = mouse.x * 7; pLight.position.y = mouse.y * 4;
+  renderer.render(scene, camera);
+}
+animate();
+window.addEventListener('resize', () => { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); });
+</script>
+
+<!-- UI Logic -->
+<script>
+// ===== PRELOADER =====
+const preloader = document.getElementById('preloader');
+const preloaderBar = document.getElementById('preloaderBar');
+let loadProgress = 0;
+const loadInterval = setInterval(() => {
+  loadProgress += Math.random() * 25 + 10;
+  if (loadProgress >= 100) {
+    loadProgress = 100;
+    clearInterval(loadInterval);
+    setTimeout(() => preloader.classList.add('hidden'), 400);
+  }
+  preloaderBar.style.width = loadProgress + '%';
+}, 300);
+
+// ===== SCROLL PROGRESS =====
+const scrollProg = document.getElementById('scrollProgress');
+window.addEventListener('scroll', () => {
+  const max = document.body.scrollHeight - window.innerHeight;
+  scrollProg.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
+});
+
+// ===== BACK TO TOP =====
+const backBtn = document.getElementById('backToTop');
+window.addEventListener('scroll', () => {
+  backBtn.classList.toggle('visible', window.scrollY > 600);
+});
+backBtn.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// ===== COOKIE CONSENT =====
+const cookieBanner = document.getElementById('cookieBanner');
+if (!localStorage.getItem('cookieConsent')) {
+  setTimeout(() => cookieBanner.classList.add('show'), 2500);
+}
+function acceptCookies() {
+  localStorage.setItem('cookieConsent', 'accepted');
+  cookieBanner.classList.remove('show');
+  showToast('Preferences saved. Thank you!');
+}
+function declineCookies() {
+  localStorage.setItem('cookieConsent', 'declined');
+  cookieBanner.classList.remove('show');
+}
+
+// ===== LIGHTBOX =====
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightboxImg');
+const lightboxCaption = document.getElementById('lightboxCaption');
+const galleryItems = document.querySelectorAll('.gallery-item');
+let currentLightbox = 0;
+
+function openLightbox(index) {
+  currentLightbox = index;
+  const item = galleryItems[index];
+  lightboxImg.src = item.dataset.full;
+  lightboxCaption.textContent = item.dataset.caption;
+  lightbox.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  lightbox.classList.remove('open');
+  document.body.style.overflow = '';
+}
+function navLightbox(dir) {
+  currentLightbox = (currentLightbox + dir + galleryItems.length) % galleryItems.length;
+  const item = galleryItems[currentLightbox];
+  lightboxImg.src = item.dataset.full;
+  lightboxCaption.textContent = item.dataset.caption;
+}
+
+galleryItems.forEach((item, i) => {
+  item.addEventListener('click', () => openLightbox(i));
+});
+lightbox.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
+lightbox.querySelector('.lightbox-prev').addEventListener('click', (e) => { e.stopPropagation(); navLightbox(-1); });
+lightbox.querySelector('.lightbox-next').addEventListener('click', (e) => { e.stopPropagation(); navLightbox(1); });
+lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+document.addEventListener('keydown', (e) => {
+  if (!lightbox.classList.contains('open')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') navLightbox(-1);
+  if (e.key === 'ArrowRight') navLightbox(1);
+});
+
+// ===== RESERVATION MODAL =====
+const resModal = document.getElementById('resModal');
+const resForm = document.getElementById('resForm');
+let selectedGuests = '1';
+
+function openResModal() { resModal.classList.add('open'); document.body.style.overflow = 'hidden'; }
+function closeResModal() { resModal.classList.remove('open'); document.body.style.overflow = ''; }
+
+document.getElementById('navResBtn').addEventListener('click', (e) => { e.preventDefault(); openResModal(); });
+document.getElementById('heroResBtn').addEventListener('click', (e) => { e.preventDefault(); openResModal(); });
+document.getElementById('visitResBtn').addEventListener('click', openResModal);
+resModal.querySelector('.modal-close').addEventListener('click', closeResModal);
+resModal.addEventListener('click', (e) => { if (e.target === resModal) closeResModal(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeResModal(); });
+
+// Set min date to today
+const resDate = document.getElementById('resDate');
+const today = new Date().toISOString().split('T')[0];
+resDate.setAttribute('min', today);
+
+// Guest selector
+document.querySelectorAll('.guest-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.guest-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedGuests = btn.dataset.guests;
+  });
+});
+
+resForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const name = document.getElementById('resName').value.trim();
+  const phone = document.getElementById('resPhone').value.trim();
+  const date = resDate.value;
+  const time = document.getElementById('resTime').value;
+
+  if (!name || !phone || !date || !time) {
+    showToast('Please fill in all required fields.', true);
+    return;
+  }
+  const btn = resForm.querySelector('button[type="submit"]');
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Confirming...';
+  btn.disabled = true;
+  setTimeout(() => {
+    showToast(`Table for ${selectedGuests} reserved for ${name} on ${new Date(date + 'T00:00:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric' })} at ${time}. See you soon!`);
+    resForm.reset();
+    document.querySelectorAll('.guest-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('.guest-btn[data-guests="1"]').classList.add('active');
+    selectedGuests = '1';
+    btn.innerHTML = '<i class="fas fa-calendar-check"></i> Confirm Reservation';
+    btn.disabled = false;
+    closeResModal();
+  }, 1500);
+});
+
+// ===== MOBILE MENU =====
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+hamburger.addEventListener('click', () => { hamburger.classList.toggle('open'); mobileMenu.classList.toggle('open'); });
+function closeMobile() { hamburger.classList.remove('open'); mobileMenu.classList.remove('open'); }
+
+// ===== NAV SCROLL =====
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 50); });
+
+// ===== SCROLL REVEAL =====
+const revealEls = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+revealEls.forEach(el => observer.observe(el));
+
+// ===== COUNTER ANIMATION =====
+let countersAnimated = false;
+const counterObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting && !countersAnimated) {
+      countersAnimated = true;
+      document.querySelectorAll('.counter').forEach(counter => {
+        const target = parseInt(counter.dataset.target);
+        const duration = 2000;
+        const start = performance.now();
+        function updateCounter(now) {
+          const elapsed = now - start;
+          const progress = Math.min(elapsed / duration, 1);
+          // Ease out cubic
+          const eased = 1 - Math.pow(1 - progress, 3);
+          const current = Math.floor(eased * target);
+          counter.textContent = current.toLocaleString();
+          if (progress < 1) requestAnimationFrame(updateCounter);
+          else counter.textContent = target.toLocaleString();
+        }
+        requestAnimationFrame(updateCounter);
+      });
+    }
+  });
+}, { threshold: 0.3 });
+counterObserver.observe(document.getElementById('statsBar'));
+
+// ===== TOAST =====
+function showToast(msg, isError) {
+  const toast = document.getElementById('toast');
+  const toastMsg = document.getElementById('toastMsg');
+  toastMsg.textContent = msg;
+  toast.style.borderColor = isError ? '#E85D5D' : 'var(--accent)';
+  toast.querySelector('i').style.color = isError ? '#E85D5D' : 'var(--accent)';
+  toast.querySelector('i').className = isError ? 'fas fa-exclamation-circle' : 'fas fa-check-circle';
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 4000);
+}
+
+// ===== MENU =====
+const menuData = {
+  coffee: [
+    { name: 'Espresso', desc: 'Double shot, single origin. Rich, sweet crema.', price: '$4.00', img: 'https://picsum.photos/seed/espresso/120/120.jpg', isNew: false },
+    { name: 'Pour Over — Yirgacheffe', desc: 'Ethiopian single origin, floral and citrus notes.', price: '$6.50', img: 'https://picsum.photos/seed/pourover/120/120.jpg', isNew: false },
+    { name: 'Oat Milk Latte', desc: 'Double espresso, house-made oat milk, latte art.', price: '$6.00', img: 'https://picsum.photos/seed/oatlatte/120/120.jpg', isNew: false },
+    { name: 'Cortado', desc: 'Equal parts espresso and steamed milk.', price: '$4.50', img: 'https://picsum.photos/seed/cortado/120/120.jpg', isNew: false },
+    { name: 'Cold Brew', desc: '24-hour steep, served over a single ice sphere.', price: '$5.50', img: 'https://picsum.photos/seed/coldbrew/120/120.jpg', isNew: false },
+    { name: 'Honey Cinnamon Americano', desc: 'Espresso, hot water, raw honey, Ceylon cinnamon.', price: '$5.50', img: 'https://picsum.photos/seed/america/120/120.jpg', isNew: true },
+    { name: 'Mocha — Oaxacan', desc: 'Espresso, Mexican chocolate, steamed milk, chili dust.', price: '$7.00', img: 'https://picsum.photos/seed/mocha/120/120.jpg', isNew: true },
+    { name: 'Affogato', desc: 'Double espresso over house-made vanilla bean gelato.', price: '$7.50', img: 'https://picsum.photos/seed/affogato/120/120.jpg', isNew: false },
+  ],
+  tea: [
+    { name: 'Ceremonial Matcha', desc: 'Uji-sourced, whisked to order, sweet and umami.', price: '$6.00', img: 'https://picsum.photos/seed/matcha/120/120.jpg', isNew: false },
+    { name: 'Matcha Oat Latte', desc: 'Ceremonial grade matcha with steamed oat milk.', price: '$7.00', img: 'https://picsum.photos/seed/matchalatte/120/120.jpg', isNew: true },
+    { name: 'Earl Grey — Bergamot', desc: 'Loose leaf, steeped 4 min, served with lemon.', price: '$4.50', img: 'https://picsum.photos/seed/earlgrey/120/120.jpg', isNew: false },
+    { name: 'Jasmine Pearl', desc: 'Hand-rolled green tea, floral and delicate.', price: '$5.00', img: 'https://picsum.photos/seed/jasmine/120/120.jpg', isNew: false },
+    { name: 'Chai — House Spice', desc: 'Assam black tea, 7 spices, steamed milk, raw honey.', price: '$6.00', img: 'https://picsum.photos/seed/chai/120/120.jpg', isNew: false },
+    { name: 'Iced Hibiscus Rose', desc: 'Cold-brewed hibiscus with rose water and agave.', price: '$5.50', img: 'https://picsum.photos/seed/hibiscus/120/120.jpg', isNew: true },
+  ],
+  pastry: [
+    { name: 'Almond Croissant', desc: 'Twice-baked, frangipane filling, sliced almonds.', price: '$5.50', img: 'https://picsum.photos/seed/croissant/120/120.jpg', isNew: false },
+    { name: 'Cardamom Brioche', desc: 'Butter brioche, Ethiopian cardamom glaze, rosewater cream.', price: '$6.50', img: 'https://picsum.photos/seed/brioche/120/120.jpg', isNew: true },
+    { name: 'Brown Butter Banana Bread', desc: 'Nutty brown butter, pecans, dark chocolate chunks.', price: '$5.00', img: 'https://picsum.photos/seed/banana/120/120.jpg', isNew: false },
+    { name: 'Pistachio Financier', desc: 'Classic French, brown butter, ground pistachios.', price: '$4.50', img: 'https://picsum.photos/seed/financier/120/120.jpg', isNew: false },
+    { name: 'Sourdough Discuit', desc: 'Our hybrid scone-biscuit with whipped honey butter.', price: '$4.50', img: 'https://picsum.photos/seed/discuit/120/120.jpg', isNew: false },
+    { name: 'Lemon Tart — Seasonal', desc: 'Meyer lemon curd, Italian meringue, shortcrust base.', price: '$6.00', img: 'https://picsum.photos/seed/lemontart/120/120.jpg', isNew: true },
+  ],
+  brunch: [
+    { name: 'Avocado Toast', desc: 'Sourdough, smashed avo, poached egg, chili oil, microgreens.', price: '$14.00', img: 'https://picsum.photos/seed/avotoast/120/120.jpg', isNew: false },
+    { name: 'Shakshuka', desc: 'Spiced tomato stew, two eggs, feta, grilled sourdough.', price: '$15.00', img: 'https://picsum.photos/seed/shakshuka/120/120.jpg', isNew: false },
+    { name: 'Brioche French Toast', desc: 'Cinnamon brioche, maple cream, seasonal berries.', price: '$13.00', img: 'https://picsum.photos/seed/frenchtoast/120/120.jpg', isNew: false },
+    { name: 'Smoked Salmon Bowl', desc: 'Sourdough rice, lox, pickled onion, capers, dill crème.', price: '$16.00', img: 'https://picsum.photos/seed/salmonbowl/120/120.jpg', isNew: true },
+    { name: 'Granola Bowl', desc: 'House granola, Greek yogurt, seasonal fruit, honey drizzle.', price: '$11.00', img: 'https://picsum.photos/seed/granola/120/120.jpg', isNew: false },
+    { name: 'Breakfast Burrito', desc: 'Scrambled eggs, black beans, cheese, pico, chipotle crema.', price: '$13.50', img: 'https://picsum.photos/seed/burrito/120/120.jpg', isNew: false },
+  ]
+};
+
+function renderMenu(cat) {
+  const grid = document.getElementById('menuGrid');
+  grid.innerHTML = '';
+  menuData[cat].forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'menu-item';
+    div.style.opacity = '0'; div.style.transform = 'translateY(15px)';
+    div.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+    div.style.transitionDelay = (i * 0.06) + 's';
+    div.innerHTML = `
+      <div class="menu-item-img"><img src="${item.img}" alt="${item.name}" loading="lazy"></div>
+      <div class="menu-item-info"><h4>${item.name}</h4><p>${item.desc}</p></div>
+      <div class="menu-item-price">${item.price}</div>
+      ${item.isNew ? '<div class="badge-new">New</div>' : ''}
+    `;
+    grid.appendChild(div);
+    requestAnimationFrame(() => requestAnimationFrame(() => { div.style.opacity = '1'; div.style.transform = 'translateY(0)'; }));
+  });
+}
+
+const tabs = document.querySelectorAll('.menu-tab');
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    tabs.forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    renderMenu(tab.dataset.cat);
+  });
+});
+renderMenu('coffee');
+
+// ===== FAQ ACCORDION =====
+document.querySelectorAll('.faq-q').forEach(q => {
+  q.addEventListener('click', () => {
+    const item = q.parentElement;
+    const wasOpen = item.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    // Toggle current
+    if (!wasOpen) item.classList.add('open');
+  });
+});
+
+// ===== HOURS =====
+const hoursData = [
+  { day: 'Monday', time: '7:00 AM — 8:00 PM' },
+  { day: 'Tuesday', time: '7:00 AM — 8:00 PM' },
+  { day: 'Wednesday', time: '7:00 AM — 8:00 PM' },
+  { day: 'Thursday', time: '7:00 AM — 9:00 PM' },
+  { day: 'Friday', time: '7:00 AM — 9:00 PM' },
+  { day: 'Saturday', time: '8:00 AM — 9:00 PM' },
+  { day: 'Sunday', time: '8:00 AM — 6:00 PM' },
+];
+const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+const todayName = days[new Date().getDay()];
+const hoursGrid = document.getElementById('hoursGrid');
+hoursData.forEach(h => {
+  const div = document.createElement('div');
+  div.className = 'hours-row' + (h.day === todayName ? ' today' : '');
+  div.innerHTML = `<span class="day">${h.day}${h.day === todayName ? ' — Today' : ''}</span><span class="time">${h.time}</span>`;
+  hoursGrid.appendChild(div);
+});
+
+// ===== NEWSLETTER =====
+document.getElementById('nlForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const email = document.getElementById('nlEmail').value.trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    showToast('Please enter a valid email address.', true);
+    return;
+  }
+  showToast('Welcome to the Ember & Brew family! Check your inbox soon.');
+  document.getElementById('nlEmail').value = '';
+});
+
+// ===== ACTIVE NAV =====
+const secs = document.querySelectorAll('section[id]');
+const navAs = document.querySelectorAll('.nav-links a:not(.nav-cta)');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  secs.forEach(s => { if (window.scrollY >= s.offsetTop - 200) cur = s.id; });
+  navAs.forEach(a => { a.style.color = a.getAttribute('href') === '#' + cur ? 'var(--fg)' : ''; });
+});
+</script>
+</body>
+</html>

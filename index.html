@@ -868,6 +868,26 @@
     .hero-btns { flex-direction: column; align-items: stretch; max-width: 320px; margin: 0 auto; }
     .hero-btns a { justify-content: center; }
   }
+
+  /* ===== Live features (Nov 2026) ===== */
+  .nav-order { color: var(--accent) !important; font-weight: 600; }
+  .menu-msg { grid-column: 1 / -1; text-align: center; color: var(--muted); padding: 2rem 0; }
+  .menu-msg button { margin-left: 0.5rem; color: var(--accent); background: none; border: 0;
+    text-decoration: underline; cursor: pointer; font: inherit; }
+  .menu-item-img.icon { display: flex; align-items: center; justify-content: center;
+    background: var(--accent-glow); color: var(--accent); font-size: 1.3rem; }
+  .menu-item-info .prep { display: block; margin-top: 0.35rem; font-size: 0.7rem; color: var(--accent-light); }
+  .menu-order { text-align: center; margin-top: 2.5rem; }
+  .menu-order p { margin-top: 0.75rem; font-size: 0.78rem; color: var(--muted); }
+  .menu-tab:focus-visible, .nav-order:focus-visible { outline: 2px solid var(--fg); outline-offset: 3px; }
+  .hero-badge.is-open { color: #9fd8a7; border-color: rgba(159,216,167,0.35); background: rgba(159,216,167,0.08); }
+  .hero-badge.is-closed { color: var(--muted); }
+  .open-status { font-size: 0.82rem; color: var(--muted); margin-bottom: 0.5rem; }
+  .open-status.is-open { color: #9fd8a7; }
+  a.visit-card { text-decoration: none; color: inherit; }
+  .map-placeholder iframe { width: 100%; height: 100%; border: 0; filter: grayscale(0.4) invert(0.9) hue-rotate(180deg); }
+  .res-privacy { font-size: 0.72rem; color: var(--muted); margin: 0.25rem 0 0.5rem; }
+  @media (max-width: 768px) { .menu-grid { grid-template-columns: 1fr; } }
 </style>
 
 <script type="importmap">
@@ -930,7 +950,7 @@
         </div>
         <div class="fg">
           <label for="resPhone">Phone</label>
-          <input type="tel" id="resPhone" placeholder="(415) 555-0000" required>
+          <input type="tel" id="resPhone" placeholder="021 123 4567" autocomplete="tel" required>
         </div>
       </div>
       <div class="form-row">
@@ -941,20 +961,7 @@
         <div class="fg">
           <label for="resTime">Time</label>
           <select id="resTime" required>
-            <option value="">Select time</option>
-            <option>8:00 AM</option><option>8:30 AM</option>
-            <option>9:00 AM</option><option>9:30 AM</option>
-            <option>10:00 AM</option><option>10:30 AM</option>
-            <option>11:00 AM</option><option>11:30 AM</option>
-            <option>12:00 PM</option><option>12:30 PM</option>
-            <option>1:00 PM</option><option>1:30 PM</option>
-            <option>2:00 PM</option><option>2:30 PM</option>
-            <option>3:00 PM</option><option>3:30 PM</option>
-            <option>4:00 PM</option><option>4:30 PM</option>
-            <option>5:00 PM</option><option>5:30 PM</option>
-            <option>6:00 PM</option><option>6:30 PM</option>
-            <option>7:00 PM</option><option>7:30 PM</option>
-            <option>8:00 PM</option>
+            <option value="">Choose a date first</option>
           </select>
         </div>
       </div>
@@ -970,8 +977,9 @@
       </div>
       <div class="fg">
         <label for="resNotes">Special Requests</label>
-        <textarea id="resNotes" placeholder="Allergies, seating preference, etc."></textarea>
+        <textarea id="resNotes" maxlength="300" placeholder="Allergies, seating preference, etc."></textarea>
       </div>
+      <p class="res-privacy">We only use your name and phone number to manage this booking.</p>
       <button type="submit" class="btn-warm" style="width: 100%; justify-content: center; margin-top: 0.5rem;">
         <i class="fas fa-calendar-check"></i> Confirm Reservation
       </button>
@@ -991,6 +999,7 @@
   
   <a href="#events" onclick="closeMobile()">Events</a>
   <a href="#visit" onclick="closeMobile()">Visit Us</a>
+  <a href="https://smart-cafe-liard.vercel.app/menu">Order online</a>
 </div>
 
 <!-- Nav -->
@@ -1004,6 +1013,7 @@
     
     <a href="#events">Events</a>
     <a href="#visit">Visit Us</a>
+    <a href="https://smart-cafe-liard.vercel.app/menu" class="nav-order">Order online</a>
     <a href="#" class="nav-cta" id="navResBtn">Reserve</a>
   </div>
   <button class="hamburger" id="hamburger" aria-label="Toggle menu">
@@ -1018,7 +1028,7 @@
 <section class="hero">
   <div class="steam-container"><div class="steam"></div><div class="steam"></div><div class="steam"></div><div class="steam"></div></div>
   <div class="hero-content">
-    <div class="hero-badge reveal"><i class="fas fa-mug-hot"></i> Est. 2026 Kathmandu</div>
+    <div class="hero-badge reveal" id="heroStatus" aria-live="polite"><i class="fas fa-clock"></i> <span>Opening hours</span></div>
     <h1 class="reveal reveal-d1">Where every cup<br>tells a <em>story</em></h1>
     <p class="hero-sub reveal reveal-d2">Your local haven for premium coffee and delightful eats in Brookfield, Tauranga, close to Otumoetai, Judea and Bethlehem.</p>
     <div class="hero-btns reveal reveal-d3">
@@ -1032,9 +1042,9 @@
 <!-- Story -->
 <section class="story" id="story">
   <div class="story-img reveal">
-    <img src="Heyjude.png" alt="Barista at work">
+    <img src="coffee.png" alt="A freshly made coffee at Manjil's Cafe">
     <div class="grad-overlay"></div>
-    <div class="tag-float"><i class="fas fa-award"></i><span>Best Specialty Coffee 2024</span></div>
+    <div class="tag-float"><i class="fas fa-fire-flame-curved"></i><span>Small-batch roasted</span></div>
   </div>
   <div>
     <div class="sec-label reveal">Our Story</div>
@@ -1077,13 +1087,12 @@
     <h2 class="sec-title reveal reveal-d1">Crafted with intention</h2>
     <p class="sec-desc reveal reveal-d2" style="margin: 0 auto;">Every item is made from scratch using seasonal, locally-sourced ingredients alongside our roasted beans.</p>
   </div>
-  <div class="menu-tabs reveal reveal-d3" id="menuTabs">
-    <button class="menu-tab active" data-cat="coffee">Coffee</button>
-    <button class="menu-tab" data-cat="tea">Tea & Matcha</button>
-    <button class="menu-tab" data-cat="pastry">Pastries</button>
-    <button class="menu-tab" data-cat="brunch">Brunch</button>
+  <div class="menu-tabs reveal reveal-d3" id="menuTabs" role="tablist" aria-label="Menu categories"></div>
+  <div class="menu-grid" id="menuGrid" aria-live="polite"><p class="menu-msg">Loading today's menu…</p></div>
+  <div class="menu-order">
+    <a href="https://smart-cafe-liard.vercel.app/menu" class="btn-warm">Order online for pickup <i class="fas fa-arrow-right"></i></a>
+    <p>Prices and availability are live from our kitchen.</p>
   </div>
-  <div class="menu-grid" id="menuGrid"></div>
 </section>
 
 <!-- Specials -->
@@ -1145,40 +1154,6 @@
     <div class="gallery-item reveal reveal-d4" data-full="cinnamonroll .png" data-caption="cinnamon roll">
       <img src="cinnamonroll .png" alt="cinnamon roll ">
       <div class="gal-overlay"><span>cinnamon roll</span><i class="fas fa-expand"></i></div>
-    </div>
-  </div>
-</section>
-
-<!-- Testimonials -->
-<section class="testimonials" id="testimonials">
-  <div style="text-align: center;">
-    <div class="sec-label reveal">What People Say</div>
-    <h2 class="sec-title reveal reveal-d1">Loved by locals and visitors alike</h2>
-  </div>
-  <div class="test-cards">
-    <div class="test-card reveal reveal-d1">
-      <div class="test-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-      <blockquote>"The best pour-over I've had outside of Tokyo. You can taste the intention in every cup. The space itself feels like a warm hug on a foggy SF morning."</blockquote>
-      <div class="test-author">
-        <img src="https://picsum.photos/seed/face-sarah/80/80.jpg" alt="Sarah K.">
-        <div><div class="name">Sarah K.</div><div class="role">Food Writer, SF Chronicle</div></div>
-      </div>
-    </div>
-    <div class="test-card reveal reveal-d2">
-      <div class="test-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-      <blockquote>"I've been coming here every morning for two years. The baristas know my name, my drink, and always make me feel like I'm coming home."</blockquote>
-      <div class="test-author">
-        <img src="https://picsum.photos/seed/face-marcus/80/80.jpg" alt="Marcus T.">
-        <div><div class="name">Marcus T.</div><div class="role">Software Engineer</div></div>
-      </div>
-    </div>
-    <div class="test-card reveal reveal-d3">
-      <div class="test-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-stroke"></i></div>
-      <blockquote>"We held our company offsite here. Custom coffee flights paired with matching pastries. Truly next level — our team is still talking about it."</blockquote>
-      <div class="test-author">
-        <img src="https://picsum.photos/seed/face-elena/80/80.jpg" alt="Elena R.">
-        <div><div class="name">Elena R.</div><div class="role">VP Design, Notion</div></div>
-      </div>
     </div>
   </div>
 </section>
@@ -1259,7 +1234,7 @@
     </div>
     <div class="faq-item reveal reveal-d4">
       <div class="faq-q">Is your space wheelchair accessible? <i class="fas fa-chevron-down"></i></div>
-      <div class="faq-a"><div class="faq-a-inner">Yes. Our Valencia Street location is fully ADA accessible with a street-level entrance, accessible restroom, and adjustable-height tables. If you have any specific needs, don't hesitate to reach out and we'll make sure you're comfortable.</div></div>
+      <div class="faq-a"><div class="faq-a-inner">Yes. We have a step-free entrance and plenty of room between tables. If you have any specific needs, add them to the special requests box when you book and we'll make sure you're comfortable.</div></div>
     </div>
     <div class="faq-item reveal reveal-d5">
       <div class="faq-q">Do you offer Wi-Fi and power outlets? <i class="fas fa-chevron-down"></i></div>
@@ -1267,7 +1242,7 @@
     </div>
     <div class="faq-item reveal reveal-d5">
       <div class="faq-q">Do you cater private events? <i class="fas fa-chevron-down"></i></div>
-      <div class="faq-a"><div class="faq-a-inner">We do! We've hosted everything from product launches to intimate dinners to wedding after-parties. Our catering menu includes custom coffee bars, pastry spreads, and full brunch service. Get in touch at hello@emberandbrew.com and we'll build something special together.</div></div>
+      <div class="faq-a"><div class="faq-a-inner">We do! We've hosted everything from product launches to intimate dinners to wedding after-parties. Our catering menu includes custom coffee bars, pastry spreads, and full brunch service. Send us a booking with the details in the special requests box and we'll build something special together.</div></div>
     </div>
   </div>
 </section>
@@ -1277,20 +1252,20 @@
   <div>
     <div class="sec-label reveal">Visit Us</div>
     <h2 class="sec-title reveal reveal-d1">Come say hello</h2>
-    <p class="sec-desc reveal reveal-d2">We’d love to hear from you! Whether you have questions about our menu, need catering services, or just want to provide feedback, our team at Hey Jude Cafe is here to assist you.</p>
+    <p class="sec-desc reveal reveal-d2">We’d love to hear from you! Whether you have questions about our menu, need catering services, or just want to provide feedback, our team at Manjil's Cafe is here to help.</p>
     <div class="visit-info reveal reveal-d3">
-      <div class="visit-card"><i class="fas fa-location-dot"></i><div><div class="vc-label">Address</div><div class="vc-value">34 Ohauiti Road, Tauranga</div></div></div>
-      <div class="visit-card"><i class="fas fa-phone"></i><div><div class="vc-label">Phone</div><div class="vc-value">(415) 555-0187</div></div></div>
+      <div class="visit-card"><i class="fas fa-location-dot"></i><div><div class="vc-label">Address</div><div class="vc-value">Brookfield, Tauranga</div></div></div>
+      <a class="visit-card" href="https://smart-cafe-liard.vercel.app/menu"><i class="fas fa-bag-shopping"></i><div><div class="vc-label">Order online</div><div class="vc-value">Order ahead for pickup</div></div></a>
       <div class="visit-card"><i class="fas fa-envelope"></i><div><div class="vc-label">Email</div><div class="vc-value">aailaxaiina@gmail.com</div></div></div>
     </div>
     <div class="map-placeholder reveal reveal-d4">
-      <img src="Heyjude.png" alt="Map">
-      <div class="map-pin"><i class="fas fa-map-marker-alt"></i><span>34 Ohauiti Road </span></div>
+      <iframe title="Map of Brookfield, Tauranga" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+        src="https://maps.google.com/maps?q=Brookfield%2C%20Tauranga%2C%20New%20Zealand&z=14&output=embed"></iframe>
     </div>
   </div>
   <div>
     <h3 class="font-display reveal" style="font-size: 1.3rem; margin-bottom: 0.3rem;">Opening Hours</h3>
-    <p class="reveal reveal-d1" style="font-size: 0.82rem; color: var(--muted); margin-bottom: 0.5rem;">We're open 7 days a week</p>
+    <p class="reveal reveal-d1 open-status" id="visitStatus" aria-live="polite">We're open 7 days a week</p>
     <div class="hours-grid reveal reveal-d2" id="hoursGrid"></div>
     <div style="margin-top: 2rem;">
       <button class="btn-warm reveal reveal-d3" style="width: 100%; justify-content: center;" id="visitResBtn">
@@ -1318,7 +1293,7 @@
   <div class="footer-grid">
     <div>
       <div class="footer-brand">Manjil's  <span>&</span> Cafe</div>
-      <p class="footer-about">Artisan coffee house in Tauranga's Mission District. Single-origin beans, small-batch roasting, and a space designed for lingering.</p>
+      <p class="footer-about">Artisan coffee house in Brookfield, Tauranga. Single-origin beans, small-batch roasting, and a space designed for lingering.</p>
       <div class="footer-socials">
         <a href="#" aria-label="Instagram" onclick="event.preventDefault()"><i class="fab fa-instagram"></i></a>
         <a href="#" aria-label="Twitter" onclick="event.preventDefault()"><i class="fab fa-x-twitter"></i></a>
@@ -1350,7 +1325,7 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <span>2024 Ember & Brew. All rights reserved.</span>
+    <span>© 2026 Manjil's Cafe. Student project.</span>
     <span>Made with <i class="fas fa-mug-hot" style="color: var(--accent);"></i> in Tauranga</span>
   </div>
 </footer>
@@ -1539,8 +1514,10 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeResMo
 
 // Set min date to today
 const resDate = document.getElementById('resDate');
-const today = new Date().toISOString().split('T')[0];
+const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'Pacific/Auckland' }).format(new Date());
 resDate.setAttribute('min', today);
+const maxDate = new Date(today + 'T12:00:00Z'); maxDate.setUTCDate(maxDate.getUTCDate() + 60);
+resDate.setAttribute('max', maxDate.toISOString().slice(0, 10));
 
 // Guest selector
 document.querySelectorAll('.guest-btn').forEach(btn => {
@@ -1549,32 +1526,6 @@ document.querySelectorAll('.guest-btn').forEach(btn => {
     btn.classList.add('active');
     selectedGuests = btn.dataset.guests;
   });
-});
-
-resForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const name = document.getElementById('resName').value.trim();
-  const phone = document.getElementById('resPhone').value.trim();
-  const date = resDate.value;
-  const time = document.getElementById('resTime').value;
-
-  if (!name || !phone || !date || !time) {
-    showToast('Please fill in all required fields.', true);
-    return;
-  }
-  const btn = resForm.querySelector('button[type="submit"]');
-  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Confirming...';
-  btn.disabled = true;
-  setTimeout(() => {
-    showToast(`Table for ${selectedGuests} reserved for ${name} on ${new Date(date + 'T00:00:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric' })} at ${time}. See you soon!`);
-    resForm.reset();
-    document.querySelectorAll('.guest-btn').forEach(b => b.classList.remove('active'));
-    document.querySelector('.guest-btn[data-guests="1"]').classList.add('active');
-    selectedGuests = '1';
-    btn.innerHTML = '<i class="fas fa-calendar-check"></i> Confirm Reservation';
-    btn.disabled = false;
-    closeResModal();
-  }, 1500);
 });
 
 // ===== MOBILE MENU =====
@@ -1633,73 +1584,98 @@ function showToast(msg, isError) {
   setTimeout(() => toast.classList.remove('show'), 4000);
 }
 
-// ===== MENU =====
-const menuData = {
-  coffee: [
-    { name: 'Espresso', desc: 'Double shot, single origin. Rich, sweet crema.', price: '$4.00', img: 'https://picsum.photos/seed/espresso/120/120.jpg', isNew: false },
-    { name: 'Pour Over — Yirgacheffe', desc: 'Ethiopian single origin, floral and citrus notes.', price: '$6.50', img: 'https://picsum.photos/seed/pourover/120/120.jpg', isNew: false },
-    { name: 'Oat Milk Latte', desc: 'Double espresso, house-made oat milk, latte art.', price: '$6.00', img: 'https://picsum.photos/seed/oatlatte/120/120.jpg', isNew: false },
-    { name: 'Cortado', desc: 'Equal parts espresso and steamed milk.', price: '$4.50', img: 'https://picsum.photos/seed/cortado/120/120.jpg', isNew: false },
-    { name: 'Cold Brew', desc: '24-hour steep, served over a single ice sphere.', price: '$5.50', img: 'https://picsum.photos/seed/coldbrew/120/120.jpg', isNew: false },
-    { name: 'Honey Cinnamon Americano', desc: 'Espresso, hot water, raw honey, Ceylon cinnamon.', price: '$5.50', img: 'https://picsum.photos/seed/america/120/120.jpg', isNew: true },
-    { name: 'Mocha — Oaxacan', desc: 'Espresso, Mexican chocolate, steamed milk, chili dust.', price: '$7.00', img: 'https://picsum.photos/seed/mocha/120/120.jpg', isNew: true },
-    { name: 'Affogato', desc: 'Double espresso over house-made vanilla bean gelato.', price: '$7.50', img: 'https://picsum.photos/seed/affogato/120/120.jpg', isNew: false },
-  ],
-  tea: [
-    { name: 'Ceremonial Matcha', desc: 'Uji-sourced, whisked to order, sweet and umami.', price: '$6.00', img: 'https://picsum.photos/seed/matcha/120/120.jpg', isNew: false },
-    { name: 'Matcha Oat Latte', desc: 'Ceremonial grade matcha with steamed oat milk.', price: '$7.00', img: 'https://picsum.photos/seed/matchalatte/120/120.jpg', isNew: true },
-    { name: 'Earl Grey — Bergamot', desc: 'Loose leaf, steeped 4 min, served with lemon.', price: '$4.50', img: 'https://picsum.photos/seed/earlgrey/120/120.jpg', isNew: false },
-    { name: 'Jasmine Pearl', desc: 'Hand-rolled green tea, floral and delicate.', price: '$5.00', img: 'https://picsum.photos/seed/jasmine/120/120.jpg', isNew: false },
-    { name: 'Chai — House Spice', desc: 'Assam black tea, 7 spices, steamed milk, raw honey.', price: '$6.00', img: 'https://picsum.photos/seed/chai/120/120.jpg', isNew: false },
-    { name: 'Iced Hibiscus Rose', desc: 'Cold-brewed hibiscus with rose water and agave.', price: '$5.50', img: 'https://picsum.photos/seed/hibiscus/120/120.jpg', isNew: true },
-  ],
-  pastry: [
-    { name: 'Almond Croissant', desc: 'Twice-baked, frangipane filling, sliced almonds.', price: '$5.50', img: 'https://picsum.photos/seed/croissant/120/120.jpg', isNew: false },
-    { name: 'Cardamom Brioche', desc: 'Butter brioche, Ethiopian cardamom glaze, rosewater cream.', price: '$6.50', img: 'https://picsum.photos/seed/brioche/120/120.jpg', isNew: true },
-    { name: 'Brown Butter Banana Bread', desc: 'Nutty brown butter, pecans, dark chocolate chunks.', price: '$5.00', img: 'https://picsum.photos/seed/banana/120/120.jpg', isNew: false },
-    { name: 'Pistachio Financier', desc: 'Classic French, brown butter, ground pistachios.', price: '$4.50', img: 'https://picsum.photos/seed/financier/120/120.jpg', isNew: false },
-    { name: 'Sourdough Discuit', desc: 'Our hybrid scone-biscuit with whipped honey butter.', price: '$4.50', img: 'https://picsum.photos/seed/discuit/120/120.jpg', isNew: false },
-    { name: 'Lemon Tart — Seasonal', desc: 'Meyer lemon curd, Italian meringue, shortcrust base.', price: '$6.00', img: 'https://picsum.photos/seed/lemontart/120/120.jpg', isNew: true },
-  ],
-  brunch: [
-    { name: 'Avocado Toast', desc: 'Sourdough, smashed avo, poached egg, chili oil, microgreens.', price: '$14.00', img: 'https://picsum.photos/seed/avotoast/120/120.jpg', isNew: false },
-    { name: 'Shakshuka', desc: 'Spiced tomato stew, two eggs, feta, grilled sourdough.', price: '$15.00', img: 'https://picsum.photos/seed/shakshuka/120/120.jpg', isNew: false },
-    { name: 'Brioche French Toast', desc: 'Cinnamon brioche, maple cream, seasonal berries.', price: '$13.00', img: 'https://picsum.photos/seed/frenchtoast/120/120.jpg', isNew: false },
-    { name: 'Smoked Salmon Bowl', desc: 'Sourdough rice, lox, pickled onion, capers, dill crème.', price: '$16.00', img: 'https://picsum.photos/seed/salmonbowl/120/120.jpg', isNew: true },
-    { name: 'Granola Bowl', desc: 'House granola, Greek yogurt, seasonal fruit, honey drizzle.', price: '$11.00', img: 'https://picsum.photos/seed/granola/120/120.jpg', isNew: false },
-    { name: 'Breakfast Burrito', desc: 'Scrambled eggs, black beans, cheese, pico, chipotle crema.', price: '$13.50', img: 'https://picsum.photos/seed/burrito/120/120.jpg', isNew: false },
-  ]
-};
+// ===== LIVE DATA (shared with the Smart Café ordering system) =====
+const SUPABASE_URL = 'https://ftfdbpimbxncmfzafvxc.supabase.co';
+// Publishable key: designed to be public. Row Level Security protects the data.
+const SUPABASE_KEY = 'sb_publishable_8y1OjSQPjQIA1yexrI-Nog_PUdm-Fus';
+const CAFE_TZ = 'Pacific/Auckland';
 
-function renderMenu(cat) {
-  const grid = document.getElementById('menuGrid');
-  grid.innerHTML = '';
-  menuData[cat].forEach((item, i) => {
+async function supabaseFetch(path, options = {}) {
+  const res = await fetch(`${SUPABASE_URL}${path}`, {
+    ...options,
+    headers: { apikey: SUPABASE_KEY, 'Content-Type': 'application/json', ...(options.headers || {}) },
+  });
+  const body = await res.json().catch(() => null);
+  if (!res.ok) {
+    const err = new Error((body && body.message) || `Request failed (${res.status})`);
+    err.status = res.status;
+    throw err;
+  }
+  return body;
+}
+
+function escapeHtml(value) {
+  return String(value ?? '').replace(/[&<>"']/g, (c) =>
+    ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+const priceFormat = new Intl.NumberFormat('en-NZ', { style: 'currency', currency: 'NZD' });
+
+// ===== MENU (loaded live from the database) =====
+const categoryIcons = [
+  [/coffee/i, 'fa-mug-hot'], [/tea|hot/i, 'fa-leaf'], [/cold|drink/i, 'fa-glass-water'],
+  [/breakfast|brunch/i, 'fa-egg'], [/cabinet|pastr|food/i, 'fa-cookie-bite'],
+];
+const iconFor = (name) => (categoryIcons.find(([re]) => re.test(name)) || [null, 'fa-utensils'])[1];
+
+const menuState = { categories: [], items: [], active: null };
+const menuGrid = document.getElementById('menuGrid');
+const menuTabs = document.getElementById('menuTabs');
+
+function renderMenu(categoryId) {
+  menuState.active = categoryId;
+  menuTabs.querySelectorAll('.menu-tab').forEach((tab) => {
+    const selected = Number(tab.dataset.cat) === categoryId;
+    tab.classList.toggle('active', selected);
+    tab.setAttribute('aria-selected', String(selected));
+  });
+  const category = menuState.categories.find((c) => c.id === categoryId);
+  const items = menuState.items.filter((item) => item.category_id === categoryId);
+  menuGrid.innerHTML = '';
+  items.forEach((item, i) => {
     const div = document.createElement('div');
     div.className = 'menu-item';
     div.style.opacity = '0'; div.style.transform = 'translateY(15px)';
     div.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-    div.style.transitionDelay = (i * 0.06) + 's';
+    div.style.transitionDelay = (i * 0.05) + 's';
     div.innerHTML = `
-      <div class="menu-item-img"><img src="${item.img}" alt="${item.name}" loading="lazy"></div>
-      <div class="menu-item-info"><h4>${item.name}</h4><p>${item.desc}</p></div>
-      <div class="menu-item-price">${item.price}</div>
-      ${item.isNew ? '<div class="badge-new">New</div>' : ''}
-    `;
-    grid.appendChild(div);
+      <div class="menu-item-img icon" aria-hidden="true"><i class="fas ${iconFor(category ? category.name : '')}"></i></div>
+      <div class="menu-item-info">
+        <h4>${escapeHtml(item.name)}</h4>
+        <p>${escapeHtml(item.description)}</p>
+        <span class="prep">Ready in about ${Number(item.prep_time_minutes)} min</span>
+      </div>
+      <div class="menu-item-price">${priceFormat.format(Number(item.price))}</div>`;
+    menuGrid.appendChild(div);
     requestAnimationFrame(() => requestAnimationFrame(() => { div.style.opacity = '1'; div.style.transform = 'translateY(0)'; }));
   });
 }
 
-const tabs = document.querySelectorAll('.menu-tab');
-tabs.forEach(tab => {
-  tab.addEventListener('click', () => {
-    tabs.forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
-    renderMenu(tab.dataset.cat);
-  });
-});
-renderMenu('coffee');
+async function loadMenu() {
+  menuGrid.innerHTML = '<p class="menu-msg">Loading today\'s menu…</p>';
+  try {
+    const [categories, items] = await Promise.all([
+      supabaseFetch('/rest/v1/categories?select=id,name,sort_order&order=sort_order.asc'),
+      supabaseFetch('/rest/v1/menu_items?select=id,category_id,name,description,price,prep_time_minutes&is_available=eq.true&order=name.asc'),
+    ]);
+    menuState.categories = categories.filter((c) => items.some((item) => item.category_id === c.id));
+    menuState.items = items;
+    if (menuState.categories.length === 0) {
+      menuGrid.innerHTML = '<p class="menu-msg">The menu is being updated. Please check back soon.</p>';
+      return;
+    }
+    menuTabs.innerHTML = menuState.categories.map((c) =>
+      `<button type="button" class="menu-tab" role="tab" data-cat="${c.id}">${escapeHtml(c.name)}</button>`).join('');
+    menuTabs.querySelectorAll('.menu-tab').forEach((tab) =>
+      tab.addEventListener('click', () => renderMenu(Number(tab.dataset.cat))));
+    renderMenu(menuState.categories[0].id);
+  } catch (err) {
+    console.error('Menu failed to load', err);
+    menuGrid.innerHTML = '<p class="menu-msg">Sorry, the menu couldn\'t load right now.<button type="button" id="menuRetry">Try again</button></p>';
+    document.getElementById('menuRetry').addEventListener('click', loadMenu);
+  }
+}
+loadMenu();
 
 // ===== FAQ ACCORDION =====
 document.querySelectorAll('.faq-q').forEach(q => {
@@ -1713,24 +1689,127 @@ document.querySelectorAll('.faq-q').forEach(q => {
   });
 });
 
-// ===== HOURS =====
+// ===== HOURS & OPEN NOW (NZ time) =====
+// Must match private.opening_hours() in the database.
 const hoursData = [
-  { day: 'Monday', time: '7:00 AM — 8:00 PM' },
-  { day: 'Tuesday', time: '7:00 AM — 8:00 PM' },
-  { day: 'Wednesday', time: '7:00 AM — 8:00 PM' },
-  { day: 'Thursday', time: '7:00 AM — 9:00 PM' },
-  { day: 'Friday', time: '7:00 AM — 9:00 PM' },
-  { day: 'Saturday', time: '8:00 AM — 9:00 PM' },
-  { day: 'Sunday', time: '8:00 AM — 6:00 PM' },
+  { day: 'Monday', open: '07:00', close: '20:00' },
+  { day: 'Tuesday', open: '07:00', close: '20:00' },
+  { day: 'Wednesday', open: '07:00', close: '20:00' },
+  { day: 'Thursday', open: '07:00', close: '21:00' },
+  { day: 'Friday', open: '07:00', close: '21:00' },
+  { day: 'Saturday', open: '08:00', close: '21:00' },
+  { day: 'Sunday', open: '08:00', close: '18:00' },
 ];
-const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-const todayName = days[new Date().getDay()];
+const toMinutes = (hhmm) => { const [hh, mm] = hhmm.split(':').map(Number); return hh * 60 + mm; };
+function formatTime(hhmm) {
+  const mins = typeof hhmm === 'number' ? hhmm : toMinutes(hhmm);
+  const hh = Math.floor(mins / 60), mm = mins % 60;
+  return `${((hh + 11) % 12) + 1}:${String(mm).padStart(2, '0')} ${hh < 12 ? 'AM' : 'PM'}`;
+}
+function cafeNow() {
+  const parts = Object.fromEntries(new Intl.DateTimeFormat('en-NZ', {
+    timeZone: CAFE_TZ, weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit',
+    hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
+  }).formatToParts(new Date()).map((p) => [p.type, p.value]));
+  return { day: parts.weekday, date: `${parts.year}-${parts.month}-${parts.day}`, minutes: Number(parts.hour) * 60 + Number(parts.minute) };
+}
+const hoursFor = (dayName) => hoursData.find((h) => h.day === dayName);
+const dayNameOf = (isoDate) => new Date(isoDate + 'T12:00:00Z').toLocaleDateString('en-NZ', { weekday: 'long', timeZone: 'UTC' });
+
+function openStatus() {
+  const now = cafeNow();
+  const today = hoursFor(now.day);
+  const opens = toMinutes(today.open), closes = toMinutes(today.close);
+  if (now.minutes >= opens && now.minutes < closes) {
+    return { open: true, text: `Open now · closes ${formatTime(today.close)}` };
+  }
+  if (now.minutes < opens) return { open: false, text: `Closed · opens ${formatTime(today.open)} today` };
+  const idx = hoursData.indexOf(today);
+  const next = hoursData[(idx + 1) % 7];
+  return { open: false, text: `Closed · opens ${formatTime(next.open)} tomorrow` };
+}
+
 const hoursGrid = document.getElementById('hoursGrid');
-hoursData.forEach(h => {
-  const div = document.createElement('div');
-  div.className = 'hours-row' + (h.day === todayName ? ' today' : '');
-  div.innerHTML = `<span class="day">${h.day}${h.day === todayName ? ' — Today' : ''}</span><span class="time">${h.time}</span>`;
-  hoursGrid.appendChild(div);
+function renderHours() {
+  const { day: todayName } = cafeNow();
+  hoursGrid.innerHTML = '';
+  hoursData.forEach((h) => {
+    const div = document.createElement('div');
+    div.className = 'hours-row' + (h.day === todayName ? ' today' : '');
+    div.innerHTML = `<span class="day">${h.day}${h.day === todayName ? ' — Today' : ''}</span><span class="time">${formatTime(h.open)} — ${formatTime(h.close)}</span>`;
+    hoursGrid.appendChild(div);
+  });
+  const status = openStatus();
+  const heroStatus = document.getElementById('heroStatus');
+  heroStatus.querySelector('span').textContent = status.text;
+  heroStatus.classList.toggle('is-open', status.open);
+  heroStatus.classList.toggle('is-closed', !status.open);
+  const visitStatus = document.getElementById('visitStatus');
+  visitStatus.textContent = `${status.text}. We're open 7 days a week.`;
+  visitStatus.classList.toggle('is-open', status.open);
+}
+renderHours();
+setInterval(renderHours, 60 * 1000);
+
+// Booking times follow the opening hours for the chosen day (last booking 30 min before close)
+const resTime = document.getElementById('resTime');
+function fillTimes() {
+  const date = resDate.value;
+  resTime.innerHTML = '';
+  if (!date) { resTime.innerHTML = '<option value="">Choose a date first</option>'; return; }
+  const hours = hoursFor(dayNameOf(date));
+  const now = cafeNow();
+  const options = ['<option value="">Select time</option>'];
+  for (let m = toMinutes(hours.open); m <= toMinutes(hours.close) - 30; m += 30) {
+    if (date === now.date && m <= now.minutes) continue;
+    const value = `${String(Math.floor(m / 60)).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`;
+    options.push(`<option value="${value}">${formatTime(m)}</option>`);
+  }
+  if (options.length === 1) options[0] = '<option value="">No times left today</option>';
+  resTime.innerHTML = options.join('');
+}
+resDate.addEventListener('change', fillTimes);
+
+resForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const name = document.getElementById('resName').value.trim();
+  const phone = document.getElementById('resPhone').value.trim();
+  const notes = document.getElementById('resNotes').value.trim();
+  const date = resDate.value;
+  const time = resTime.value;
+
+  if (!name || !phone || !date || !time) {
+    showToast('Please fill in all required fields.', true);
+    return;
+  }
+  const btn = resForm.querySelector('button[type="submit"]');
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Confirming...';
+  btn.disabled = true;
+  try {
+    const result = await supabaseFetch('/rest/v1/rpc/create_reservation', {
+      method: 'POST',
+      body: JSON.stringify({
+        p_name: name, p_phone: phone, p_date: date, p_time: time,
+        p_guests: selectedGuests, p_notes: notes || null,
+      }),
+    });
+    const niceDate = new Date(date + 'T12:00:00Z').toLocaleDateString('en-NZ', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC' });
+    showToast(`Booked! Table for ${result.guests} on ${niceDate} at ${result.time}. Your reference is ${result.reference}.`);
+    resForm.reset();
+    fillTimes();
+    document.querySelectorAll('.guest-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('.guest-btn[data-guests="1"]').classList.add('active');
+    selectedGuests = '1';
+    closeResModal();
+  } catch (err) {
+    console.error('Reservation failed', err);
+    // Database validation messages are written for customers; anything else gets a general message
+    const friendly = err.status === 400 && err.message ? err.message : 'Sorry, we couldn\'t save your booking. Please try again.';
+    showToast(friendly, true);
+  } finally {
+    btn.innerHTML = '<i class="fas fa-calendar-check"></i> Confirm Reservation';
+    btn.disabled = false;
+  }
 });
 
 // ===== NEWSLETTER =====
@@ -1741,7 +1820,7 @@ document.getElementById('nlForm').addEventListener('submit', (e) => {
     showToast('Please enter a valid email address.', true);
     return;
   }
-  showToast('Welcome to the Ember & Brew family! Check your inbox soon.');
+  showToast("Welcome to the Manjil's Cafe family! Check your inbox soon.");
   document.getElementById('nlEmail').value = '';
 });
 

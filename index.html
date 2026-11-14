@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Manjil's Cafe — Artisan Coffee House</title>
-<script src="https://cdn.tailwindcss.com"></script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -26,6 +26,11 @@
     --cream: #F5E6D0;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  img, svg, video, canvas, iframe { display: block; max-width: 100%; }
+  img, video { height: auto; }
+  a { color: inherit; text-decoration: inherit; }
+  ol, ul { list-style: none; }
+  button, input, select, textarea { font: inherit; color: inherit; }
   html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--accent-dark) var(--bg); }
   body {
     font-family: 'DM Sans', sans-serif;
@@ -886,6 +891,8 @@
   .open-status.is-open { color: #9fd8a7; }
   a.visit-card { text-decoration: none; color: inherit; }
   .map-placeholder iframe { width: 100%; height: 100%; border: 0; filter: grayscale(0.4) invert(0.9) hue-rotate(180deg); }
+  .special-icon { width: 80px; height: 80px; flex-shrink: 0; border-radius: 12px; display: flex;
+    align-items: center; justify-content: center; background: var(--accent-glow); color: var(--accent); font-size: 1.6rem; }
   .res-privacy { font-size: 0.72rem; color: var(--muted); margin: 0.25rem 0 0.5rem; }
   @media (max-width: 768px) { .menu-grid { grid-template-columns: 1fr; } }
 </style>
@@ -1042,7 +1049,7 @@
 <!-- Story -->
 <section class="story" id="story">
   <div class="story-img reveal">
-    <img src="coffee.png" alt="A freshly made coffee at Manjil's Cafe">
+    <img src="images/croll-sm.webp" srcset="images/croll-sm.webp 600w, images/croll.webp 1200w" sizes="(max-width: 768px) 100vw, 50vw" width="1200" height="898" alt="Latte art and fresh pastries at Manjil's Cafe" loading="lazy" decoding="async">
     <div class="grad-overlay"></div>
     <div class="tag-float"><i class="fas fa-fire-flame-curved"></i><span>Small-batch roasted</span></div>
   </div>
@@ -1102,7 +1109,7 @@
   <p class="sec-desc reveal reveal-d2">Our roasters and kitchen team collaborate on rotating specials that highlight the best of each season.</p>
   <div class="specials-grid">
     <div class="special-main reveal reveal-d2">
-      <img src="coffee.png" alt="Smoke & Cedar Latte">
+      <img src="images/coffee-sm.webp" srcset="images/coffee-sm.webp 600w, images/coffee.webp 1122w" sizes="(max-width: 768px) 100vw, 50vw" width="1122" height="1402" alt="Smoke and Cedar Latte topped with a toasted marshmallow" loading="lazy" decoding="async">
       <div class="overlay"></div>
       <div class="content">
         <div class="tag">Winter Feature</div>
@@ -1112,15 +1119,15 @@
     </div>
     <div class="special-side">
       <div class="special-card reveal reveal-d3">
-        <img src="https://picsum.photos/seed/special-pastry/160/160.jpg" alt="Cardamom Brioche">
+        <img src="images/cinnamon-roll-sm.webp" width="600" height="638" alt="Freshly baked pastries" loading="lazy" decoding="async">
         <div><h4>Cardamom Brioche</h4><p>Butter-rich brioche with Ethiopian cardamom sugar glaze and rosewater cream.</p><div class="price">$6.50</div></div>
       </div>
       <div class="special-card reveal reveal-d4">
-        <img src="https://picsum.photos/seed/special-cold/160/160.jpg" alt="Yuzu Cold Brew">
+        <div class="special-icon" aria-hidden="true"><i class="fas fa-glass-water"></i></div>
         <div><h4>Yuzu Cold Brew</h4><p>24-hour cold brew with fresh yuzu juice, honey syrup, and sparkling water.</p><div class="price">$7.00</div></div>
       </div>
       <div class="special-card reveal reveal-d5">
-        <img src="https://picsum.photos/seed/special-mocha/160/160.jpg" alt="Mole Mocha">
+        <img src="images/cupma-sm.webp" width="600" height="756" alt="Espresso pouring into a cup" loading="lazy" decoding="async">
         <div><h4>Mole Mocha</h4><p>Espresso, Oaxacan chocolate, cinnamon, chili, and toasted almond milk.</p><div class="price">$7.50</div></div>
       </div>
     </div>
@@ -1135,24 +1142,24 @@
     <p class="sec-desc reveal reveal-d2" style="margin: 0 auto;">A warm, textured space designed for lingering — whether you're deep in work or deep in conversation.</p>
   </div>
   <div class="gallery-grid" id="galleryGrid">
-    <div class="gallery-item reveal" data-full="Reserved.png" data-caption="Main seating area">
-      <img src="Reserved.png" alt="Cafe interior">
+    <div class="gallery-item reveal" data-full="images/reserved.webp" data-caption="Main seating area">
+      <img src="images/reserved-sm.webp" srcset="images/reserved-sm.webp 600w, images/reserved.webp 1200w" sizes="(max-width: 768px) 100vw, 50vw" width="1200" height="1141" alt="Main seating area with reserved tables" loading="lazy" decoding="async">
       <div class="gal-overlay"><span>Main seating area</span><i class="fas fa-expand"></i></div>
     </div>
-    <div class="gallery-item reveal reveal-d1" data-full="Dog.png" data-caption="Our café dog">
-      <img src="Dog.png" alt="The café dog relaxing">
+    <div class="gallery-item reveal reveal-d1" data-full="images/dog.webp" data-caption="Our café dog">
+      <img src="images/dog-sm.webp" srcset="images/dog-sm.webp 600w, images/dog.webp 1104w" sizes="(max-width: 768px) 100vw, 50vw" width="1104" height="1172" alt="The café dog relaxing" loading="lazy" decoding="async">
       <div class="gal-overlay"><span>Dog </span><i class="fas fa-expand"></i></div>
     </div>
-    <div class="gallery-item reveal reveal-d2" data-full="Cupma.png" data-caption="Coffee">
-      <img src="Cupma.png" alt="Coffee">
+    <div class="gallery-item reveal reveal-d2" data-full="images/cupma.webp" data-caption="Coffee">
+      <img src="images/cupma-sm.webp" srcset="images/cupma-sm.webp 600w, images/cupma.webp 1190w" sizes="(max-width: 768px) 100vw, 50vw" width="1190" height="1500" alt="Espresso pouring into a cup" loading="lazy" decoding="async">
       <div class="gal-overlay"><span>Coffee</span><i class="fas fa-expand"></i></div>
     </div>
-    <div class="gallery-item reveal reveal-d3" data-full="Lamb.png" data-caption="Nepalese style Lamb">
-      <img src="Lamb.png" alt="Nepalese style lamb">
+    <div class="gallery-item reveal reveal-d3" data-full="images/lamb.webp" data-caption="Nepalese style Lamb">
+      <img src="images/lamb-sm.webp" srcset="images/lamb-sm.webp 600w, images/lamb.webp 1200w" sizes="(max-width: 768px) 100vw, 50vw" width="1200" height="1237" alt="Nepalese style lamb with salad" loading="lazy" decoding="async">
       <div class="gal-overlay"><span>Nepalese style Lamb</span><i class="fas fa-expand"></i></div>
     </div>
-    <div class="gallery-item reveal reveal-d4" data-full="cinnamonroll .png" data-caption="cinnamon roll">
-      <img src="cinnamonroll .png" alt="cinnamon roll ">
+    <div class="gallery-item reveal reveal-d4" data-full="images/cinnamon-roll.webp" data-caption="cinnamon roll">
+      <img src="images/cinnamon-roll-sm.webp" srcset="images/cinnamon-roll-sm.webp 600w, images/cinnamon-roll.webp 1200w" sizes="(max-width: 768px) 100vw, 50vw" width="1200" height="1275" alt="A plate of cinnamon rolls" loading="lazy" decoding="async">
       <div class="gal-overlay"><span>cinnamon roll</span><i class="fas fa-expand"></i></div>
     </div>
   </div>
@@ -1338,7 +1345,11 @@
 
 <!-- Three.js -->
 <script type="module">
-import * as THREE from 'three';
+const lowPower = window.matchMedia('(max-width: 900px), (prefers-reduced-motion: reduce)').matches;
+if (lowPower) {
+  document.getElementById('three-canvas').style.display = 'none';
+} else {
+const THREE = await import('three');
 const canvas = document.getElementById('three-canvas');
 const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -1408,6 +1419,8 @@ function animate() {
 }
 animate();
 window.addEventListener('resize', () => { camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); renderer.setSize(window.innerWidth, window.innerHeight); });
+
+}
 </script>
 
 <!-- UI Logic -->
@@ -1424,7 +1437,7 @@ const loadInterval = setInterval(() => {
     setTimeout(() => preloader.classList.add('hidden'), 400);
   }
   preloaderBar.style.width = loadProgress + '%';
-}, 300);
+}, 90);
 
 // ===== SCROLL PROGRESS =====
 const scrollProg = document.getElementById('scrollProgress');

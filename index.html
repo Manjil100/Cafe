@@ -857,6 +857,17 @@
       transition-duration: 0.01ms !important;
     }
   }
+
+  /* ===== Layout fixes (Nov 2026) ===== */
+  .hero { padding: 7rem 1.5rem 7rem; }
+  .hero-btns a { position: relative; z-index: 2; }
+  @media (max-height: 760px) { .scroll-hint { display: none; } }
+  @media (max-width: 768px) {
+    .hero { min-height: 100svh; padding: 6.5rem 1.25rem 9rem; }
+    .hero h1 { font-size: clamp(2.4rem, 11vw, 3.4rem); }
+    .hero-btns { flex-direction: column; align-items: stretch; max-width: 320px; margin: 0 auto; }
+    .hero-btns a { justify-content: center; }
+  }
 </style>
 
 <script type="importmap">
@@ -977,7 +988,7 @@
   <a href="#menu" onclick="closeMobile()">Menu</a>
   <a href="#specials" onclick="closeMobile()">Specials</a>
   <a href="#gallery" onclick="closeMobile()">Gallery</a>
-  <a href="#team" onclick="closeMobile()">Our Team</a>
+  
   <a href="#events" onclick="closeMobile()">Events</a>
   <a href="#visit" onclick="closeMobile()">Visit Us</a>
 </div>
@@ -990,7 +1001,7 @@
     <a href="#menu">Menu</a>
     <a href="#specials">Specials</a>
     <a href="#gallery">Gallery</a>
-    <a href="#team">Team</a>
+    
     <a href="#events">Events</a>
     <a href="#visit">Visit Us</a>
     <a href="#" class="nav-cta" id="navResBtn">Reserve</a>
@@ -1009,7 +1020,7 @@
   <div class="hero-content">
     <div class="hero-badge reveal"><i class="fas fa-mug-hot"></i> Est. 2026 Kathmandu</div>
     <h1 class="reveal reveal-d1">Where every cup<br>tells a <em>story</em></h1>
-    <p class="hero-sub reveal reveal-d2">Welcome to Manjil's Cafe, your local haven for premium coffee and delightful eats in the heart of Brookfield, Tauranga. Conveniently located near the suburbs of Otumoetai, Judea, and Bethlehem, our cafe is a favourite spot for both locals and visitors.Our journey began with a passion for great coffee, delicious food, and a desire to create a warm, welcoming space for the community. We are dedicated to providing an exceptional dining experience, whether you’re stopping by for a quick coffee or settling in for a leisurely meal.</p>
+    <p class="hero-sub reveal reveal-d2">Your local haven for premium coffee and delightful eats in Brookfield, Tauranga, close to Otumoetai, Judea and Bethlehem.</p>
     <div class="hero-btns reveal reveal-d3">
       <a href="#menu" class="btn-warm">Explore the Menu <i class="fas fa-arrow-right"></i></a>
       <a href="#" class="btn-ghost" id="heroResBtn">Reserve a Table</a>
@@ -1028,7 +1039,7 @@
   <div>
     <div class="sec-label reveal">Our Story</div>
     <h2 class="sec-title reveal reveal-d1">Born from obsession, built with purpose</h2>
-    <p class="sec-desc reveal reveal-d2">Manjil's Cafe started in a 200-square-foot garage in the Mission District. Two friends, a second-hand Probat roaster, and an unreasonable belief that coffee could be something more — something personal, transparent, and unforgettable.</p>
+    <p class="sec-desc reveal reveal-d2">Our journey began with a passion for great coffee, delicious food, and a desire to create a warm, welcoming space for the community. Whether you're stopping by for a quick coffee or settling in for a leisurely meal, we want every visit to feel like coming home.</p>
     <p class="sec-desc reveal reveal-d3" style="margin-top: 1rem;">Today, we source directly from farms in Kathmandu, Nepal and New Zealand. Every bag is traceable to the lot. Every roast is profiled for the bean, not the trend.</p>
     <div class="story-values reveal reveal-d4">
       <div class="value-item"><i class="fas fa-seedling"></i><h4>Direct Trade</h4><p>Sourced from farms we know by name, paying above fair-trade minimums.</p></div>
@@ -1119,8 +1130,8 @@
       <img src="Reserved.png" alt="Cafe interior">
       <div class="gal-overlay"><span>Main seating area</span><i class="fas fa-expand"></i></div>
     </div>
-    <div class="gallery-item reveal reveal-d1" data-full="Dog.png" data-caption="Amod mero nam">
-      <img src="Dog.png" alt="Amod rey nam kukur ko">
+    <div class="gallery-item reveal reveal-d1" data-full="Dog.png" data-caption="Our café dog">
+      <img src="Dog.png" alt="The café dog relaxing">
       <div class="gal-overlay"><span>Dog </span><i class="fas fa-expand"></i></div>
     </div>
     <div class="gallery-item reveal reveal-d2" data-full="Cupma.png" data-caption="Coffee">
@@ -1134,56 +1145,6 @@
     <div class="gallery-item reveal reveal-d4" data-full="cinnamonroll .png" data-caption="cinnamon roll">
       <img src="cinnamonroll .png" alt="cinnamon roll ">
       <div class="gal-overlay"><span>cinnamon roll</span><i class="fas fa-expand"></i></div>
-    </div>
-  </div>
-</section>
-
-<!-- Team -->
-<section class="team" id="team">
-  <div style="text-align: center;">
-    <div class="sec-label reveal">The People</div>
-    <h2 class="sec-title reveal reveal-d1">Meet the crew</h2>
-    <p class="sec-desc reveal reveal-d2" style="margin: 0 auto;">Passionate humans who take coffee very seriously — and themselves, not so much.</p>
-  </div>
-  <div class="team-grid">
-    <div class="team-card reveal reveal-d1">
-      <img src="Manjil.png" alt="Manjil Khatiwada">
-      <h4>Manjil Khatiwada</h4>
-      <div class="role">Head Roaster & Co-Founder</div>
-      <p>Q-Grader certified. Traveled to 14 origin countries. Roasts with intuition and data in equal measure.</p>
-      <div class="team-socials">
-        <a href="#" onclick="event.preventDefault()" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-        <a href="#" onclick="event.preventDefault()" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-      </div>
-    </div>
-    <div class="team-card reveal reveal-d2">
-      <img src="Parash.png" alt="Parash Acharya">
-      <h4>Parash Acharya</h4>
-      <div class="role">Head Barista & Co-Founder</div>
-      <p>3x Regional Latte Art Champion. Believes the perfect shot is a conversation, not a formula.</p>
-      <div class="team-socials">
-        <a href="https://www.instagram.com/manjil______/" onclick="event.preventDefault()" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-        <a href="#" onclick="event.preventDefault()" aria-label="Twitter"><i class="fab fa-x-twitter"></i></a>
-      </div>
-    </div>
-    <div class="team-card reveal reveal-d3">
-      <img src="Sunil.png" alt="Sunil Kunwar">
-      <h4>Sunil Kunwar</h4>
-      <div class="role">Pastry Chef</div>
-      <p>Trained in Paris, rooted in the Philippines. Turns seasonal ingredients into pastries you dream about.</p>
-      <div class="team-socials">
-        <a href="#" onclick="event.preventDefault()" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-      </div>
-    </div>
-    <div class="team-card reveal reveal-d4">
-      <img src="Amod.png" alt="Amod Kumar">
-      <h4>Amod K Pudasaini</h4>
-      <div class="role">Floor Manager</div>
-      <p>The person who remembers your name, your drink, and asks about your dog. Keeps the whole ship running.</p>
-      <div class="team-socials">
-        <a href="#" onclick="event.preventDefault()" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-        <a href="#" onclick="event.preventDefault()" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-      </div>
     </div>
   </div>
 </section>
@@ -1376,7 +1337,7 @@
     <div class="footer-col">
       <h4>Company</h4>
       <a href="#story">Our Story</a>
-      <a href="#team">Our Team</a>
+      
       <a href="#events">Events</a>
       <a href="#" onclick="event.preventDefault()">Careers</a>
       <a href="#visit">Contact</a>

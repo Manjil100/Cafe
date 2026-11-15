@@ -1,0 +1,61 @@
+<section class="section" aria-labelledby="pageTitle">
+  <div class="wrap form-wrap">
+    <div>
+      <h1 id="pageTitle" style="font-size: var(--step-4); line-height: 0.95;">Get in touch</h1>
+      <p class="lede">Questions, feedback or a big group coming in? Send us a message, or catch us on Instagram for the quickest reply.</p>
+      <dl class="info" style="grid-template-columns: 1fr;">
+        <div><dt>Instagram</dt><dd><a class="link" href="{{INSTAGRAM}}" target="_blank" rel="noopener">@heyjudecafe_</a></dd></div>
+        <!--email--><div><dt>Email</dt><dd><a class="link" href="mailto:{{EMAIL}}">{{EMAIL}}</a></dd></div><!--/email-->
+        <div><dt>Visit</dt><dd>2 Jude Place, Brookfield, Tauranga<br>Every day, 7am to 3pm</dd></div>
+      </dl>
+      <p class="fineprint" style="margin-top: 1.75rem;">Want a table? <a class="link" href="/book">Book online</a> instead, it’s faster.</p>
+    </div>
+
+    <div class="form-card">
+      <form id="contactForm" novalidate>
+        <p class="form-error" id="contactError" role="alert" tabindex="-1" hidden></p>
+        <div class="field">
+          <label for="cName">Name</label>
+          <input id="cName" name="name" autocomplete="name" maxlength="60" required>
+        </div>
+        <div class="field">
+          <label for="cEmail">Email <span class="hint">so we can reply</span></label>
+          <input id="cEmail" name="email" type="email" autocomplete="email" inputmode="email" maxlength="120" required>
+        </div>
+        <div class="field">
+          <label for="cTopic">What’s it about?</label>
+          <select id="cTopic" name="topic" required>
+            <option value="">Choose one</option>
+            <option value="general">A general question</option>
+            <option value="booking">Bookings and groups</option>
+            <option value="feedback">Feedback on a visit</option>
+            <option value="work">Working at Hey Jude</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="cMessage">Message</label>
+          <textarea id="cMessage" name="message" minlength="10" maxlength="1000" required aria-describedby="cCount"></textarea>
+          <span class="hint count" id="cCount" aria-live="polite">0 of 1000 characters</span>
+        </div>
+        <!-- Spam trap: hidden from people, bots tend to fill it in -->
+        <div class="trap" aria-hidden="true">
+          <label for="cWebsite">Leave this empty</label>
+          <input id="cWebsite" name="website" tabindex="-1" autocomplete="off">
+        </div>
+        <button class="btn btn-solid" type="submit" style="width: 100%;">Send message</button>
+        <p class="fineprint" style="margin: 1rem 0 0;">We only use your details to reply. <a class="link" href="/privacy">How we handle your details</a></p>
+      </form>
+
+      <div class="done" id="contactDone" hidden>
+        <h2 tabindex="-1">Message sent</h2>
+        <p class="ref" id="contactRef"></p>
+        <p id="contactText"></p>
+        <p class="fineprint" style="margin-top: 1rem;">This website is a student prototype, so the café isn’t checking these messages yet. For anything urgent, message <a class="link" href="{{INSTAGRAM}}" target="_blank" rel="noopener">@heyjudecafe_</a> on Instagram.</p>
+        <div class="actions">
+          <a class="btn btn-solid" href="/menu">See the menu</a>
+          <button class="btn btn-line" type="button" id="contactAnother">Send another message</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

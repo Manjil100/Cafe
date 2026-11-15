@@ -5,6 +5,9 @@
   const preferred = ['Benny Supreme', 'Eggs Benedict', 'Smashed Avocado', 'Big Breakfast', 'Flat White', 'Blueberry Muffin'];
 
   async function load() {
+    // Grey placeholder cards while the dishes load
+    list.innerHTML = Array.from({ length: 3 }, () =>
+      '<div class="dish-card skeleton" aria-hidden="true"><span class="sk sk-photo"></span><span class="sk sk-line"></span><span class="sk sk-text"></span></div>').join('');
     try {
       const [items, categories] = await Promise.all([
         api('/rest/v1/menu_items?select=id,name,description,price,image_url,category_id&is_available=eq.true&image_url=not.is.null'),
@@ -17,7 +20,7 @@
       list.innerHTML = picks.map((i) => {
         const sm = i.image_url.replace(/\.webp$/, '-sm.webp');
         return `<a class="dish-card" href="/menu#${slug(catName(i.category_id))}">
-          <div class="frame"><img src="${sm}" srcset="${sm} 600w, ${i.image_url} 1200w" sizes="(max-width: 860px) 76vw, 30vw" alt="${escapeHtml(i.name)}" width="600" height="750" loading="lazy" decoding="async"></div>
+          <div class="frame"><img src="${sm}" srcset="${sm} 600w, ${i.image_url} 1200w" sizes="(max-width: 860px) 76vw, 30vw" alt="" width="600" height="750" loading="lazy" decoding="async"></div>
           <h3><span>${escapeHtml(i.name)}</span><span class="price">${price(i.price)}</span></h3>
           <p>${escapeHtml(i.description)}</p>
         </a>`;

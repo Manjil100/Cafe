@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cafe-n2mj.vercel.app/sitemap.xml

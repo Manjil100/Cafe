@@ -48,9 +48,13 @@
     if (!date.value) { missing.push('a date'); bad.push(date); }
     if (!time.value) { missing.push('a time'); bad.push(time); }
     if (missing.length) { fail(`Please add ${missing.join(', ')}.`, bad); return; }
+    // Same rule as the database: at least 7 digits, only phone characters
+    if (!/^[0-9+() -]{7,20}$/.test(phone) || phone.replace(/\D/g, '').length < 7) {
+      fail('Please enter a valid phone number, like 021 123 4567.', [form.elements.phone]); return;
+    }
 
     const btn = form.querySelector('[type="submit"]');
-    btn.disabled = true; btn.textContent = 'Booking…'; errorEl.hidden = true;
+    window.HJ.busy(btn, true, 'Booking…'); errorEl.hidden = true;
     try {
       const r = await api('/rest/v1/rpc/create_reservation', {
         method: 'POST',
@@ -70,9 +74,12 @@
       console.error('Booking failed', err);
       fail(err.status === 400 && err.message ? err.message : 'We couldn’t save your booking. Check your connection and try again.');
     } finally {
-      btn.disabled = false; btn.textContent = 'Book table';
+      window.HJ.busy(btn, false);
     }
   });
+
+  // Clear a field's error as soon as it's fixed
+  form.addEventListener('input', (e) => { if (e.target.hasAttribute('aria-invalid')) e.target.removeAttribute('aria-invalid'); });
 
   document.getElementById('bookAnother').addEventListener('click', () => {
     form.reset(); fillTimes(); form.hidden = false; done.hidden = true; form.elements.name.focus();

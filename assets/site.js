@@ -83,20 +83,71 @@
   const header = document.getElementById('siteHeader');
   const nav = document.getElementById('siteNav');
   const toggle = document.getElementById('menuToggle');
+  const toggleLabel = toggle.querySelector('.menu-label');
   function setNav(open) {
     nav.classList.toggle('open', open);
+    toggle.classList.toggle('is-open', open);
     toggle.setAttribute('aria-expanded', String(open));
-    toggle.textContent = open ? 'Close' : 'Menu';
+    toggleLabel.textContent = open ? 'Close' : 'Menu';
   }
   toggle.addEventListener('click', () => setNav(!nav.classList.contains('open')));
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && nav.classList.contains('open')) { setNav(false); toggle.focus(); } });
   nav.addEventListener('click', (e) => { if (e.target.closest('a')) setNav(false); });
+  // Tapping outside the open menu closes it
+  document.addEventListener('click', (e) => {
+    if (nav.classList.contains('open') && !nav.contains(e.target) && !toggle.contains(e.target)) setNav(false);
+  });
+
+  // ----- Back to top: appears once you've scrolled a screen or so
+  const toTop = document.getElementById('toTop');
+  const still = window.matchMedia('(prefers-reduced-motion: reduce)');
+  toTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: still.matches ? 'auto' : 'smooth' });
+    document.querySelector('.brand').focus({ preventScroll: true });
+  });
+
   let ticking = false;
+  function onScroll() {
+    header.classList.toggle('scrolled', window.scrollY > 8);
+    const show = window.scrollY > window.innerHeight * 0.9;
+    if (show === toTop.hidden) {
+      toTop.hidden = !show;
+      requestAnimationFrame(() => toTop.classList.toggle('show', show));
+    }
+    ticking = false;
+  }
   window.addEventListener('scroll', () => {
     if (ticking) return;
     ticking = true;
-    requestAnimationFrame(() => { header.classList.toggle('scrolled', window.scrollY > 8); ticking = false; });
+    requestAnimationFrame(onScroll);
   }, { passive: true });
+
+  // ----- Maps and players from other sites load only when asked
+  // (they can set their own cookies, so nothing loads until you click)
+  document.querySelectorAll('[data-embed-src]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const frame = document.createElement('iframe');
+      frame.src = btn.dataset.embedSrc;
+      frame.title = btn.dataset.embedTitle;
+      frame.className = btn.dataset.embedClass || '';
+      if (btn.dataset.embedAllow) frame.allow = btn.dataset.embedAllow;
+      frame.referrerPolicy = 'no-referrer-when-downgrade';
+      frame.tabIndex = 0;
+      btn.closest('.embed-load').replaceWith(frame);
+      frame.focus();
+    });
+  });
+
+  // ----- Shared form helpers for the booking and contact forms
+  // busy(button, true, 'Sending…') shows a spinner and stops double submits
+  function busy(button, on, label) {
+    if (on) { button.dataset.label = button.textContent; button.textContent = label; }
+    else if (button.dataset.label) { button.textContent = button.dataset.label; }
+    button.disabled = on;
+    button.classList.toggle('is-busy', on);
+    button.setAttribute('aria-busy', String(on));
+  }
+  window.HJ.busy = busy;
 
   // ----- Section entrances: once, just before fully in view
   const reveals = document.querySelectorAll('.reveal');
@@ -111,4 +162,5 @@
 
   renderStatus();
   setInterval(renderStatus, 60000);
+  onScroll();
 })();

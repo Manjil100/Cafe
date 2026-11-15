@@ -12,12 +12,17 @@ navigation and footer, and writes the finished page to the site root:
 Run it after changing anything in src/:   python3 tools/build_pages.py
 """
 import html
+import json
+import os
 import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 ORDER_URL = "https://smart-cafe-liard.vercel.app/menu"
-EMAIL = "khatiwadamanjil51@gmail.com"
+# Contact email to show on the site. It isn't stored in this file: set it when you build, e.g.
+#   CAFE_EMAIL=hello@example.com python3 tools/build_pages.py
+# Left unset, the site sends people to the Contact page instead.
+EMAIL = os.environ.get("CAFE_EMAIL", "").strip()
 INSTAGRAM = "https://www.instagram.com/heyjudecafe_/"
 SITE = "https://cafe-n2mj.vercel.app"
 
@@ -46,11 +51,14 @@ PAGES = [
     ("book", "/book", "book", "Book a table | Hey Jude Cafe",
      "Book a table at Hey Jude Cafe in Brookfield, Tauranga.",
      "book.js", "/images/reserved.webp"),
+    ("contact", "/contact", "contact", "Contact | Hey Jude Cafe",
+     "Get in touch with Hey Jude Cafe in Brookfield, Tauranga. Send a message, find us on Instagram, or visit at 2 Jude Place.",
+     "contact.js", "/images/menu/wall-flowers.webp"),
     ("privacy", "/privacy", "privacy", "Your details | Hey Jude Cafe",
      "How Hey Jude Cafe handles the details you give when you book a table.",
      None, "/images/reserved.webp"),
     ("404", None, None, "Page not found | Hey Jude Cafe",
-     "This page isn’t here.", None, "/images/reserved.webp"),
+     "The page you’re looking for isn’t on the Hey Jude Cafe website. Find the menu, bookings and opening hours from here.", None, "/images/reserved.webp"),
 ]
 
 FAVICON = ("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E"
@@ -76,14 +84,15 @@ HEAD = """<!doctype html>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&amp;family=Figtree:ital,wght@0,400;0,500;0,600;1,400&amp;display=swap">
 <link rel="stylesheet" href="/assets/site.css">
+<script src="/assets/transitions.js"></script>
 <script src="/assets/site.js" defer></script>
-{page_script}</head>
+{page_script}{extra_head}</head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<div class="proto" role="note"><p>Student prototype for Hey Jude Cafe. Menu prices are placeholders, and bookings and online orders don’t reach the café yet.</p></div>
+<aside class="proto" aria-label="About this website"><p>Student prototype for Hey Jude Cafe. Menu prices are placeholders, and bookings, messages and online orders don’t reach the café yet.</p></aside>
 """
 
-NAV_LINKS = [("menu", "/menu", "Menu"), ("about", "/about", "About"), ("visit", "/visit", "Visit")]
+NAV_LINKS = [("menu", "/menu", "Menu"), ("about", "/about", "About"), ("visit", "/visit", "Visit"), ("contact", "/contact", "Contact")]
 
 
 def header(active):
@@ -93,7 +102,9 @@ def header(active):
   <div class="wrap">
     <a class="brand" href="/"{current(active, "home")}>Hey Jude</a>
     <a class="now" href="/visit" data-status><span class="record" aria-hidden="true"></span><span class="now-text" data-status-text>Open every day, 7am to 3pm</span></a>
-    <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="siteNav">Menu</button>
+    <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="siteNav">
+      <span class="burger" aria-hidden="true"><span></span></span><span class="menu-label">Menu</span>
+    </button>
     <nav class="nav" id="siteNav" aria-label="Main">
 {links}
       <a href="{ORDER_URL}">Order online</a>
@@ -132,6 +143,7 @@ def footer(active):
           {li("menu", "/menu", "Menu")}
           {li("about", "/about", "About")}
           {li("visit", "/visit", "Visit")}
+          {li("contact", "/contact", "Contact")}
           {li("book", "/book", "Book a table")}
           {li("order", ORDER_URL, "Order online")}
         </ul>
@@ -140,7 +152,7 @@ def footer(active):
         <h2>Get in touch</h2>
         <ul>
           {li("ig", INSTAGRAM, "Instagram", external=True)}
-          {li("mail", "mailto:" + EMAIL, "Email us")}
+          {li("mail", "mailto:" + EMAIL, "Email us") if EMAIL else ""}
           {li("privacy", "/privacy", "Your details")}
         </ul>
       </div>
@@ -148,6 +160,9 @@ def footer(active):
     <p class="footer-bottom">© 2026 Hey Jude Cafe. Website built by Manjil as a COMP.6207 student project at Toi Ohomai. Photos from <a href="{INSTAGRAM}" target="_blank" rel="noopener">Hey Jude Cafe’s Instagram</a>, used with permission.</p>
   </div>
 </footer>
+<button class="to-top" id="toTop" type="button" aria-label="Back to top" hidden>
+  <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>
 </html>
@@ -174,8 +189,11 @@ def listen_section():
       </div>
       <a class="more" href="{esc(PLAYLIST_URL)}" target="_blank" rel="noopener">Open in Spotify</a>
     </div>
-    <iframe class="listen-embed reveal" title="Hey Jude’s café playlist on Spotify" src="{embed}" loading="lazy"
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+    <div class="embed-load listen-embed reveal">
+      <button class="btn btn-solid" type="button" data-embed-src="{embed}" data-embed-title="Hey Jude’s café playlist on Spotify"
+              data-embed-class="listen-embed" data-embed-allow="clipboard-write; encrypted-media; fullscreen; picture-in-picture">Play the café playlist</button>
+      <p>Loads Spotify’s player, which may set its own cookies.</p>
+    </div>
   </div>
 </section>"""
 
@@ -203,20 +221,62 @@ def reviews_section():
 </section>"""
 
 
+# Home page only: load the hero photo early, and describe the café for search engines
+# (schema.org structured data, shown in Google's business results).
+HOME_HEAD = f"""<link rel="preload" as="image" href="/images/reserved.webp" imagesrcset="/images/reserved-sm.webp 600w, /images/reserved.webp 1200w" imagesizes="100vw">
+<script type="application/ld+json">
+{json.dumps({
+    "@context": "https://schema.org",
+    "@type": "CafeOrCoffeeShop",
+    "name": "Hey Jude Cafe",
+    "url": SITE + "/",
+    "image": SITE + "/images/reserved.webp",
+    "address": {"@type": "PostalAddress", "streetAddress": "2 Jude Place", "addressLocality": "Brookfield, Tauranga",
+                "postalCode": "3110", "addressCountry": "NZ"},
+    "openingHoursSpecification": [{"@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        "opens": "07:00", "closes": "15:00"}],
+    "servesCuisine": ["Cafe", "Brunch"],
+    "menu": SITE + "/menu",
+    "acceptsReservations": True,
+    "sameAs": [INSTAGRAM],
+}, ensure_ascii=False, indent=1)}
+</script>
+"""
+
+
+def write_seo_files():
+    """robots.txt and sitemap.xml so search engines find every page."""
+    pages = [path for _, path, *_ in PAGES if path]
+    urls = "\n".join(f"  <url><loc>{SITE}{path}</loc></url>" for path in pages)
+    (ROOT / "sitemap.xml").write_text(
+        f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}\n</urlset>\n',
+        encoding="utf-8")
+    (ROOT / "robots.txt").write_text(f"User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n", encoding="utf-8")
+    print("built sitemap.xml and robots.txt")
+
+
 def build():
     for name, path, active, title, description, script, image in PAGES:
         body = (ROOT / "src" / "pages" / f"{name}.html").read_text(encoding="utf-8")
-        body = body.replace("{{ORDER_URL}}", ORDER_URL).replace("{{EMAIL}}", EMAIL)
+        body = body.replace("{{ORDER_URL}}", ORDER_URL).replace("{{INSTAGRAM}}", INSTAGRAM)
+        # Parts marked <!--email--> ... <!--/email--> only appear when an email is set
+        if EMAIL:
+            body = body.replace("<!--email-->", "").replace("<!--/email-->", "").replace("{{EMAIL}}", esc(EMAIL))
+        else:
+            body = re.sub(r"<!--email-->.*?<!--/email-->\n?", "", body, flags=re.S)
         body = body.replace("{{LISTEN}}", listen_section()).replace("{{REVIEWS}}", reviews_section())
         canonical = f'<link rel="canonical" href="{SITE}{path}">\n' if path else '<meta name="robots" content="noindex">\n'
         page_script = f'<script src="/assets/{script}" defer></script>\n' if script else ""
         html = HEAD.format(title=title, description=description, canonical=canonical, site=SITE,
-                           image=image, favicon=FAVICON, page_script=page_script)
+                           image=image, favicon=FAVICON, page_script=page_script,
+                           extra_head=HOME_HEAD if name == "index" else "")
         html += header(active if active else ("home" if name == "index" else None))
         html += f'<main id="main" tabindex="-1">\n{body.strip()}\n</main>\n'
         html += footer(active)
         (ROOT / f"{name}.html").write_text(html, encoding="utf-8")
         print(f"built {name}.html")
+    write_seo_files()
 
 
 if __name__ == "__main__":

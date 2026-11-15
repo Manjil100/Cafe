@@ -17,21 +17,67 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&amp;family=Figtree:ital,wght@0,400;0,500;0,600;1,400&amp;display=swap">
 <link rel="stylesheet" href="/assets/site.css">
+<script src="/assets/transitions.js"></script>
 <script src="/assets/site.js" defer></script>
 <script src="/assets/home.js" defer></script>
+<link rel="preload" as="image" href="/images/reserved.webp" imagesrcset="/images/reserved-sm.webp 600w, /images/reserved.webp 1200w" imagesizes="100vw">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@type": "CafeOrCoffeeShop",
+ "name": "Hey Jude Cafe",
+ "url": "https://cafe-n2mj.vercel.app/",
+ "image": "https://cafe-n2mj.vercel.app/images/reserved.webp",
+ "address": {
+  "@type": "PostalAddress",
+  "streetAddress": "2 Jude Place",
+  "addressLocality": "Brookfield, Tauranga",
+  "postalCode": "3110",
+  "addressCountry": "NZ"
+ },
+ "openingHoursSpecification": [
+  {
+   "@type": "OpeningHoursSpecification",
+   "dayOfWeek": [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday"
+   ],
+   "opens": "07:00",
+   "closes": "15:00"
+  }
+ ],
+ "servesCuisine": [
+  "Cafe",
+  "Brunch"
+ ],
+ "menu": "https://cafe-n2mj.vercel.app/menu",
+ "acceptsReservations": true,
+ "sameAs": [
+  "https://www.instagram.com/heyjudecafe_/"
+ ]
+}
+</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<div class="proto" role="note"><p>Student prototype for Hey Jude Cafe. Menu prices are placeholders, and bookings and online orders don’t reach the café yet.</p></div>
+<aside class="proto" aria-label="About this website"><p>Student prototype for Hey Jude Cafe. Menu prices are placeholders, and bookings, messages and online orders don’t reach the café yet.</p></aside>
 <header class="site-header" id="siteHeader">
   <div class="wrap">
     <a class="brand" href="/" aria-current="page">Hey Jude</a>
     <a class="now" href="/visit" data-status><span class="record" aria-hidden="true"></span><span class="now-text" data-status-text>Open every day, 7am to 3pm</span></a>
-    <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="siteNav">Menu</button>
+    <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="siteNav">
+      <span class="burger" aria-hidden="true"><span></span></span><span class="menu-label">Menu</span>
+    </button>
     <nav class="nav" id="siteNav" aria-label="Main">
       <a href="/menu">Menu</a>
       <a href="/about">About</a>
       <a href="/visit">Visit</a>
+      <a href="/contact">Contact</a>
       <a href="https://smart-cafe-liard.vercel.app/menu">Order online</a>
       <a class="btn btn-solid" href="/book">Book a table</a>
       <a class="now now-mobile" href="/visit" data-status><span class="record" aria-hidden="true"></span><span data-status-text>Open every day, 7am to 3pm</span></a>
@@ -152,6 +198,7 @@
           <li><a href="/menu">Menu</a></li>
           <li><a href="/about">About</a></li>
           <li><a href="/visit">Visit</a></li>
+          <li><a href="/contact">Contact</a></li>
           <li><a href="/book">Book a table</a></li>
           <li><a href="https://smart-cafe-liard.vercel.app/menu">Order online</a></li>
         </ul>
@@ -160,7 +207,7 @@
         <h2>Get in touch</h2>
         <ul>
           <li><a href="https://www.instagram.com/heyjudecafe_/" target="_blank" rel="noopener">Instagram</a></li>
-          <li><a href="mailto:khatiwadamanjil51@gmail.com">Email us</a></li>
+          
           <li><a href="/privacy">Your details</a></li>
         </ul>
       </div>
@@ -168,6 +215,9 @@
     <p class="footer-bottom">© 2026 Hey Jude Cafe. Website built by Manjil as a COMP.6207 student project at Toi Ohomai. Photos from <a href="https://www.instagram.com/heyjudecafe_/" target="_blank" rel="noopener">Hey Jude Cafe’s Instagram</a>, used with permission.</p>
   </div>
 </footer>
+<button class="to-top" id="toTop" type="button" aria-label="Back to top" hidden>
+  <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>
 </html>

@@ -50,12 +50,20 @@
       if (on) board.setAttribute('aria-labelledby', tab.id);
     });
     flipTo(sideOf(state.categories.indexOf(cat)));
-    const items = state.items.filter((i) => i.category_id === categoryId);
+    state.current = categoryId;
+    renderItems(state.items.filter((i) => i.category_id === categoryId));
+    if (updateHash && cat) history.replaceState(null, '', `#${slug(cat.name)}`);
+  }
+
+  // Draws a list of dishes on the board. Search results also show which side they're on.
+  function renderItems(items, { showSide = false } = {}) {
     board.innerHTML = items.map((item) => {
       const photo = photoFor(item);
+      const i = state.categories.findIndex((c) => c.id === item.category_id);
+      const side = showSide && i >= 0 ? `<p class="from-side">Side ${sideOf(i)}, ${escapeHtml(state.categories[i].name)}</p>` : '';
       return `<article class="board-item${photo ? ' has-photo' : ''}" data-id="${item.id}">
         ${photo ? `<img class="board-thumb" src="${photo.sm}" alt="" width="600" height="450" loading="lazy" decoding="async">` : ''}
-        <div class="board-line"><h3>${escapeHtml(item.name)}</h3><span class="leader" aria-hidden="true"></span><span class="price">${price(item.price)}</span></div>
+        ${side}<div class="board-line"><h3>${escapeHtml(item.name)}</h3><span class="leader" aria-hidden="true"></span><span class="price">${price(item.price)}</span></div>
         <p>${escapeHtml(item.description)}</p>
         <p class="prep">Ready in about ${Number(item.prep_time_minutes)} min</p>
       </article>`;
@@ -69,11 +77,47 @@
     board.querySelectorAll('.board-item.has-photo').forEach((el) => {
       el.addEventListener('mouseenter', () => showDish(state.items.find((i) => i.id === Number(el.dataset.id))));
     });
-    if (updateHash && cat) history.replaceState(null, '', `#${slug(cat.name)}`);
   }
 
+  // ----- Search across every side of the menu
+  const search = document.getElementById('menuSearch');
+  const searchStatus = document.getElementById('searchStatus');
+  const deck = document.querySelector('.deck');
+  const norm = (s) => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+  function runSearch() {
+    const q = norm(search.value.trim());
+    if (!state.categories.length) return;
+    if (!q) {
+      deck.classList.remove('is-searching');
+      searchStatus.textContent = '';
+      select(state.current, { updateHash: false });
+      return;
+    }
+    deck.classList.add('is-searching');
+    const words = q.split(/\s+/);
+    const found = state.items.filter((item) => {
+      const hay = norm(`${item.name} ${item.description}`);
+      return words.every((w) => hay.includes(w));
+    });
+    renderItems(found, { showSide: true });
+    if (!found.length) {
+      board.innerHTML = `<p class="board-msg">Nothing on the menu matches “${escapeHtml(search.value.trim())}”. Try a single word, like eggs or coffee.</p>`;
+    }
+    searchStatus.textContent = found.length === 1 ? '1 dish matches' : `${found.length} dishes match`;
+  }
+  let searchTimer;
+  search.addEventListener('input', () => { clearTimeout(searchTimer); searchTimer = setTimeout(runSearch, 120); });
+  // Choosing a side clears the search
+  tabsEl.addEventListener('click', () => {
+    if (search.value) { search.value = ''; deck.classList.remove('is-searching'); searchStatus.textContent = ''; }
+  }, true);
+
+  // Grey placeholder rows while the menu loads
+  const skeleton = () => Array.from({ length: 4 }, () =>
+    '<div class="board-item skeleton" aria-hidden="true"><span class="sk sk-line"></span><span class="sk sk-text"></span><span class="sk sk-short"></span></div>').join('');
+
   async function load() {
-    board.innerHTML = '<p class="board-msg">Loading today’s menu…</p>';
+    board.innerHTML = `<p class="sr-only">Loading today’s menu…</p>${skeleton()}`;
     try {
       const [categories, items] = await Promise.all([
         api('/rest/v1/categories?select=id,name,sort_order&order=sort_order.asc'),

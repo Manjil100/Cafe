@@ -16,14 +16,20 @@
       </div>
       <a class="btn btn-solid" href="{{ORDER_URL}}">Order online for pickup</a>
     </div>
+    <div class="menu-search">
+      <label for="menuSearch">Search the menu</label>
+      <input id="menuSearch" type="search" placeholder="Try ‘eggs’ or ‘mocha’" autocomplete="off" aria-describedby="searchStatus">
+      <p class="search-status" id="searchStatus" aria-live="polite"></p>
+    </div>
     <div class="deck">
       <div class="side-record" id="sideRecord" aria-hidden="true">
         <div class="disc"></div><span class="side-letter">A</span>
       </div>
       <div class="tabs" role="tablist" aria-label="Menu categories" id="menuTabs"></div>
     </div>
+    <h2 class="sr-only">Dishes</h2>
     <div class="board-wrap" id="boardWrap">
-      <div class="board" id="menuBoard" role="tabpanel" aria-live="polite"><p class="board-msg">Loading today’s menu…</p></div>
+      <div class="board" id="menuBoard" role="tabpanel" aria-live="polite"><p class="sr-only">Loading today’s menu…</p></div>
       <figure class="dish" id="dishPhoto" hidden>
         <img alt="" width="1200" height="1500" decoding="async">
         <figcaption></figcaption>

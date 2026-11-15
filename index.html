@@ -164,6 +164,25 @@
   .menu-foot p { color: var(--on-dark-muted); font-size: 0.97rem; }
   @media (max-width: 700px) { .board { grid-template-columns: 1fr; } }
 
+  /* Dish photos: one large photo beside the list on desktop, small photos inline on phones */
+  .board-wrap.has-photo { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
+  .board-wrap.has-photo .board { grid-template-columns: 1fr; }
+  .dish { position: sticky; top: 92px; margin: 0; }
+  .dish img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius); background: var(--espresso-soft); }
+  .dish figcaption { margin-top: 0.6rem; color: var(--on-dark-muted); font-size: var(--step--1); }
+  .board-item.has-photo h3::after { content: ''; display: inline-block; width: 7px; height: 7px; margin-left: 0.5rem; border-radius: 50%;
+    background: var(--mustard); opacity: 0.55; vertical-align: 0.2em; }
+  .board-item.is-shown h3 { color: var(--mustard); }
+  .board-item.is-shown h3::after { opacity: 1; }
+  .board-thumb { display: none; }
+  @media (max-width: 860px) {
+    .board-wrap.has-photo { display: block; }
+    .dish { display: none; }
+    .board-thumb { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radius); margin-bottom: 0.9rem; }
+    .board-item.has-photo h3::after { display: none; }
+    .board-item.is-shown h3 { color: inherit; }
+  }
+
   /* Photo strip */
   .strip { display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr; gap: 0.75rem; margin-top: 2.5rem; }
   .strip button { position: relative; border: 0; padding: 0; background: none; cursor: zoom-in; border-radius: var(--radius); overflow: hidden; text-align: left; }
@@ -337,7 +356,13 @@
         <a class="btn btn-solid" href="https://smart-cafe-liard.vercel.app/menu">Order online for pickup</a>
       </div>
       <div class="tabs" role="tablist" aria-label="Menu categories" id="menuTabs"></div>
-      <div class="board" id="menuBoard" role="tabpanel" aria-live="polite"><p class="board-msg">Loading today’s menu…</p></div>
+      <div class="board-wrap" id="boardWrap">
+        <div class="board" id="menuBoard" role="tabpanel" aria-live="polite"><p class="board-msg">Loading today’s menu…</p></div>
+        <figure class="dish" id="dishPhoto" hidden>
+          <img src="" alt="" width="1200" height="1500" decoding="async">
+          <figcaption></figcaption>
+        </figure>
+      </div>
       <div class="menu-foot">
         <p>Oat and soy milk are always available. Ask at the counter about allergies.</p>
       </div>
@@ -353,9 +378,9 @@
           <img src="images/reserved-sm.webp" width="600" height="571" alt="The big wooden table set for a group" loading="lazy" decoding="async">
           <figcaption>The big table</figcaption>
         </button>
-        <button type="button" data-full="images/cupma.webp" data-caption="Espresso pouring into a cup">
-          <img src="images/cupma-sm.webp" width="600" height="756" alt="Espresso pouring into a black cup" loading="lazy" decoding="async">
-          <figcaption>Espresso</figcaption>
+        <button type="button" data-full="images/menu/wall-flowers.webp" data-caption="Dried flowers on the mustard wall">
+          <img src="images/menu/wall-flowers-sm.webp" width="600" height="527" alt="A large arrangement of dried flowers on a mustard-yellow wall" loading="lazy" decoding="async">
+          <figcaption>The flower wall</figcaption>
         </button>
         <button type="button" data-full="images/cinnamon-roll.webp" data-caption="Cinnamon rolls, baked in the morning">
           <img src="images/cinnamon-roll-sm.webp" width="600" height="638" alt="A plate piled with cinnamon rolls" loading="lazy" decoding="async">
@@ -437,7 +462,7 @@
         <button type="button" class="as-link" id="privacyLink">Privacy</button>
       </div>
     </div>
-    <p class="footer-bottom">© 2026 Manjil’s Cafe. Student project for COMP.6207 at Toi Ohomai.</p>
+    <p class="footer-bottom">© 2026 Manjil’s Cafe. Student project for COMP.6207 at Toi Ohomai. Photos courtesy of <a href="https://www.instagram.com/heyjudecafe_/">Hey Jude Cafe</a>, Brookfield, used with permission.</p>
   </div>
 </footer>
 
@@ -612,12 +637,46 @@ function renderMenu(categoryId) {
     if (selected) menuBoard.setAttribute('aria-labelledby', tab.id);
   });
   const items = menuState.items.filter((i) => i.category_id === categoryId);
-  menuBoard.innerHTML = items.map((item) => `
-    <article class="board-item">
+  menuBoard.innerHTML = items.map((item) => {
+    const photo = photoFor(item);
+    return `
+    <article class="board-item${photo ? ' has-photo' : ''}" data-id="${item.id}">
+      ${photo ? `<img class="board-thumb" src="${photo.sm}" alt="" width="600" height="450" loading="lazy" decoding="async">` : ''}
       <div class="board-line"><h3>${escapeHtml(item.name)}</h3><span class="leader" aria-hidden="true"></span><span class="price">${priceFormat.format(Number(item.price))}</span></div>
       <p>${escapeHtml(item.description)}</p>
       <p class="prep">Ready in about ${Number(item.prep_time_minutes)} min</p>
-    </article>`).join('');
+    </article>`;
+  }).join('');
+
+  // Desktop: one large photo beside the list, swapped as you point at dishes that have one
+  const withPhotos = items.filter(photoFor);
+  boardWrap.classList.toggle('has-photo', withPhotos.length > 0);
+  dishPhoto.hidden = withPhotos.length === 0;
+  if (withPhotos.length) showDish(withPhotos[0]);
+  menuBoard.querySelectorAll('.board-item.has-photo').forEach((el) => {
+    el.addEventListener('mouseenter', () => showDish(menuState.items.find((i) => i.id === Number(el.dataset.id))));
+  });
+}
+
+// Photos live in the menu database (image_url), shared with the ordering app
+function photoFor(item) {
+  if (!item || !item.image_url) return null;
+  return { full: item.image_url, sm: item.image_url.replace(/\.webp$/, '-sm.webp') };
+}
+const boardWrap = document.getElementById('boardWrap');
+const dishPhoto = document.getElementById('dishPhoto');
+let shownDishId = null;
+function showDish(item) {
+  const photo = photoFor(item);
+  if (!photo || shownDishId === item.id) return;
+  shownDishId = item.id;
+  const img = dishPhoto.querySelector('img');
+  img.srcset = `${photo.sm} 600w, ${photo.full} 1200w`;
+  img.sizes = '(max-width: 860px) 100vw, 40vw';
+  img.src = photo.full;
+  img.alt = item.name;
+  dishPhoto.querySelector('figcaption').textContent = item.name;
+  menuBoard.querySelectorAll('.board-item').forEach((el) => el.classList.toggle('is-shown', Number(el.dataset.id) === item.id));
 }
 
 async function loadMenu() {
@@ -625,7 +684,7 @@ async function loadMenu() {
   try {
     const [categories, items] = await Promise.all([
       supabaseFetch('/rest/v1/categories?select=id,name,sort_order&order=sort_order.asc'),
-      supabaseFetch('/rest/v1/menu_items?select=id,category_id,name,description,price,prep_time_minutes&is_available=eq.true&order=name.asc'),
+      supabaseFetch('/rest/v1/menu_items?select=id,category_id,name,description,price,prep_time_minutes,image_url&is_available=eq.true&order=name.asc'),
     ]);
     menuState.items = items;
     menuState.categories = categories.filter((c) => items.some((i) => i.category_id === c.id));

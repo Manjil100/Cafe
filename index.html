@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Manjil’s Cafe, Brookfield, Tauranga</title>
-<meta name="description" content="Neighbourhood café in Brookfield, Tauranga. Coffee, brunch and cabinet food. See today's menu, order online for pickup or book a table.">
+<title>Hey Jude Cafe, Brookfield, Tauranga</title>
+<meta name="description" content="Hey Jude is the locals’ café in Brookfield, Tauranga. Sacred Grounds coffee, brunch and lunch, open every day 7am to 3pm.">
 <meta name="theme-color" content="#E2B33C">
-<meta property="og:title" content="Manjil’s Cafe">
-<meta property="og:description" content="Coffee, brunch and cabinet food in Brookfield, Tauranga.">
+<meta property="og:title" content="Hey Jude Cafe">
+<meta property="og:description" content="The locals’ café in Brookfield, Tauranga. Open every day 7am to 3pm.">
 <meta property="og:image" content="images/reserved.webp">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23E2B33C'/%3E%3Cpath d='M16 24h26v14a11 11 0 0 1-11 11h-4a11 11 0 0 1-11-11z' fill='%232A1C14'/%3E%3Cpath d='M42 28h4a6 6 0 0 1 0 12h-4' stroke='%232A1C14' stroke-width='4' fill='none'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Figtree:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Figtree:ital,wght@0,400;0,500;0,600;1,400&display=swap">
 <link rel="preload" as="image" href="images/reserved-sm.webp" media="(max-width: 860px)">
 <link rel="preload" as="image" href="images/reserved.webp" media="(min-width: 861px)">
 <style>
@@ -30,7 +30,7 @@
     --on-dark: #F6EEDF;
     --on-dark-muted: #CDBEA8;
 
-    --display: 'Bricolage Grotesque', 'Arial Narrow', system-ui, sans-serif;
+    --display: 'Alfa Slab One', 'Rockwell', 'Roboto Slab', Georgia, serif;
     --body: 'Figtree', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
     --step--1: 0.875rem;
@@ -48,14 +48,15 @@
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-padding-top: 76px; -webkit-text-size-adjust: 100%; }
-  body { font-family: var(--body); font-size: var(--step-0); line-height: 1.6; color: var(--espresso); background: var(--milk); }
+  body { font-synthesis-weight: none; font-family: var(--body); font-size: var(--step-0); line-height: 1.6; color: var(--espresso); background: var(--milk); }
   img { display: block; max-width: 100%; height: auto; }
   a { color: inherit; }
   button, input, select, textarea { font: inherit; color: inherit; }
   ul, ol { list-style: none; }
-  h1, h2, h3 { font-family: var(--display); font-weight: 750; line-height: 1.02; letter-spacing: -0.015em; font-variation-settings: 'wdth' 82; }
+  h1, h2 { font-family: var(--display); font-weight: 400; line-height: 1.04; letter-spacing: -0.01em; }
+  h3 { font-family: var(--body); font-weight: 600; }
   h2 { font-size: var(--step-3); }
-  h3 { font-size: var(--step-1); letter-spacing: 0; line-height: 1.2; font-variation-settings: 'wdth' 90; }
+  h3 { font-size: var(--step-1); letter-spacing: 0; line-height: 1.25; }
   :focus-visible { outline: 3px solid var(--wood); outline-offset: 3px; border-radius: 2px; }
   .dark :focus-visible, .hero :focus-visible { outline-color: var(--espresso); }
   .dark :focus-visible { outline-color: var(--mustard); }
@@ -78,12 +79,13 @@
   .dark .btn-solid:hover { background: #EDC459; border-color: #EDC459; }
   .link { color: var(--wood); font-weight: 600; text-underline-offset: 3px; }
 
+  .proto { background: var(--espresso); color: var(--on-dark); font-size: var(--step--1); text-align: center; padding: 0.5rem var(--gutter); }
   /* Header */
   .site-header { position: sticky; top: 0; z-index: 50; background: rgba(251,248,241,0.94); backdrop-filter: blur(10px);
     border-bottom: 1px solid transparent; transition: border-color 0.2s; }
   .site-header.scrolled { border-color: var(--line); }
   .site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; height: 68px; }
-  .brand { font-family: var(--display); font-weight: 800; font-size: 1.45rem; letter-spacing: -0.02em; text-decoration: none; font-variation-settings: 'wdth' 80; }
+  .brand { font-family: var(--display); font-weight: 400; font-size: 1.5rem; letter-spacing: -0.01em; text-decoration: none; }
   .nav { display: flex; align-items: center; gap: clamp(1rem, 2.2vw, 2rem); }
   .nav a { text-decoration: none; font-weight: 500; font-size: 0.97rem; }
   .nav a:not(.btn):hover, .nav a[aria-current="true"] { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; text-decoration-color: var(--mustard-deep); }
@@ -102,14 +104,24 @@
   .hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); min-height: min(88vh, 820px); background: var(--mustard); }
   .hero-text { padding: clamp(2.5rem, 6vw, 5.5rem) var(--gutter); padding-left: max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter)));
     display: flex; flex-direction: column; justify-content: flex-end; gap: 1.5rem; }
-  .hero h1 { font-size: var(--step-4); line-height: 0.88; letter-spacing: -0.02em; font-variation-settings: 'wdth' 78; }
+  .hero h1 { font-size: clamp(4rem, 2rem + 9vw, 9rem); line-height: 0.86; letter-spacing: -0.02em; }
+  .hero .locals { font-weight: 600; font-size: var(--step-1); margin-top: -0.5rem; }
   .hero h1 span { display: block; }
   .hero p { font-size: var(--step-1); line-height: 1.45; max-width: 30ch; }
   .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
   .hero-actions .link { color: var(--espresso); margin-left: 0.25rem; }
   .status { display: flex; flex-wrap: wrap; gap: 0.35rem 1.25rem; font-weight: 600; font-size: 0.97rem; }
-  .status .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--espresso); margin-right: 0.5rem; vertical-align: 0.05em; }
-  .status.is-open .dot { background: var(--leaf); box-shadow: 0 0 0 3px rgba(62,90,56,0.2); }
+  .status { align-items: center; }
+  .record { flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%;
+    background: radial-gradient(circle, var(--milk) 0 7%, var(--wood) 8% 30%, transparent 31%),
+                repeating-radial-gradient(circle, #1d130d 0 1.5px, #34251b 1.5px 3px); box-shadow: 0 2px 0 rgba(42,28,20,0.25); }
+  .status .now { display: grid; line-height: 1.3; }
+  .status .now small { font-size: 0.8rem; font-weight: 600; opacity: 0.75; }
+  @media (prefers-reduced-motion: no-preference) {
+    .record { animation: spin 1.8s linear infinite; animation-play-state: paused; }
+    .status.is-open .record { animation-play-state: running; }
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
   .hero-photo { position: relative; min-height: 320px; }
   .hero-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   @media (max-width: 860px) {
@@ -183,6 +195,23 @@
     .board-item.is-shown h3 { color: inherit; }
   }
 
+  /* On the walls */
+  .walls-head { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr); gap: 1rem clamp(2rem, 5vw, 4rem); align-items: end; }
+  .walls-head .lede { margin-top: 0; }
+  .walls { display: grid; grid-template-columns: 1.15fr 1fr 1fr; grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 0.75rem; margin-top: 2.5rem; height: min(78vh, 720px); }
+  .walls button { position: relative; border: 0; padding: 0; background: none; cursor: zoom-in; border-radius: var(--radius); overflow: hidden; text-align: left; }
+  .walls .tall { grid-row: span 2; }
+  .walls img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.9s var(--ease); }
+  .walls button:hover img { transform: scale(1.03); }
+  .walls figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 2rem 0.9rem 0.75rem; color: #fff; font-size: 0.92rem; font-weight: 500;
+    background: linear-gradient(transparent, rgba(20,12,8,0.7)); }
+  @media (max-width: 860px) {
+    .walls-head { grid-template-columns: 1fr; }
+    .walls { display: flex; height: auto; overflow-x: auto; scroll-snap-type: x mandatory; margin-right: calc(var(--gutter) * -1); padding-right: var(--gutter); scrollbar-width: none; }
+    .walls::-webkit-scrollbar { display: none; }
+    .walls button { flex: 0 0 72%; scroll-snap-align: start; aspect-ratio: 3 / 4; }
+  }
+
   /* Photo strip */
   .strip { display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr; gap: 0.75rem; margin-top: 2.5rem; }
   .strip button { position: relative; border: 0; padding: 0; background: none; cursor: zoom-in; border-radius: var(--radius); overflow: hidden; text-align: left; }
@@ -224,6 +253,11 @@
   .contact dd { font-weight: 600; }
   .map { width: 100%; aspect-ratio: 4 / 3; border: 0; border-radius: var(--radius); background: var(--line); }
   .faq { margin-top: 2.5rem; }
+  .open-line { font-family: var(--display); font-size: var(--step-2); line-height: 1.1; margin-top: 0.25rem; }
+  .open-now { color: var(--muted); margin-top: 0.4rem; font-weight: 500; }
+  .known { display: grid; gap: 0.6rem; margin-top: 0.75rem; }
+  .known li { padding-left: 1.1rem; position: relative; }
+  .known li::before { content: ''; position: absolute; left: 0; top: 0.65em; width: 6px; height: 6px; border-radius: 50%; background: var(--mustard-deep); }
   .faq h3 { margin-bottom: 0.5rem; }
   .faq details { border-bottom: 1px solid var(--line); }
   .faq summary { cursor: pointer; padding: 0.95rem 2rem 0.95rem 0; font-weight: 600; list-style: none; position: relative; }
@@ -239,7 +273,7 @@
   .footer-grid h3 { font-family: var(--body); font-size: var(--step--1); font-weight: 600; color: var(--on-dark-muted); margin-bottom: 0.75rem; }
   .footer-grid a, .footer-grid button.as-link { display: block; text-decoration: none; padding: 0.3rem 0; color: var(--on-dark); background: none; border: 0; cursor: pointer; text-align: left; }
   .footer-grid a:hover, .footer-grid button.as-link:hover { color: var(--mustard); }
-  .footer-brand { font-family: var(--display); font-size: 2rem; font-weight: 800; font-variation-settings: 'wdth' 80; letter-spacing: -0.02em; }
+  .footer-brand { font-family: var(--display); font-size: 2.2rem; font-weight: 400; letter-spacing: -0.01em; }
   .footer-grid p { color: var(--on-dark-muted); margin-top: 0.5rem; max-width: 34ch; font-size: 0.97rem; }
   .footer-bottom { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid rgba(246,238,223,0.15); color: var(--on-dark-muted); font-size: var(--step--1); }
   @media (max-width: 860px) { .footer-grid { grid-template-columns: 1fr 1fr; } .footer-grid > div:first-child { grid-column: 1 / -1; } }
@@ -291,14 +325,15 @@
 <body>
 <a class="skip" href="#main">Skip to content</a>
 
+<p class="proto">Student prototype for Hey Jude Cafe. Menu prices are placeholders, and bookings and online orders don’t reach the café yet.</p>
 <header class="site-header" id="siteHeader">
   <div class="wrap">
-    <a class="brand" href="#top">Manjil’s Cafe</a>
+    <a class="brand" href="#top">Hey Jude</a>
     <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="siteNav">Menu</button>
     <nav class="nav" id="siteNav" aria-label="Main">
       <a href="#story">About</a>
       <a href="#menu">Menu</a>
-      <a href="#whats-on">What’s on</a>
+      <a href="#inside">On the walls</a>
       <a href="#visit">Visit</a>
       <a href="https://smart-cafe-liard.vercel.app/menu" class="btn btn-line">Order online</a>
       <button type="button" class="btn btn-solid" data-book>Book a table</button>
@@ -310,9 +345,10 @@
   <!-- Hero: the café's mustard wall -->
   <section class="hero" id="top" aria-labelledby="heroTitle">
     <div class="hero-text">
-      <p class="status" id="heroStatus" aria-live="polite"><span><span class="dot" aria-hidden="true"></span><span id="statusText">Open 7 days</span></span><span id="kitchenWait"></span></p>
-      <h1 id="heroTitle"><span>Manjil’s</span><span>Cafe</span></h1>
-      <p>Good coffee, proper brunch and a full cabinet, a few minutes from Otumoetai, Judea and Bethlehem.</p>
+      <p class="status" id="heroStatus" aria-live="polite"><span class="record" aria-hidden="true"></span><span class="now"><small>Now playing at Hey Jude</small><span id="statusText">Open every day, 7am to 3pm</span><span id="kitchenWait"></span></span></p>
+      <h1 id="heroTitle"><span>Hey</span><span>Jude</span></h1>
+      <p class="locals">The locals’ café in Brookfield</p>
+      <p>Sacred Grounds coffee, proper brunch and lunch, and a gramophone in the corner.</p>
       <div class="hero-actions">
         <a class="btn btn-solid" href="#menu">See the menu</a>
         <button type="button" class="btn btn-line" data-book>Book a table</button>
@@ -321,26 +357,26 @@
     </div>
     <div class="hero-photo">
       <img src="images/reserved-sm.webp" srcset="images/reserved-sm.webp 600w, images/reserved.webp 1200w" sizes="(max-width: 860px) 100vw, 50vw"
-           width="1200" height="1141" alt="Inside Manjil’s Cafe: a long wooden table set for a group, mustard walls and hanging plants" fetchpriority="high">
+           width="1200" height="1141" alt="Inside Hey Jude: a long wooden table set for a group, mustard walls and hanging plants" fetchpriority="high">
     </div>
   </section>
 
-  <!-- Story. Replace with the café's real story when it opens. -->
+  <!-- Story: summarised from the owner's own Instagram post -->
   <section class="section" id="story" aria-labelledby="storyTitle">
     <div class="wrap story-grid">
       <div class="story-text reveal">
-        <h2 id="storyTitle">A neighbourhood café in Brookfield</h2>
-        <p>Manjil’s Cafe is for the flat white on your way to work, the long brunch on a Saturday, and the pie you grab from the cabinet when you’re in a rush.</p>
-        <p>Grab the big table for a birthday, bring the dog, or settle in with a laptop. If it’s on the menu, it was made here this morning.</p>
+        <h2 id="storyTitle">It started with a cinnamon roll</h2>
+        <p>Back when he was cooking in Rotorua, our chef-owner started every day the same way: a warm cinnamon roll and a flat white from a little bakery on the way to work.</p>
+        <p>Moving to Tauranga meant leaving that morning ritual behind. Hey Jude is how he brought it back, for everyone. The cinnamon rolls are made here, the coffee comes from Sacred Grounds in Taupō, and the kitchen cooks proper food all day.</p>
         <dl class="facts">
-          <div><dt>Open</dt><dd>7 days</dd></div>
-          <div><dt>On the menu today</dt><dd id="factItems">17 items</dd></div>
-          <div><dt>Order ahead</dt><dd>Online</dd></div>
+          <div><dt>Open</dt><dd>Every day</dd></div>
+          <div><dt>Coffee</dt><dd>Sacred Grounds</dd></div>
+          <div><dt>Dogs</dt><dd>Welcome</dd></div>
         </dl>
       </div>
       <div class="story-photo reveal">
-        <img src="images/croll-sm.webp" srcset="images/croll-sm.webp 600w, images/croll.webp 1200w" sizes="(max-width: 860px) 100vw, 45vw"
-             width="1200" height="898" alt="A latte with leaf latte art next to a plate of fresh pastries" loading="lazy" decoding="async">
+        <img src="images/cinnamon-roll-sm.webp" srcset="images/cinnamon-roll-sm.webp 600w, images/cinnamon-roll.webp 1200w" sizes="(max-width: 860px) 100vw, 45vw"
+             width="1200" height="1276" alt="A plate piled with Hey Jude’s cinnamon rolls" loading="lazy" decoding="async">
       </div>
     </div>
   </section>
@@ -364,27 +400,34 @@
         </figure>
       </div>
       <div class="menu-foot">
-        <p>Oat and soy milk are always available. Ask at the counter about allergies.</p>
+        <p>Ask at the counter about allergies and dietary needs.</p>
       </div>
     </div>
   </section>
 
-  <!-- Photos -->
+  <!-- On the walls -->
   <section class="section" id="inside" aria-labelledby="insideTitle">
     <div class="wrap">
-      <h2 id="insideTitle" class="reveal">Inside the café</h2>
-      <div class="strip reveal" id="strip">
-        <button type="button" data-full="images/reserved.webp" data-caption="The big table, ready for a group booking">
-          <img src="images/reserved-sm.webp" width="600" height="571" alt="The big wooden table set for a group" loading="lazy" decoding="async">
+      <div class="walls-head reveal">
+        <h2 id="insideTitle">On the walls</h2>
+        <p class="lede">Framed photos of the music greats, from the Beatles and Bob Marley to Nirvana and Guns N’ Roses. A gramophone in the corner, a shelf of books to browse, and plenty of mustard yellow.</p>
+      </div>
+      <div class="walls reveal" id="strip">
+        <button type="button" class="tall" data-full="images/menu/gramophone.webp" data-caption="The gramophone">
+          <img src="images/menu/gramophone-sm.webp" width="600" height="1089" alt="An old brass gramophone on a wooden cabinet, in black and white" loading="lazy" decoding="async">
+          <figcaption>The gramophone</figcaption>
+        </button>
+        <button type="button" data-full="images/menu/bookshelf.webp" data-caption="Books to browse while you wait">
+          <img src="images/menu/bookshelf-sm.webp" width="600" height="624" alt="A wooden bookshelf full of books against a mustard wall" loading="lazy" decoding="async">
+          <figcaption>The bookshelf</figcaption>
+        </button>
+        <button type="button" data-full="images/reserved.webp" data-caption="The big table, ready for a group">
+          <img src="images/reserved-sm.webp" width="600" height="571" alt="The long wooden table set for a group" loading="lazy" decoding="async">
           <figcaption>The big table</figcaption>
         </button>
         <button type="button" data-full="images/menu/wall-flowers.webp" data-caption="Dried flowers on the mustard wall">
           <img src="images/menu/wall-flowers-sm.webp" width="600" height="527" alt="A large arrangement of dried flowers on a mustard-yellow wall" loading="lazy" decoding="async">
           <figcaption>The flower wall</figcaption>
-        </button>
-        <button type="button" data-full="images/cinnamon-roll.webp" data-caption="Cinnamon rolls, baked in the morning">
-          <img src="images/cinnamon-roll-sm.webp" width="600" height="638" alt="A plate piled with cinnamon rolls" loading="lazy" decoding="async">
-          <figcaption>Cinnamon rolls</figcaption>
         </button>
         <button type="button" data-full="images/dog.webp" data-caption="Dogs are welcome">
           <img src="images/dog-sm.webp" width="600" height="637" alt="A shaggy grey dog sitting between the café tables" loading="lazy" decoding="async">
@@ -394,39 +437,32 @@
     </div>
   </section>
 
-  <!-- What's on -->
-  <section class="section" id="whats-on" aria-labelledby="whatsOnTitle" style="padding-top: 0;">
-    <div class="wrap">
-      <h2 id="whatsOnTitle" class="reveal">What’s on</h2>
-      <p class="lede reveal">Small get-togethers at the café each month. Spaces are limited, so book a spot.</p>
-      <ol class="events reveal" id="eventsList"></ol>
-    </div>
-  </section>
-
-  <!-- Visit -->
+    <!-- Visit -->
   <section class="section" id="visit" aria-labelledby="visitTitle" style="background: var(--paper); border-top: 1px solid var(--line);">
     <div class="wrap">
       <h2 id="visitTitle" class="reveal">Visit us</h2>
       <div class="visit-grid">
         <div class="reveal">
           <h3>Opening hours</h3>
-          <p class="sr-only" id="visitStatus" aria-live="polite"></p>
-          <table class="hours" id="hoursTable"><caption class="sr-only">Opening hours</caption><tbody></tbody></table>
+          <p class="open-line">Every day, 7am to 3pm</p>
+          <p class="open-now" id="visitStatus" aria-live="polite"></p>
           <dl class="contact">
-            <dt>Where</dt><dd>Brookfield, Tauranga</dd>
+            <dt>Where</dt><dd>2 Jude Place, Brookfield, Tauranga</dd>
+            <dt>Instagram</dt><dd><a class="link" href="https://www.instagram.com/heyjudecafe_/">@heyjudecafe_</a></dd>
             <dt>Email</dt><dd><a class="link" href="mailto:khatiwadamanjil51@gmail.com">khatiwadamanjil51@gmail.com</a></dd>
           </dl>
           <div class="faq">
             <h3>Good to know</h3>
-            <details><summary>Do I need to book?</summary><p>No, walk-ins are always welcome. Booking is worth it for groups of five or more, and for weekend brunch.</p></details>
-            <details><summary>Do you have dairy-free options?</summary><p>Yes. Oat and soy milk are always on, and we’re happy to tell you what’s in any dish.</p></details>
-            <details><summary>Can I bring my dog?</summary><p>Yes, well-behaved dogs are welcome. We’ll bring a water bowl.</p></details>
-            <details><summary>Is the café wheelchair accessible?</summary><p>Yes. The entrance is step-free and there’s room between tables. Add anything else you need to your booking notes.</p></details>
+            <ul class="known">
+              <li>Dogs are welcome.</li>
+              <li>Coffee is roasted by Sacred Grounds in Taupō.</li>
+              <li>Specials, new dishes and holiday closures go up on <a class="link" href="https://www.instagram.com/heyjudecafe_/">Instagram</a> first.</li>
+            </ul>
           </div>
         </div>
         <div class="reveal">
-          <iframe class="map" title="Map of Brookfield, Tauranga" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-            src="https://maps.google.com/maps?q=Brookfield%2C%20Tauranga%2C%20New%20Zealand&z=14&output=embed"></iframe>
+          <iframe class="map" title="Map showing 2 Jude Place, Brookfield, Tauranga" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+            src="https://maps.google.com/maps?q=2%20Jude%20Place%2C%20Brookfield%2C%20Tauranga%2C%20New%20Zealand&z=15&output=embed"></iframe>
           <div class="hero-actions" style="margin-top: 1.5rem;">
             <button type="button" class="btn btn-solid" data-book>Book a table</button>
             <a class="btn btn-line" href="https://smart-cafe-liard.vercel.app/menu">Order online</a>
@@ -441,8 +477,8 @@
   <div class="wrap">
     <div class="footer-grid">
       <div>
-        <div class="footer-brand">Manjil’s Cafe</div>
-        <p>Coffee, brunch and cabinet food in Brookfield, Tauranga.</p>
+        <div class="footer-brand">Hey Jude</div>
+        <p>The locals’ café at 2 Jude Place, Brookfield, Tauranga. Open every day, 7am to 3pm.</p>
       </div>
       <div>
         <h3>Eat</h3>
@@ -453,16 +489,17 @@
       <div>
         <h3>Café</h3>
         <a href="#story">About</a>
-        <a href="#whats-on">What’s on</a>
+        <a href="#inside">On the walls</a>
         <a href="#visit">Hours and location</a>
       </div>
       <div>
         <h3>Contact</h3>
+        <a href="https://www.instagram.com/heyjudecafe_/">Instagram</a>
         <a href="mailto:khatiwadamanjil51@gmail.com">Email us</a>
         <button type="button" class="as-link" id="privacyLink">Privacy</button>
       </div>
     </div>
-    <p class="footer-bottom">© 2026 Manjil’s Cafe. Student project for COMP.6207 at Toi Ohomai. Photos courtesy of <a href="https://www.instagram.com/heyjudecafe_/">Hey Jude Cafe</a>, Brookfield, used with permission.</p>
+    <p class="footer-bottom">© 2026 Hey Jude Cafe. Website built by Manjil as a COMP.6207 student project at Toi Ohomai. Photos from <a href="https://www.instagram.com/heyjudecafe_/">Hey Jude Cafe’s Instagram</a>, used with permission.</p>
   </div>
 </footer>
 
@@ -566,8 +603,8 @@ const hoursData = [
   { day: 'Wednesday', open: '07:00', close: '15:00' },
   { day: 'Thursday', open: '07:00', close: '15:00' },
   { day: 'Friday', open: '07:00', close: '15:00' },
-  { day: 'Saturday', open: '08:00', close: '15:00' },
-  { day: 'Sunday', open: '08:00', close: '15:00' },
+  { day: 'Saturday', open: '07:00', close: '15:00' },
+  { day: 'Sunday', open: '07:00', close: '15:00' },
 ];
 const toMinutes = (hhmm) => { const [h, m] = hhmm.split(':').map(Number); return h * 60 + m; };
 function formatTime(value) {
@@ -599,12 +636,10 @@ function openStatus() {
 
 let isOpenNow = false;
 function renderHours() {
-  const { day } = cafeNow();
-  document.querySelector('#hoursTable tbody').innerHTML = hoursData.map((h) =>
-    `<tr class="${h.day === day ? 'today' : ''}"><th scope="row">${h.day}</th><td>${formatTime(h.open)} – ${formatTime(h.close)}</td></tr>`).join('');
   const status = openStatus();
   isOpenNow = status.open;
   document.getElementById('statusText').textContent = status.text;
+  document.querySelector('#heroStatus small').textContent = status.open ? 'Now playing at Hey Jude' : 'Back soon';
   document.getElementById('heroStatus').classList.toggle('is-open', status.open);
   document.getElementById('visitStatus').textContent = status.text;
   if (!status.open) document.getElementById('kitchenWait').textContent = '';
@@ -688,7 +723,6 @@ async function loadMenu() {
     ]);
     menuState.items = items;
     menuState.categories = categories.filter((c) => items.some((i) => i.category_id === c.id));
-    document.getElementById('factItems').textContent = `${items.length} items`;
     if (!menuState.categories.length) {
       menuBoard.innerHTML = '<p class="board-msg">The menu is being updated. Check back soon.</p>';
       return;
@@ -712,45 +746,6 @@ async function loadMenu() {
   }
 }
 loadMenu();
-
-// ===== What's on (monthly, so dates are always upcoming) =====
-const eventsData = [
-  { title: "Makers' market morning", desc: 'Local makers set up at the big table and outside. Coffee from the window from 8am.', weekday: 6, nth: -1, start: '08:00', end: '12:00' },
-  { title: 'Latte art for beginners', desc: 'Learn to steam milk and pour your first heart. Coffee included.', weekday: 6, nth: 1, start: '13:30', end: '14:45' },
-  { title: 'Home brewing basics', desc: 'Plunger, pour-over and AeroPress: find the method that suits your kitchen.', weekday: 0, nth: 2, start: '10:00', end: '11:00' },
-];
-function nthWeekday(year, month, weekday, nth) {
-  if (nth > 0) {
-    const first = new Date(Date.UTC(year, month, 1));
-    return new Date(Date.UTC(year, month, 1 + ((weekday - first.getUTCDay() + 7) % 7) + (nth - 1) * 7));
-  }
-  const last = new Date(Date.UTC(year, month + 1, 0));
-  return new Date(Date.UTC(year, month, last.getUTCDate() - ((last.getUTCDay() - weekday + 7) % 7)));
-}
-function nextOccurrence(ev) {
-  const now = cafeNow();
-  const [y, m] = now.date.split('-').map(Number);
-  for (let i = 0; i < 3; i++) {
-    const d = nthWeekday(y, m - 1 + i, ev.weekday, ev.nth);
-    const iso = d.toISOString().slice(0, 10);
-    if (iso > now.date || (iso === now.date && toMinutes(ev.end) > now.minutes)) return d;
-  }
-  return null;
-}
-function renderEvents() {
-  const upcoming = eventsData.map((ev) => ({ ...ev, date: nextOccurrence(ev) })).filter((ev) => ev.date).sort((a, b) => a.date - b.date);
-  const list = document.getElementById('eventsList');
-  list.innerHTML = upcoming.map((ev) => {
-    const iso = ev.date.toISOString().slice(0, 10);
-    const opt = (o) => ev.date.toLocaleDateString('en-NZ', { ...o, timeZone: 'UTC' });
-    return `<li class="event">
-      <time datetime="${iso}"><b>${ev.date.getUTCDate()}</b><span>${opt({ month: 'short' })}</span></time>
-      <div><h3>${ev.title}</h3><p>${ev.desc}</p><p class="when">${opt({ weekday: 'long' })}, ${formatTime(ev.start)} to ${formatTime(ev.end)}</p></div>
-      <button type="button" class="btn btn-line" data-book data-date="${iso}" data-time="${ev.start}" data-note="${ev.title}">Book a spot</button>
-    </li>`;
-  }).join('');
-}
-renderEvents();
 
 // ===== Booking =====
 const bookDialog = document.getElementById('bookDialog');

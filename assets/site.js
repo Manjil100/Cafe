@@ -56,6 +56,7 @@
   // Every element marked data-status shows the live open/closed status
   function renderStatus() {
     const status = openStatus();
+    document.documentElement.classList.toggle('cafe-open', status.open);
     document.querySelectorAll('[data-status]').forEach((el) => {
       el.classList.toggle('is-open', status.open);
       const text = el.querySelector('[data-status-text]') || el;

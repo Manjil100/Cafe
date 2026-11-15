@@ -11,6 +11,8 @@ navigation and footer, and writes the finished page to the site root:
 
 Run it after changing anything in src/:   python3 tools/build_pages.py
 """
+import html
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -18,6 +20,14 @@ ORDER_URL = "https://smart-cafe-liard.vercel.app/menu"
 EMAIL = "khatiwadamanjil51@gmail.com"
 INSTAGRAM = "https://www.instagram.com/heyjudecafe_/"
 SITE = "https://cafe-n2mj.vercel.app"
+
+# The café's Spotify playlist, e.g. "https://open.spotify.com/playlist/37i9dQZF1DX..."
+# Leave empty and the "What's playing" section stays off the home page.
+PLAYLIST_URL = ""
+
+# Real reviews only, copied word for word with the café's OK. Leave empty to hide the section.
+# Example: {"quote": "Best eggs bene in Tauranga.", "who": "Sam", "source": "Google review", "link": "https://..."}
+REVIEWS = []
 
 # file, path, nav key, <title>, description, page script, social image
 PAGES = [
@@ -144,10 +154,60 @@ def footer(active):
 """
 
 
+def esc(text):
+    return html.escape(text, quote=True)
+
+
+def listen_section():
+    if not PLAYLIST_URL:
+        return ""
+    match = re.search(r"open\.spotify\.com/(playlist|album)/([A-Za-z0-9]+)", PLAYLIST_URL)
+    if not match:
+        raise SystemExit("PLAYLIST_URL should be a Spotify playlist or album link")
+    embed = f"https://open.spotify.com/embed/{match.group(1)}/{match.group(2)}"
+    return f"""<section class="section dark" aria-labelledby="listenTitle">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <h2 id="listenTitle">What’s playing at Hey Jude</h2>
+        <p class="lede">The records we play in the café, so you can take them home.</p>
+      </div>
+      <a class="more" href="{esc(PLAYLIST_URL)}" target="_blank" rel="noopener">Open in Spotify</a>
+    </div>
+    <iframe class="listen-embed reveal" title="Hey Jude’s café playlist on Spotify" src="{embed}" loading="lazy"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+  </div>
+</section>"""
+
+
+def reviews_section():
+    if not REVIEWS:
+        return ""
+    items = []
+    for r in REVIEWS:
+        source = esc(r["source"])
+        if r.get("link"):
+            source = f'<a class="link" href="{esc(r["link"])}" target="_blank" rel="noopener">{source}</a>'
+        who = f'{esc(r["who"])}, ' if r.get("who") else ""
+        items.append(f"""      <figure class="review">
+        <blockquote>“{esc(r["quote"])}”</blockquote>
+        <figcaption>{who}{source}</figcaption>
+      </figure>""")
+    return f"""<section class="section plain" aria-labelledby="reviewsTitle">
+  <div class="wrap">
+    <h2 id="reviewsTitle" class="reveal">What people say</h2>
+    <div class="reviews reveal">
+{chr(10).join(items)}
+    </div>
+  </div>
+</section>"""
+
+
 def build():
     for name, path, active, title, description, script, image in PAGES:
         body = (ROOT / "src" / "pages" / f"{name}.html").read_text(encoding="utf-8")
         body = body.replace("{{ORDER_URL}}", ORDER_URL).replace("{{EMAIL}}", EMAIL)
+        body = body.replace("{{LISTEN}}", listen_section()).replace("{{REVIEWS}}", reviews_section())
         canonical = f'<link rel="canonical" href="{SITE}{path}">\n' if path else '<meta name="robots" content="noindex">\n'
         page_script = f'<script src="/assets/{script}" defer></script>\n' if script else ""
         html = HEAD.format(title=title, description=description, canonical=canonical, site=SITE,

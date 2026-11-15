@@ -6,7 +6,24 @@
   const board = document.getElementById('menuBoard');
   const wrap = document.getElementById('boardWrap');
   const dish = document.getElementById('dishPhoto');
-  const state = { categories: [], items: [], shownId: null };
+  const state = { categories: [], items: [], shownId: null, side: null };
+  const sideOf = (i) => String.fromCharCode(65 + i); // 0 -> A, 1 -> B ...
+
+  // The record beside the tabs turns over to the new side when you change tabs
+  const record = document.getElementById('sideRecord');
+  const letter = record.querySelector('.side-letter');
+  const still = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let flipTimer;
+  function flipTo(side) {
+    if (state.side === side) return;
+    const first = state.side === null;
+    state.side = side;
+    clearTimeout(flipTimer);
+    if (first || still.matches) { letter.textContent = side; return; }
+    record.classList.remove('flipping'); void record.offsetWidth; record.classList.add('flipping');
+    flipTimer = setTimeout(() => { letter.textContent = side; }, 260);
+  }
+  record.addEventListener('animationend', () => record.classList.remove('flipping'));
 
   const photoFor = (item) => (item && item.image_url
     ? { full: item.image_url, sm: item.image_url.replace(/\.webp$/, '-sm.webp') } : null);
@@ -32,6 +49,7 @@
       tab.tabIndex = on ? 0 : -1;
       if (on) board.setAttribute('aria-labelledby', tab.id);
     });
+    flipTo(sideOf(state.categories.indexOf(cat)));
     const items = state.items.filter((i) => i.category_id === categoryId);
     board.innerHTML = items.map((item) => {
       const photo = photoFor(item);
@@ -67,8 +85,8 @@
         board.innerHTML = '<p class="board-msg">The menu is being updated. Check back soon.</p>';
         return;
       }
-      tabsEl.innerHTML = state.categories.map((c) =>
-        `<button type="button" class="tab" role="tab" id="tab-${slug(c.name)}" data-cat="${c.id}" aria-controls="menuBoard">${escapeHtml(c.name)}</button>`).join('');
+      tabsEl.innerHTML = state.categories.map((c, i) =>
+        `<button type="button" class="tab" role="tab" id="tab-${slug(c.name)}" data-cat="${c.id}" aria-controls="menuBoard"><span class="tab-side">Side ${sideOf(i)}</span>${escapeHtml(c.name)}</button>`).join('');
       const tabs = [...tabsEl.querySelectorAll('.tab')];
       tabs.forEach((tab, i) => {
         tab.addEventListener('click', () => select(Number(tab.dataset.cat)));

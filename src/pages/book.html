@@ -1,0 +1,63 @@
+<section class="section" aria-labelledby="pageTitle">
+  <div class="wrap form-wrap">
+    <div>
+      <h1 id="pageTitle" style="font-size: var(--step-4); line-height: 0.95;">Book a table</h1>
+      <p class="lede">Pick a day and time and we’ll hold a table for you. Bookings open up to 60 days ahead.</p>
+      <dl class="info" style="grid-template-columns: 1fr;">
+        <div><dt>Hours</dt><dd>Every day, 7am to 3pm. Last booking 2:30pm.</dd></div>
+        <div><dt>Where</dt><dd>2 Jude Place, Brookfield, Tauranga</dd></div>
+      </dl>
+      <p class="fineprint" style="margin-top: 1.75rem;">We use your details only for this booking. <a class="link" href="/privacy">How we handle your details</a></p>
+    </div>
+
+    <div class="form-card">
+      <form id="bookForm" novalidate>
+        <p class="form-error" id="bookError" role="alert" tabindex="-1" hidden></p>
+        <div class="field">
+          <label for="bName">Name</label>
+          <input id="bName" name="name" autocomplete="name" maxlength="80" required>
+        </div>
+        <div class="field">
+          <label for="bPhone">Phone <span class="hint">in case we need to reach you</span></label>
+          <input id="bPhone" name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="30" required>
+        </div>
+        <div class="row">
+          <div class="field">
+            <label for="bDate">Date</label>
+            <input id="bDate" name="date" type="date" required>
+          </div>
+          <div class="field">
+            <label for="bTime">Time</label>
+            <select id="bTime" name="time" required><option value="">Choose a date first</option></select>
+          </div>
+        </div>
+        <fieldset class="field">
+          <legend>Guests</legend>
+          <div class="guests">
+            <label><input type="radio" name="guests" value="1"><span>1</span></label>
+            <label><input type="radio" name="guests" value="2" checked><span>2</span></label>
+            <label><input type="radio" name="guests" value="3"><span>3</span></label>
+            <label><input type="radio" name="guests" value="4"><span>4</span></label>
+            <label><input type="radio" name="guests" value="5+"><span>5+</span></label>
+          </div>
+        </fieldset>
+        <div class="field">
+          <label for="bNotes">Notes <span class="hint">optional, like a high chair or a dog</span></label>
+          <textarea id="bNotes" name="notes" maxlength="300"></textarea>
+        </div>
+        <button class="btn btn-solid" type="submit" style="width: 100%;">Book table</button>
+      </form>
+
+      <div class="done" id="bookDone" hidden>
+        <h2 tabindex="-1">You’re booked in</h2>
+        <p class="ref" id="doneRef"></p>
+        <p id="doneText"></p>
+        <p class="fineprint" style="margin-top: 1rem;">Keep this reference in case you need to change your booking.</p>
+        <div class="actions">
+          <a class="btn btn-solid" href="/visit">Get directions</a>
+          <button class="btn btn-line" type="button" id="bookAnother">Make another booking</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

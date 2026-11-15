@@ -6,915 +6,153 @@
 <title>Hey Jude Cafe, Brookfield, Tauranga</title>
 <meta name="description" content="Hey Jude is the locals’ café in Brookfield, Tauranga. Sacred Grounds coffee, brunch and lunch, open every day 7am to 3pm.">
 <meta name="theme-color" content="#E2B33C">
-<meta property="og:title" content="Hey Jude Cafe">
-<meta property="og:description" content="The locals’ café in Brookfield, Tauranga. Open every day 7am to 3pm.">
-<meta property="og:image" content="images/reserved.webp">
+<link rel="canonical" href="https://cafe-n2mj.vercel.app/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Hey Jude Cafe">
+<meta property="og:title" content="Hey Jude Cafe, Brookfield, Tauranga">
+<meta property="og:description" content="Hey Jude is the locals’ café in Brookfield, Tauranga. Sacred Grounds coffee, brunch and lunch, open every day 7am to 3pm.">
+<meta property="og:image" content="https://cafe-n2mj.vercel.app/images/reserved.webp">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23E2B33C'/%3E%3Cpath d='M16 24h26v14a11 11 0 0 1-11 11h-4a11 11 0 0 1-11-11z' fill='%232A1C14'/%3E%3Cpath d='M42 28h4a6 6 0 0 1 0 12h-4' stroke='%232A1C14' stroke-width='4' fill='none'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Figtree:ital,wght@0,400;0,500;0,600;1,400&display=swap">
-<link rel="preload" as="image" href="images/reserved-sm.webp" media="(max-width: 860px)">
-<link rel="preload" as="image" href="images/reserved.webp" media="(min-width: 861px)">
-<style>
-  :root {
-    --mustard: #E2B33C;
-    --mustard-deep: #C99A26;
-    --espresso: #2A1C14;
-    --espresso-soft: #3A2A1F;
-    --milk: #FBF8F1;
-    --paper: #FFFFFF;
-    --wood: #8A5A35;
-    --leaf: #3E5A38;
-    --line: #E6DCCB;
-    --muted: #6B5A4C;
-    --on-dark: #F6EEDF;
-    --on-dark-muted: #CDBEA8;
-
-    --display: 'Alfa Slab One', 'Rockwell', 'Roboto Slab', Georgia, serif;
-    --body: 'Figtree', system-ui, -apple-system, 'Segoe UI', sans-serif;
-
-    --step--1: 0.875rem;
-    --step-0: 1.0625rem;
-    --step-1: 1.3125rem;
-    --step-2: clamp(1.6rem, 1.2rem + 1.6vw, 2.25rem);
-    --step-3: clamp(2.2rem, 1.4rem + 3.4vw, 3.6rem);
-    --step-4: clamp(3.4rem, 1.6rem + 8vw, 7.5rem);
-
-    --gutter: clamp(1rem, 4vw, 3rem);
-    --max: 1180px;
-    --radius: 6px;
-    --ease: cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-padding-top: 76px; -webkit-text-size-adjust: 100%; }
-  body { font-synthesis-weight: none; font-family: var(--body); font-size: var(--step-0); line-height: 1.6; color: var(--espresso); background: var(--milk); }
-  img { display: block; max-width: 100%; height: auto; }
-  a { color: inherit; }
-  button, input, select, textarea { font: inherit; color: inherit; }
-  ul, ol { list-style: none; }
-  h1, h2 { font-family: var(--display); font-weight: 400; line-height: 1.04; letter-spacing: -0.01em; }
-  h3 { font-family: var(--body); font-weight: 600; }
-  h2 { font-size: var(--step-3); }
-  h3 { font-size: var(--step-1); letter-spacing: 0; line-height: 1.25; }
-  :focus-visible { outline: 3px solid var(--wood); outline-offset: 3px; border-radius: 2px; }
-  .dark :focus-visible, .hero :focus-visible { outline-color: var(--espresso); }
-  .dark :focus-visible { outline-color: var(--mustard); }
-  .skip { position: absolute; left: -9999px; top: 0; background: var(--espresso); color: var(--on-dark); padding: 0.75rem 1rem; z-index: 100; }
-  .skip:focus { left: 1rem; top: 1rem; }
-  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
-  .section { padding: clamp(4rem, 9vw, 7.5rem) 0; }
-  .lede { max-width: 58ch; color: var(--muted); margin-top: 1rem; }
-  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-
-  /* Buttons */
-  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; min-height: 48px; padding: 0.7rem 1.4rem;
-    border-radius: var(--radius); border: 2px solid var(--espresso); font-weight: 600; text-decoration: none; cursor: pointer;
-    transition: background-color 0.2s, color 0.2s, border-color 0.2s; }
-  .btn-solid { background: var(--espresso); color: var(--milk); }
-  .btn-solid:hover { background: var(--espresso-soft); border-color: var(--espresso-soft); }
-  .btn-line { background: transparent; color: var(--espresso); }
-  .btn-line:hover { background: rgba(42,28,20,0.08); }
-  .dark .btn-solid { background: var(--mustard); border-color: var(--mustard); color: var(--espresso); }
-  .dark .btn-solid:hover { background: #EDC459; border-color: #EDC459; }
-  .link { color: var(--wood); font-weight: 600; text-underline-offset: 3px; }
-
-  .proto { background: var(--espresso); color: var(--on-dark); font-size: var(--step--1); text-align: center; padding: 0.5rem var(--gutter); }
-  /* Header */
-  .site-header { position: sticky; top: 0; z-index: 50; background: rgba(251,248,241,0.94); backdrop-filter: blur(10px);
-    border-bottom: 1px solid transparent; transition: border-color 0.2s; }
-  .site-header.scrolled { border-color: var(--line); }
-  .site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; height: 68px; }
-  .brand { font-family: var(--display); font-weight: 400; font-size: 1.5rem; letter-spacing: -0.01em; text-decoration: none; }
-  .nav { display: flex; align-items: center; gap: clamp(1rem, 2.2vw, 2rem); }
-  .nav a { text-decoration: none; font-weight: 500; font-size: 0.97rem; }
-  .nav a:not(.btn):hover, .nav a[aria-current="true"] { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; text-decoration-color: var(--mustard-deep); }
-  .nav .btn { min-height: 42px; padding: 0.45rem 1.05rem; }
-  .menu-toggle { display: none; background: none; border: 2px solid var(--espresso); border-radius: var(--radius); min-height: 42px; padding: 0 0.9rem; font-weight: 600; cursor: pointer; }
-  @media (max-width: 860px) {
-    .menu-toggle { display: inline-flex; align-items: center; }
-    .nav { position: absolute; top: 68px; left: 0; right: 0; flex-direction: column; align-items: stretch; gap: 0;
-      background: var(--milk); border-bottom: 1px solid var(--line); padding: 0.5rem var(--gutter) 1.25rem; display: none; }
-    .nav.open { display: flex; }
-    .nav a:not(.btn) { padding: 0.85rem 0; border-bottom: 1px solid var(--line); }
-    .nav .btn { margin-top: 1rem; min-height: 48px; }
-  }
-
-  /* Hero: the mustard wall */
-  .hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); min-height: min(88vh, 820px); background: var(--mustard); }
-  .hero-text { padding: clamp(2.5rem, 6vw, 5.5rem) var(--gutter); padding-left: max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter)));
-    display: flex; flex-direction: column; justify-content: flex-end; gap: 1.5rem; }
-  .hero h1 { font-size: clamp(4rem, 2rem + 9vw, 9rem); line-height: 0.86; letter-spacing: -0.02em; }
-  .hero .locals { font-weight: 600; font-size: var(--step-1); margin-top: -0.5rem; }
-  .hero h1 span { display: block; }
-  .hero p { font-size: var(--step-1); line-height: 1.45; max-width: 30ch; }
-  .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
-  .hero-actions .link { color: var(--espresso); margin-left: 0.25rem; }
-  .status { display: flex; flex-wrap: wrap; gap: 0.35rem 1.25rem; font-weight: 600; font-size: 0.97rem; }
-  .status { align-items: center; }
-  .record { flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%;
-    background: radial-gradient(circle, var(--milk) 0 7%, var(--wood) 8% 30%, transparent 31%),
-                repeating-radial-gradient(circle, #1d130d 0 1.5px, #34251b 1.5px 3px); box-shadow: 0 2px 0 rgba(42,28,20,0.25); }
-  .status .now { display: grid; line-height: 1.3; }
-  .status .now small { font-size: 0.8rem; font-weight: 600; opacity: 0.75; }
-  @media (prefers-reduced-motion: no-preference) {
-    .record { animation: spin 1.8s linear infinite; animation-play-state: paused; }
-    .status.is-open .record { animation-play-state: running; }
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .hero-photo { position: relative; min-height: 320px; }
-  .hero-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  @media (max-width: 860px) {
-    .hero { grid-template-columns: 1fr; min-height: 0; }
-    .hero-photo { order: -1; min-height: 0; aspect-ratio: 4 / 3; }
-    .hero-text { padding: 2rem var(--gutter) 2.5rem; }
-  }
-  @media (prefers-reduced-motion: no-preference) {
-    .hero h1 span { animation: rise 0.9s var(--ease) both; }
-    .hero h1 span + span { animation-delay: 0.08s; }
-    .hero-photo img { animation: settle 1.4s var(--ease) both; }
-  }
-  @keyframes rise { from { opacity: 0; transform: translateY(0.35em); } to { opacity: 1; transform: none; } }
-  @keyframes settle { from { opacity: 0.4; transform: scale(1.04); } to { opacity: 1; transform: none; } }
-
-  /* Story */
-  .story-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr); gap: clamp(2rem, 6vw, 5.5rem); align-items: center; }
-  .story-grid p + p { margin-top: 1rem; }
-  .story-text p { max-width: 58ch; }
-  .story-text h2 { margin-bottom: 1.5rem; }
-  .story-photo img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius); }
-  .facts { margin-top: 2rem; display: grid; grid-template-columns: repeat(3, auto); justify-content: start; gap: 0.5rem 2.5rem; }
-  .facts dt { font-size: var(--step--1); color: var(--muted); }
-  .facts dd { font-family: var(--display); font-weight: 700; font-size: 1.35rem; font-variation-settings: 'wdth' 85; }
-  @media (max-width: 860px) {
-    .story-grid { grid-template-columns: 1fr; }
-    .story-photo { order: -1; }
-    .story-photo img { aspect-ratio: 4 / 3; }
-    .facts { grid-template-columns: repeat(2, auto); }
-  }
-
-  /* Menu board */
-  .dark { background: var(--espresso); color: var(--on-dark); }
-  .dark .lede { color: var(--on-dark-muted); }
-  .menu-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 1.5rem; }
-  .tabs { display: flex; flex-wrap: wrap; gap: 0.25rem 1.75rem; margin: 2.5rem 0 1.5rem; border-bottom: 1px solid rgba(246,238,223,0.18); }
-  .tab { background: none; border: 0; padding: 0.6rem 0 0.75rem; cursor: pointer; font-weight: 600; color: var(--on-dark-muted);
-    border-bottom: 3px solid transparent; margin-bottom: -1px; min-height: 44px; }
-  .tab[aria-selected="true"] { color: var(--on-dark); border-bottom-color: var(--mustard); }
-  .tab:hover { color: var(--on-dark); }
-  .board { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 clamp(2rem, 5vw, 4.5rem); min-height: 12rem; }
-  .board-item { padding: 1.1rem 0; border-bottom: 1px solid rgba(246,238,223,0.12); }
-  .board-line { display: flex; align-items: baseline; gap: 0.6rem; }
-  .board-line h3 { font-size: 1.25rem; }
-  .board-line .leader { flex: 1; border-bottom: 2px dotted rgba(246,238,223,0.35); transform: translateY(-0.3em); min-width: 1.5rem; }
-  .board-line .price { font-family: var(--display); font-weight: 700; font-size: 1.25rem; color: var(--mustard); font-variant-numeric: tabular-nums; }
-  .board-item p { color: var(--on-dark-muted); font-size: 0.97rem; margin-top: 0.25rem; max-width: 46ch; }
-  .board-item .prep { font-size: var(--step--1); color: var(--on-dark-muted); opacity: 0.85; margin-top: 0.15rem; }
-  .board-msg { grid-column: 1 / -1; color: var(--on-dark-muted); padding: 2rem 0; }
-  .board-msg button { margin-left: 0.5rem; background: none; border: 0; color: var(--mustard); text-decoration: underline; cursor: pointer; font-weight: 600; }
-  .menu-foot { margin-top: 2.5rem; display: flex; flex-wrap: wrap; gap: 1rem 1.5rem; align-items: center; }
-  .menu-foot p { color: var(--on-dark-muted); font-size: 0.97rem; }
-  @media (max-width: 700px) { .board { grid-template-columns: 1fr; } }
-
-  /* Dish photos: one large photo beside the list on desktop, small photos inline on phones */
-  .board-wrap.has-photo { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: clamp(2rem, 5vw, 4.5rem); align-items: start; }
-  .board-wrap.has-photo .board { grid-template-columns: 1fr; }
-  .dish { position: sticky; top: 92px; margin: 0; }
-  .dish img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius); background: var(--espresso-soft); }
-  .dish figcaption { margin-top: 0.6rem; color: var(--on-dark-muted); font-size: var(--step--1); }
-  .board-item.has-photo h3::after { content: ''; display: inline-block; width: 7px; height: 7px; margin-left: 0.5rem; border-radius: 50%;
-    background: var(--mustard); opacity: 0.55; vertical-align: 0.2em; }
-  .board-item.is-shown h3 { color: var(--mustard); }
-  .board-item.is-shown h3::after { opacity: 1; }
-  .board-thumb { display: none; }
-  @media (max-width: 860px) {
-    .board-wrap.has-photo { display: block; }
-    .dish { display: none; }
-    .board-thumb { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radius); margin-bottom: 0.9rem; }
-    .board-item.has-photo h3::after { display: none; }
-    .board-item.is-shown h3 { color: inherit; }
-  }
-
-  /* On the walls */
-  .walls-head { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr); gap: 1rem clamp(2rem, 5vw, 4rem); align-items: end; }
-  .walls-head .lede { margin-top: 0; }
-  .walls { display: grid; grid-template-columns: 1.15fr 1fr 1fr; grid-template-rows: repeat(2, minmax(0, 1fr)); gap: 0.75rem; margin-top: 2.5rem; height: min(78vh, 720px); }
-  .walls button { position: relative; border: 0; padding: 0; background: none; cursor: zoom-in; border-radius: var(--radius); overflow: hidden; text-align: left; }
-  .walls .tall { grid-row: span 2; }
-  .walls img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.9s var(--ease); }
-  .walls button:hover img { transform: scale(1.03); }
-  .walls figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 2rem 0.9rem 0.75rem; color: #fff; font-size: 0.92rem; font-weight: 500;
-    background: linear-gradient(transparent, rgba(20,12,8,0.7)); }
-  @media (max-width: 860px) {
-    .walls-head { grid-template-columns: 1fr; }
-    .walls { display: flex; height: auto; overflow-x: auto; scroll-snap-type: x mandatory; margin-right: calc(var(--gutter) * -1); padding-right: var(--gutter); scrollbar-width: none; }
-    .walls::-webkit-scrollbar { display: none; }
-    .walls button { flex: 0 0 72%; scroll-snap-align: start; aspect-ratio: 3 / 4; }
-  }
-
-  /* Photo strip */
-  .strip { display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr; gap: 0.75rem; margin-top: 2.5rem; }
-  .strip button { position: relative; border: 0; padding: 0; background: none; cursor: zoom-in; border-radius: var(--radius); overflow: hidden; text-align: left; }
-  .strip img { width: 100%; height: 100%; aspect-ratio: 3 / 4; object-fit: cover; transition: transform 0.9s var(--ease); }
-  .strip button:first-child img { aspect-ratio: auto; }
-  .strip button:hover img { transform: scale(1.03); }
-  .strip figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 2rem 0.9rem 0.75rem; color: #fff; font-size: 0.92rem; font-weight: 500;
-    background: linear-gradient(transparent, rgba(20,12,8,0.7)); }
-  @media (max-width: 860px) {
-    .strip { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 0.75rem; margin-right: calc(var(--gutter) * -1); padding-right: var(--gutter); scrollbar-width: none; }
-    .strip::-webkit-scrollbar { display: none; }
-    .strip button { flex: 0 0 72%; scroll-snap-align: start; }
-    .strip button:first-child img { aspect-ratio: 3 / 4; }
-  }
-
-  /* What's on */
-  .events { margin-top: 2.5rem; border-top: 2px solid var(--espresso); }
-  .event { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr) auto; gap: 1.5rem; align-items: center; padding: 1.5rem 0; border-bottom: 1px solid var(--line); }
-  .event time { display: grid; place-items: center; background: var(--mustard); border-radius: var(--radius); padding: 0.6rem 0.4rem; line-height: 1; text-align: center; }
-  .event time b { font-family: var(--display); font-size: 2rem; font-weight: 800; font-variation-settings: 'wdth' 80; }
-  .event time span { font-size: var(--step--1); font-weight: 600; margin-top: 0.2rem; }
-  .event h3 { font-size: 1.4rem; }
-  .event p { color: var(--muted); margin-top: 0.2rem; max-width: 60ch; }
-  .event .when { color: var(--espresso); font-weight: 600; font-size: 0.97rem; margin-top: 0.35rem; }
-  @media (max-width: 700px) {
-    .event { grid-template-columns: 4.5rem minmax(0, 1fr); gap: 1rem; }
-    .event .btn { grid-column: 2; justify-self: start; }
-  }
-
-  /* Visit */
-  .visit-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(2rem, 6vw, 5rem); margin-top: 2.5rem; }
-  .hours { width: 100%; border-collapse: collapse; }
-  .hours th, .hours td { padding: 0.75rem 0; border-bottom: 1px solid var(--line); text-align: left; font-weight: 500; }
-  .hours td { text-align: right; font-variant-numeric: tabular-nums; }
-  .hours tr.today th, .hours tr.today td { font-weight: 700; }
-  .hours tr.today th::after { content: 'Today'; margin-left: 0.6rem; font-size: 0.75rem; font-weight: 700; background: var(--mustard); padding: 0.1rem 0.45rem; border-radius: 4px; vertical-align: 0.1em; }
-  .contact { margin-top: 2rem; display: grid; gap: 0.35rem; }
-  .contact dt { font-size: var(--step--1); color: var(--muted); margin-top: 0.75rem; }
-  .contact dd { font-weight: 600; }
-  .map { width: 100%; aspect-ratio: 4 / 3; border: 0; border-radius: var(--radius); background: var(--line); }
-  .faq { margin-top: 2.5rem; }
-  .open-line { font-family: var(--display); font-size: var(--step-2); line-height: 1.1; margin-top: 0.25rem; }
-  .open-now { color: var(--muted); margin-top: 0.4rem; font-weight: 500; }
-  .known { display: grid; gap: 0.6rem; margin-top: 0.75rem; }
-  .known li { padding-left: 1.1rem; position: relative; }
-  .known li::before { content: ''; position: absolute; left: 0; top: 0.65em; width: 6px; height: 6px; border-radius: 50%; background: var(--mustard-deep); }
-  .faq h3 { margin-bottom: 0.5rem; }
-  .faq details { border-bottom: 1px solid var(--line); }
-  .faq summary { cursor: pointer; padding: 0.95rem 2rem 0.95rem 0; font-weight: 600; list-style: none; position: relative; }
-  .faq summary::-webkit-details-marker { display: none; }
-  .faq summary::after { content: '+'; position: absolute; right: 0.25rem; top: 0.7rem; font-size: 1.4rem; font-weight: 400; color: var(--wood); }
-  .faq details[open] summary::after { content: '−'; }
-  .faq details p { padding: 0 0 1rem; color: var(--muted); max-width: 60ch; }
-  @media (max-width: 860px) { .visit-grid { grid-template-columns: 1fr; } }
-
-  /* Footer */
-  .site-footer { padding: 3.5rem 0 2.5rem; }
-  .footer-grid { display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: 2rem; }
-  .footer-grid h3 { font-family: var(--body); font-size: var(--step--1); font-weight: 600; color: var(--on-dark-muted); margin-bottom: 0.75rem; }
-  .footer-grid a, .footer-grid button.as-link { display: block; text-decoration: none; padding: 0.3rem 0; color: var(--on-dark); background: none; border: 0; cursor: pointer; text-align: left; }
-  .footer-grid a:hover, .footer-grid button.as-link:hover { color: var(--mustard); }
-  .footer-brand { font-family: var(--display); font-size: 2.2rem; font-weight: 400; letter-spacing: -0.01em; }
-  .footer-grid p { color: var(--on-dark-muted); margin-top: 0.5rem; max-width: 34ch; font-size: 0.97rem; }
-  .footer-bottom { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid rgba(246,238,223,0.15); color: var(--on-dark-muted); font-size: var(--step--1); }
-  @media (max-width: 860px) { .footer-grid { grid-template-columns: 1fr 1fr; } .footer-grid > div:first-child { grid-column: 1 / -1; } }
-
-  /* Section entrances (subtle, once) */
-  @media (prefers-reduced-motion: no-preference) {
-    .reveal { opacity: 0; transform: translateY(18px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
-    .reveal.visible { opacity: 1; transform: none; }
-  }
-
-  /* Dialogs */
-  dialog { border: 0; border-radius: 10px; padding: 0; color: var(--espresso); background: var(--paper); width: min(560px, calc(100% - 2rem)); max-height: calc(100% - 2rem); margin: auto; }
-  dialog::backdrop { background: rgba(26,17,11,0.6); }
-  .dialog-body { padding: clamp(1.25rem, 4vw, 2rem); }
-  .dialog-head { display: flex; justify-content: space-between; align-items: start; gap: 1rem; margin-bottom: 1.25rem; }
-  .dialog-head h2 { font-size: var(--step-2); }
-  .close { background: none; border: 0; font-size: 1.75rem; line-height: 1; cursor: pointer; padding: 0.25rem 0.5rem; color: var(--muted); }
-  .field { display: grid; gap: 0.35rem; margin-bottom: 1rem; }
-  .field label, .field legend { font-weight: 600; font-size: 0.95rem; }
-  .field input, .field select, .field textarea { width: 100%; min-height: 48px; padding: 0.65rem 0.8rem; border: 1.5px solid #B9A994; border-radius: var(--radius); background: var(--paper); font-size: 1.05rem; }
-  .field textarea { min-height: 88px; resize: vertical; }
-  .field input:focus, .field select:focus, .field textarea:focus { outline: 3px solid var(--mustard); outline-offset: 0; border-color: var(--espresso); }
-  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 0 1rem; }
-  .guests { display: flex; gap: 0.5rem; border: 0; }
-  .guests label { flex: 1; }
-  .guests input { position: absolute; opacity: 0; pointer-events: none; }
-  .guests span { display: grid; place-items: center; min-height: 46px; border: 1.5px solid #B9A994; border-radius: var(--radius); font-weight: 600; cursor: pointer; }
-  .guests input:checked + span { background: var(--espresso); color: var(--milk); border-color: var(--espresso); }
-  .guests input:focus-visible + span { outline: 3px solid var(--mustard); outline-offset: 2px; }
-  .fineprint { font-size: var(--step--1); color: var(--muted); margin: 0.25rem 0 1.25rem; }
-  .form-error { color: #9B2C1F; font-weight: 600; margin-bottom: 1rem; }
-  .privacy-list { display: grid; gap: 0.75rem; }
-  .privacy-list li { padding-left: 1.1rem; position: relative; color: var(--muted); }
-  .privacy-list li::before { content: ''; position: absolute; left: 0; top: 0.7em; width: 6px; height: 6px; border-radius: 50%; background: var(--mustard-deep); }
-  .lightbox { width: min(1000px, calc(100% - 2rem)); background: #140c08; color: var(--on-dark); }
-  .lightbox img { width: 100%; max-height: 78vh; object-fit: contain; }
-  .lightbox .bar { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 0.75rem 1rem; }
-  .lightbox .bar button { background: none; border: 1.5px solid rgba(246,238,223,0.4); color: var(--on-dark); border-radius: var(--radius); min-height: 42px; padding: 0 0.9rem; cursor: pointer; }
-  @media (max-width: 480px) { .row { grid-template-columns: 1fr; } }
-
-  /* Toast */
-  .toast { position: fixed; left: 50%; bottom: 1.25rem; transform: translate(-50%, 150%); background: var(--espresso); color: var(--on-dark);
-    padding: 0.9rem 1.2rem; border-radius: var(--radius); width: max-content; max-width: calc(100% - 2rem); z-index: 200;
-    visibility: hidden; transition: transform 0.35s var(--ease), visibility 0s linear 0.35s; }
-  .toast.show { transform: translate(-50%, 0); visibility: visible; transition: transform 0.35s var(--ease); }
-  .toast.error { background: #7F2418; }
-</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&amp;family=Figtree:ital,wght@0,400;0,500;0,600;1,400&amp;display=swap">
+<link rel="stylesheet" href="/assets/site.css">
+<script src="/assets/site.js" defer></script>
+<script src="/assets/home.js" defer></script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-
-<p class="proto">Student prototype for Hey Jude Cafe. Menu prices are placeholders, and bookings and online orders don’t reach the café yet.</p>
+<div class="proto" role="note"><p>Student prototype for Hey Jude Cafe. Menu prices are placeholders, and bookings and online orders don’t reach the café yet.</p></div>
 <header class="site-header" id="siteHeader">
   <div class="wrap">
-    <a class="brand" href="#top">Hey Jude</a>
-    <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="siteNav">Menu</button>
+    <a class="brand" href="/" aria-current="page">Hey Jude</a>
+    <a class="now" href="/visit" data-status><span class="record" aria-hidden="true"></span><span class="now-text" data-status-text>Open every day, 7am to 3pm</span></a>
+    <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="siteNav">Menu</button>
     <nav class="nav" id="siteNav" aria-label="Main">
-      <a href="#story">About</a>
-      <a href="#menu">Menu</a>
-      <a href="#inside">On the walls</a>
-      <a href="#visit">Visit</a>
-      <a href="https://smart-cafe-liard.vercel.app/menu" class="btn btn-line">Order online</a>
-      <button type="button" class="btn btn-solid" data-book>Book a table</button>
+      <a href="/menu">Menu</a>
+      <a href="/about">About</a>
+      <a href="/visit">Visit</a>
+      <a href="https://smart-cafe-liard.vercel.app/menu">Order online</a>
+      <a class="btn btn-solid" href="/book">Book a table</a>
+      <a class="now now-mobile" href="/visit" data-status><span class="record" aria-hidden="true"></span><span data-status-text>Open every day, 7am to 3pm</span></a>
     </nav>
   </div>
 </header>
+<main id="main" tabindex="-1">
+<section class="photo-hero" aria-labelledby="heroTitle">
+  <img src="/images/reserved.webp" srcset="/images/reserved-sm.webp 600w, /images/reserved.webp 1200w" sizes="100vw" width="1200" height="1141"
+       alt="Inside Hey Jude: a long wooden table set for a group, mustard walls and hanging plants" fetchpriority="high">
+  <div class="wrap">
+    <h1 id="heroTitle">Hey Jude</h1>
+    <div class="hero-foot">
+      <p>The locals’ café in Brookfield. Sacred Grounds coffee, proper brunch and lunch, and a gramophone in the corner.</p>
+      <div class="actions">
+        <a class="btn btn-solid" href="/menu">See the menu</a>
+        <a class="btn btn-line" href="/book">Book a table</a>
+      </div>
+    </div>
+  </div>
+</section>
 
-<main id="main">
-  <!-- Hero: the café's mustard wall -->
-  <section class="hero" id="top" aria-labelledby="heroTitle">
-    <div class="hero-text">
-      <p class="status" id="heroStatus" aria-live="polite"><span class="record" aria-hidden="true"></span><span class="now"><small>Now playing at Hey Jude</small><span id="statusText">Open every day, 7am to 3pm</span><span id="kitchenWait"></span></span></p>
-      <h1 id="heroTitle"><span>Hey</span><span>Jude</span></h1>
-      <p class="locals">The locals’ café in Brookfield</p>
-      <p>Sacred Grounds coffee, proper brunch and lunch, and a gramophone in the corner.</p>
-      <div class="hero-actions">
-        <a class="btn btn-solid" href="#menu">See the menu</a>
-        <button type="button" class="btn btn-line" data-book>Book a table</button>
-        <a class="link" href="https://smart-cafe-liard.vercel.app/menu">Order online for pickup</a>
-      </div>
-    </div>
-    <div class="hero-photo">
-      <img src="images/reserved-sm.webp" srcset="images/reserved-sm.webp 600w, images/reserved.webp 1200w" sizes="(max-width: 860px) 100vw, 50vw"
-           width="1200" height="1141" alt="Inside Hey Jude: a long wooden table set for a group, mustard walls and hanging plants" fetchpriority="high">
-    </div>
-  </section>
+<div class="status-bar">
+  <div class="wrap">
+    <a class="now" href="/visit" data-status><span class="record" aria-hidden="true"></span><span data-status-text>Open every day, 7am to 3pm</span></a>
+    <span>2 Jude Place, Brookfield, Tauranga</span>
+    <a class="more" style="margin-top:0;border-color:var(--espresso)" href="https://smart-cafe-liard.vercel.app/menu">Order online for pickup</a>
+  </div>
+</div>
 
-  <!-- Story: summarised from the owner's own Instagram post -->
-  <section class="section" id="story" aria-labelledby="storyTitle">
-    <div class="wrap story-grid">
-      <div class="story-text reveal">
-        <h2 id="storyTitle">It started with a cinnamon roll</h2>
-        <p>Back when he was cooking in Rotorua, our chef-owner started every day the same way: a warm cinnamon roll and a flat white from a little bakery on the way to work.</p>
-        <p>Moving to Tauranga meant leaving that morning ritual behind. Hey Jude is how he brought it back, for everyone. The cinnamon rolls are made here, the coffee comes from Sacred Grounds in Taupō, and the kitchen cooks proper food all day.</p>
-        <dl class="facts">
-          <div><dt>Open</dt><dd>Every day</dd></div>
-          <div><dt>Coffee</dt><dd>Sacred Grounds</dd></div>
-          <div><dt>Dogs</dt><dd>Welcome</dd></div>
-        </dl>
-      </div>
-      <div class="story-photo reveal">
-        <img src="images/cinnamon-roll-sm.webp" srcset="images/cinnamon-roll-sm.webp 600w, images/cinnamon-roll.webp 1200w" sizes="(max-width: 860px) 100vw, 45vw"
-             width="1200" height="1276" alt="A plate piled with Hey Jude’s cinnamon rolls" loading="lazy" decoding="async">
-      </div>
+<section class="section plain" aria-labelledby="storyTitle">
+  <div class="wrap split">
+    <div class="split-media reveal">
+      <img src="/images/cinnamon-roll-sm.webp" srcset="/images/cinnamon-roll-sm.webp 600w, /images/cinnamon-roll.webp 1200w" sizes="(max-width: 860px) 100vw, 45vw"
+           width="1200" height="1275" alt="A plate piled with Hey Jude’s cinnamon rolls" loading="lazy" decoding="async">
     </div>
-  </section>
+    <div class="split-text reveal">
+      <h2 id="storyTitle">It started with a cinnamon roll</h2>
+      <p>Back when he was cooking in Rotorua, our chef-owner started every day with a warm cinnamon roll and a flat white from a little bakery on the way to work.</p>
+      <p>Hey Jude is how he brought that morning ritual to Tauranga, for everyone.</p>
+      <a class="more" href="/about">Read our story</a>
+    </div>
+  </div>
+</section>
 
-  <!-- Menu board (live from the ordering system's database) -->
-  <section class="section dark" id="menu" aria-labelledby="menuTitle">
-    <div class="wrap">
-      <div class="menu-head reveal">
-        <div>
-          <h2 id="menuTitle">Today’s menu</h2>
-          <p class="lede">This comes straight from the kitchen’s system, so everything listed is available right now.</p>
-        </div>
-        <a class="btn btn-solid" href="https://smart-cafe-liard.vercel.app/menu">Order online for pickup</a>
+<section class="section dark" aria-labelledby="kitchenTitle">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <h2 id="kitchenTitle">From the kitchen</h2>
+        <p class="lede">Proper food, cooked here every day.</p>
       </div>
-      <div class="tabs" role="tablist" aria-label="Menu categories" id="menuTabs"></div>
-      <div class="board-wrap" id="boardWrap">
-        <div class="board" id="menuBoard" role="tabpanel" aria-live="polite"><p class="board-msg">Loading today’s menu…</p></div>
-        <figure class="dish" id="dishPhoto" hidden>
-          <img src="" alt="" width="1200" height="1500" decoding="async">
-          <figcaption></figcaption>
-        </figure>
-      </div>
-      <div class="menu-foot">
-        <p>Ask at the counter about allergies and dietary needs.</p>
-      </div>
+      <a class="more" href="/menu">See the full menu</a>
     </div>
-  </section>
+    <div class="dishes" id="featured" aria-live="polite"></div>
+  </div>
+</section>
 
-  <!-- On the walls -->
-  <section class="section" id="inside" aria-labelledby="insideTitle">
-    <div class="wrap">
-      <div class="walls-head reveal">
-        <h2 id="insideTitle">On the walls</h2>
-        <p class="lede">Framed photos of the music greats, from the Beatles and Bob Marley to Nirvana and Guns N’ Roses. A gramophone in the corner, a shelf of books to browse, and plenty of mustard yellow.</p>
-      </div>
-      <div class="walls reveal" id="strip">
-        <button type="button" class="tall" data-full="images/menu/gramophone.webp" data-caption="The gramophone">
-          <img src="images/menu/gramophone-sm.webp" width="600" height="1089" alt="An old brass gramophone on a wooden cabinet, in black and white" loading="lazy" decoding="async">
-          <figcaption>The gramophone</figcaption>
-        </button>
-        <button type="button" data-full="images/menu/bookshelf.webp" data-caption="Books to browse while you wait">
-          <img src="images/menu/bookshelf-sm.webp" width="600" height="624" alt="A wooden bookshelf full of books against a mustard wall" loading="lazy" decoding="async">
-          <figcaption>The bookshelf</figcaption>
-        </button>
-        <button type="button" data-full="images/reserved.webp" data-caption="The big table, ready for a group">
-          <img src="images/reserved-sm.webp" width="600" height="571" alt="The long wooden table set for a group" loading="lazy" decoding="async">
-          <figcaption>The big table</figcaption>
-        </button>
-        <button type="button" data-full="images/menu/wall-flowers.webp" data-caption="Dried flowers on the mustard wall">
-          <img src="images/menu/wall-flowers-sm.webp" width="600" height="527" alt="A large arrangement of dried flowers on a mustard-yellow wall" loading="lazy" decoding="async">
-          <figcaption>The flower wall</figcaption>
-        </button>
-        <button type="button" data-full="images/dog.webp" data-caption="Dogs are welcome">
-          <img src="images/dog-sm.webp" width="600" height="637" alt="A shaggy grey dog sitting between the café tables" loading="lazy" decoding="async">
-          <figcaption>Dogs welcome</figcaption>
-        </button>
-      </div>
+<section class="section plain" aria-labelledby="wallsTitle">
+  <div class="wrap split split--flip">
+    <div class="split-media reveal">
+      <img src="/images/menu/gramophone-sm.webp" 
+           width="472" height="857" alt="An old brass gramophone on a wooden cabinet, in black and white" loading="lazy" decoding="async">
     </div>
-  </section>
+    <div class="split-text reveal">
+      <h2 id="wallsTitle">Music on the walls</h2>
+      <p>Framed photos of the music greats, from the Beatles and Bob Marley to Nirvana and Guns N’ Roses. A gramophone in the corner and a shelf of books to browse while you wait.</p>
+      <a class="more" href="/about#walls">Have a look around</a>
+    </div>
+  </div>
+</section>
 
-    <!-- Visit -->
-  <section class="section" id="visit" aria-labelledby="visitTitle" style="background: var(--paper); border-top: 1px solid var(--line);">
-    <div class="wrap">
-      <h2 id="visitTitle" class="reveal">Visit us</h2>
-      <div class="visit-grid">
-        <div class="reveal">
-          <h3>Opening hours</h3>
-          <p class="open-line">Every day, 7am to 3pm</p>
-          <p class="open-now" id="visitStatus" aria-live="polite"></p>
-          <dl class="contact">
-            <dt>Where</dt><dd>2 Jude Place, Brookfield, Tauranga</dd>
-            <dt>Instagram</dt><dd><a class="link" href="https://www.instagram.com/heyjudecafe_/">@heyjudecafe_</a></dd>
-            <dt>Email</dt><dd><a class="link" href="mailto:khatiwadamanjil51@gmail.com">khatiwadamanjil51@gmail.com</a></dd>
-          </dl>
-          <div class="faq">
-            <h3>Good to know</h3>
-            <ul class="known">
-              <li>Dogs are welcome.</li>
-              <li>Coffee is roasted by Sacred Grounds in Taupō.</li>
-              <li>Specials, new dishes and holiday closures go up on <a class="link" href="https://www.instagram.com/heyjudecafe_/">Instagram</a> first.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="reveal">
-          <iframe class="map" title="Map showing 2 Jude Place, Brookfield, Tauranga" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-            src="https://maps.google.com/maps?q=2%20Jude%20Place%2C%20Brookfield%2C%20Tauranga%2C%20New%20Zealand&z=15&output=embed"></iframe>
-          <div class="hero-actions" style="margin-top: 1.5rem;">
-            <button type="button" class="btn btn-solid" data-book>Book a table</button>
-            <a class="btn btn-line" href="https://smart-cafe-liard.vercel.app/menu">Order online</a>
-          </div>
-        </div>
-      </div>
+<section class="section mustard" aria-labelledby="visitTitle">
+  <div class="wrap">
+    <h2 id="visitTitle" class="reveal">Come and see us</h2>
+    <dl class="info reveal">
+      <div><dt>Hours</dt><dd class="big">7am to 3pm</dd><dd>Every day</dd></div>
+      <div><dt>Address</dt><dd class="big">2 Jude Place</dd><dd>Brookfield, Tauranga</dd></div>
+      <div><dt>Coffee</dt><dd class="big">Sacred Grounds</dd><dd>From Taupō</dd></div>
+    </dl>
+    <div class="actions">
+      <a class="btn btn-solid" href="/visit">Plan your visit</a>
+      <a class="btn btn-line" href="/book">Book a table</a>
     </div>
-  </section>
+  </div>
+</section>
 </main>
-
 <footer class="site-footer dark">
   <div class="wrap">
     <div class="footer-grid">
       <div>
-        <div class="footer-brand">Hey Jude</div>
-        <p>The locals’ café at 2 Jude Place, Brookfield, Tauranga. Open every day, 7am to 3pm.</p>
+        <p class="footer-brand">Hey Jude</p>
+        <p>The locals’ café in Brookfield, Tauranga. Good coffee, proper food and a record on the go.</p>
       </div>
       <div>
-        <h3>Eat</h3>
-        <a href="#menu">Today’s menu</a>
-        <a href="https://smart-cafe-liard.vercel.app/menu">Order online</a>
-        <button type="button" class="as-link" data-book>Book a table</button>
+        <h2>Visit</h2>
+        <p style="margin-top:0">2 Jude Place<br>Brookfield, Tauranga</p>
+        <p>Every day<br>7am to 3pm</p>
       </div>
       <div>
-        <h3>Café</h3>
-        <a href="#story">About</a>
-        <a href="#inside">On the walls</a>
-        <a href="#visit">Hours and location</a>
+        <h2>The café</h2>
+        <ul>
+          <li><a href="/menu">Menu</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/visit">Visit</a></li>
+          <li><a href="/book">Book a table</a></li>
+          <li><a href="https://smart-cafe-liard.vercel.app/menu">Order online</a></li>
+        </ul>
       </div>
       <div>
-        <h3>Contact</h3>
-        <a href="https://www.instagram.com/heyjudecafe_/">Instagram</a>
-        <a href="mailto:khatiwadamanjil51@gmail.com">Email us</a>
-        <button type="button" class="as-link" id="privacyLink">Privacy</button>
+        <h2>Get in touch</h2>
+        <ul>
+          <li><a href="https://www.instagram.com/heyjudecafe_/" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="mailto:khatiwadamanjil51@gmail.com">Email us</a></li>
+          <li><a href="/privacy">Your details</a></li>
+        </ul>
       </div>
     </div>
-    <p class="footer-bottom">© 2026 Hey Jude Cafe. Website built by Manjil as a COMP.6207 student project at Toi Ohomai. Photos from <a href="https://www.instagram.com/heyjudecafe_/">Hey Jude Cafe’s Instagram</a>, used with permission.</p>
+    <p class="footer-bottom">© 2026 Hey Jude Cafe. Website built by Manjil as a COMP.6207 student project at Toi Ohomai. Photos from <a href="https://www.instagram.com/heyjudecafe_/" target="_blank" rel="noopener">Hey Jude Cafe’s Instagram</a>, used with permission.</p>
   </div>
 </footer>
-
-<!-- Booking -->
-<dialog id="bookDialog" aria-labelledby="bookTitle">
-  <form class="dialog-body" id="bookForm" novalidate>
-    <div class="dialog-head">
-      <h2 id="bookTitle">Book a table</h2>
-      <button type="button" class="close" data-close aria-label="Close">×</button>
-    </div>
-    <p class="form-error" id="bookError" role="alert" hidden></p>
-    <div class="row">
-      <div class="field"><label for="bName">Name</label><input id="bName" name="name" autocomplete="name" maxlength="60" required></div>
-      <div class="field"><label for="bPhone">Phone</label><input id="bPhone" name="phone" type="tel" autocomplete="tel" placeholder="021 123 4567" required></div>
-    </div>
-    <div class="row">
-      <div class="field"><label for="bDate">Date</label><input id="bDate" name="date" type="date" required></div>
-      <div class="field"><label for="bTime">Time</label><select id="bTime" name="time" required><option value="">Choose a date first</option></select></div>
-    </div>
-    <fieldset class="field">
-      <legend>Guests</legend>
-      <div class="guests">
-        <label><input type="radio" name="guests" value="1"><span>1</span></label>
-        <label><input type="radio" name="guests" value="2" checked><span>2</span></label>
-        <label><input type="radio" name="guests" value="3"><span>3</span></label>
-        <label><input type="radio" name="guests" value="4"><span>4</span></label>
-        <label><input type="radio" name="guests" value="5+"><span>5+</span></label>
-      </div>
-    </fieldset>
-    <div class="field"><label for="bNotes">Notes <span style="font-weight:400;color:var(--muted)">(optional)</span></label><textarea id="bNotes" name="notes" maxlength="300" placeholder="Allergies, high chair, an event you’re booking for…"></textarea></div>
-    <p class="fineprint">We only use your name and phone number to manage this booking. <button type="button" class="link" style="background:none;border:0;cursor:pointer;padding:0" data-privacy>How we handle your details</button></p>
-    <button type="submit" class="btn btn-solid" style="width:100%">Book table</button>
-  </form>
-</dialog>
-
-<!-- Privacy -->
-<dialog id="privacyDialog" aria-labelledby="privacyTitle">
-  <div class="dialog-body">
-    <div class="dialog-head">
-      <h2 id="privacyTitle">Your details</h2>
-      <button type="button" class="close" data-close aria-label="Close">×</button>
-    </div>
-    <ul class="privacy-list">
-      <li>When you book, we collect your name, phone number, the date and time, how many guests and any notes.</li>
-      <li>We use them only to manage your booking. We don’t sell or share them, and we don’t send marketing.</li>
-      <li>Bookings are kept in our booking system, and only signed-in café staff can see them.</li>
-      <li>This website doesn’t use tracking or advertising cookies.</li>
-      <li>To see, correct or delete your details, email <a class="link" href="mailto:khatiwadamanjil51@gmail.com">khatiwadamanjil51@gmail.com</a>. We follow the New Zealand Privacy Act 2020.</li>
-    </ul>
-  </div>
-</dialog>
-
-<!-- Photo viewer -->
-<dialog id="lightbox" class="lightbox" aria-label="Photo">
-  <img id="lightboxImg" src="" alt="">
-  <div class="bar">
-    <span id="lightboxCaption"></span>
-    <span><button type="button" id="lbPrev" aria-label="Previous photo">Previous</button> <button type="button" id="lbNext" aria-label="Next photo">Next</button> <button type="button" data-close>Close</button></span>
-  </div>
-</dialog>
-
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-<script>
-// ===== Shared data (same database as the Smart Café ordering system) =====
-const SUPABASE_URL = 'https://ftfdbpimbxncmfzafvxc.supabase.co';
-// Publishable key: designed to be public. Row Level Security protects the data.
-const SUPABASE_KEY = 'sb_publishable_8y1OjSQPjQIA1yexrI-Nog_PUdm-Fus';
-const CAFE_TZ = 'Pacific/Auckland';
-
-async function supabaseFetch(path, options = {}) {
-  const res = await fetch(`${SUPABASE_URL}${path}`, {
-    ...options,
-    headers: { apikey: SUPABASE_KEY, 'Content-Type': 'application/json', ...(options.headers || {}) },
-  });
-  const body = await res.json().catch(() => null);
-  if (!res.ok) {
-    const err = new Error((body && body.message) || `Request failed (${res.status})`);
-    err.status = res.status;
-    throw err;
-  }
-  return body;
-}
-const escapeHtml = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-const priceFormat = new Intl.NumberFormat('en-NZ', { style: 'currency', currency: 'NZD' });
-
-const toastEl = document.getElementById('toast');
-let toastTimer;
-function showToast(message, isError = false) {
-  toastEl.textContent = message;
-  toastEl.classList.toggle('error', isError);
-  toastEl.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toastEl.classList.remove('show'), 5000);
-}
-
-// ===== Hours (must match private.opening_hours() in the database) =====
-const hoursData = [
-  { day: 'Monday', open: '07:00', close: '15:00' },
-  { day: 'Tuesday', open: '07:00', close: '15:00' },
-  { day: 'Wednesday', open: '07:00', close: '15:00' },
-  { day: 'Thursday', open: '07:00', close: '15:00' },
-  { day: 'Friday', open: '07:00', close: '15:00' },
-  { day: 'Saturday', open: '07:00', close: '15:00' },
-  { day: 'Sunday', open: '07:00', close: '15:00' },
-];
-const toMinutes = (hhmm) => { const [h, m] = hhmm.split(':').map(Number); return h * 60 + m; };
-function formatTime(value) {
-  const mins = typeof value === 'number' ? value : toMinutes(value);
-  const h = Math.floor(mins / 60), m = mins % 60;
-  const suffix = h < 12 ? 'am' : 'pm';
-  const h12 = ((h + 11) % 12) + 1;
-  return m === 0 ? `${h12}${suffix}` : `${h12}:${String(m).padStart(2, '0')}${suffix}`;
-}
-function cafeNow() {
-  const p = Object.fromEntries(new Intl.DateTimeFormat('en-NZ', {
-    timeZone: CAFE_TZ, weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23',
-  }).formatToParts(new Date()).map((x) => [x.type, x.value]));
-  return { day: p.weekday, date: `${p.year}-${p.month}-${p.day}`, minutes: Number(p.hour) * 60 + Number(p.minute) };
-}
-const hoursFor = (dayName) => hoursData.find((h) => h.day === dayName);
-const dayNameOf = (isoDate) => new Date(isoDate + 'T12:00:00Z').toLocaleDateString('en-NZ', { weekday: 'long', timeZone: 'UTC' });
-
-function openStatus() {
-  const now = cafeNow();
-  const today = hoursFor(now.day);
-  if (now.minutes >= toMinutes(today.open) && now.minutes < toMinutes(today.close)) {
-    return { open: true, text: `Open now until ${formatTime(today.close)}` };
-  }
-  if (now.minutes < toMinutes(today.open)) return { open: false, text: `Closed. Opens today at ${formatTime(today.open)}` };
-  const next = hoursData[(hoursData.indexOf(today) + 1) % 7];
-  return { open: false, text: `Closed. Opens tomorrow at ${formatTime(next.open)}` };
-}
-
-let isOpenNow = false;
-function renderHours() {
-  const status = openStatus();
-  isOpenNow = status.open;
-  document.getElementById('statusText').textContent = status.text;
-  document.querySelector('#heroStatus small').textContent = status.open ? 'Now playing at Hey Jude' : 'Back soon';
-  document.getElementById('heroStatus').classList.toggle('is-open', status.open);
-  document.getElementById('visitStatus').textContent = status.text;
-  if (!status.open) document.getElementById('kitchenWait').textContent = '';
-}
-renderHours();
-setInterval(renderHours, 60000);
-
-// Live kitchen queue from the ordering system (only shown while open)
-async function loadKitchenWait() {
-  const el = document.getElementById('kitchenWait');
-  if (!isOpenNow) { el.textContent = ''; return; }
-  try {
-    const wait = await supabaseFetch('/rest/v1/rpc/get_kitchen_wait', { method: 'POST', body: '{}' });
-    el.textContent = wait.queue_minutes > 0 ? `Kitchen wait about ${wait.queue_minutes} min` : 'No wait in the kitchen';
-  } catch { el.textContent = ''; }
-}
-loadKitchenWait();
-setInterval(loadKitchenWait, 60000);
-
-// ===== Menu board =====
-const menuState = { categories: [], items: [] };
-const menuBoard = document.getElementById('menuBoard');
-const menuTabs = document.getElementById('menuTabs');
-
-function renderMenu(categoryId) {
-  menuTabs.querySelectorAll('.tab').forEach((tab) => {
-    const selected = Number(tab.dataset.cat) === categoryId;
-    tab.setAttribute('aria-selected', String(selected));
-    tab.tabIndex = selected ? 0 : -1;
-    if (selected) menuBoard.setAttribute('aria-labelledby', tab.id);
-  });
-  const items = menuState.items.filter((i) => i.category_id === categoryId);
-  menuBoard.innerHTML = items.map((item) => {
-    const photo = photoFor(item);
-    return `
-    <article class="board-item${photo ? ' has-photo' : ''}" data-id="${item.id}">
-      ${photo ? `<img class="board-thumb" src="${photo.sm}" alt="" width="600" height="450" loading="lazy" decoding="async">` : ''}
-      <div class="board-line"><h3>${escapeHtml(item.name)}</h3><span class="leader" aria-hidden="true"></span><span class="price">${priceFormat.format(Number(item.price))}</span></div>
-      <p>${escapeHtml(item.description)}</p>
-      <p class="prep">Ready in about ${Number(item.prep_time_minutes)} min</p>
-    </article>`;
-  }).join('');
-
-  // Desktop: one large photo beside the list, swapped as you point at dishes that have one
-  const withPhotos = items.filter(photoFor);
-  boardWrap.classList.toggle('has-photo', withPhotos.length > 0);
-  dishPhoto.hidden = withPhotos.length === 0;
-  if (withPhotos.length) showDish(withPhotos[0]);
-  menuBoard.querySelectorAll('.board-item.has-photo').forEach((el) => {
-    el.addEventListener('mouseenter', () => showDish(menuState.items.find((i) => i.id === Number(el.dataset.id))));
-  });
-}
-
-// Photos live in the menu database (image_url), shared with the ordering app
-function photoFor(item) {
-  if (!item || !item.image_url) return null;
-  return { full: item.image_url, sm: item.image_url.replace(/\.webp$/, '-sm.webp') };
-}
-const boardWrap = document.getElementById('boardWrap');
-const dishPhoto = document.getElementById('dishPhoto');
-let shownDishId = null;
-function showDish(item) {
-  const photo = photoFor(item);
-  if (!photo || shownDishId === item.id) return;
-  shownDishId = item.id;
-  const img = dishPhoto.querySelector('img');
-  img.srcset = `${photo.sm} 600w, ${photo.full} 1200w`;
-  img.sizes = '(max-width: 860px) 100vw, 40vw';
-  img.src = photo.full;
-  img.alt = item.name;
-  dishPhoto.querySelector('figcaption').textContent = item.name;
-  menuBoard.querySelectorAll('.board-item').forEach((el) => el.classList.toggle('is-shown', Number(el.dataset.id) === item.id));
-}
-
-async function loadMenu() {
-  menuBoard.innerHTML = '<p class="board-msg">Loading today\'s menu…</p>';
-  try {
-    const [categories, items] = await Promise.all([
-      supabaseFetch('/rest/v1/categories?select=id,name,sort_order&order=sort_order.asc'),
-      supabaseFetch('/rest/v1/menu_items?select=id,category_id,name,description,price,prep_time_minutes,image_url&is_available=eq.true&order=name.asc'),
-    ]);
-    menuState.items = items;
-    menuState.categories = categories.filter((c) => items.some((i) => i.category_id === c.id));
-    if (!menuState.categories.length) {
-      menuBoard.innerHTML = '<p class="board-msg">The menu is being updated. Check back soon.</p>';
-      return;
-    }
-    menuTabs.innerHTML = menuState.categories.map((c) =>
-      `<button type="button" class="tab" role="tab" id="tab-${c.id}" data-cat="${c.id}" aria-controls="menuBoard">${escapeHtml(c.name)}</button>`).join('');
-    const tabs = [...menuTabs.querySelectorAll('.tab')];
-    tabs.forEach((tab, i) => {
-      tab.addEventListener('click', () => renderMenu(Number(tab.dataset.cat)));
-      tab.addEventListener('keydown', (e) => {
-        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
-        const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
-        next.focus(); renderMenu(Number(next.dataset.cat));
-      });
-    });
-    renderMenu(menuState.categories[0].id);
-  } catch (err) {
-    console.error('Menu failed to load', err);
-    menuBoard.innerHTML = '<p class="board-msg">The menu couldn\'t load right now.<button type="button" id="menuRetry">Try again</button></p>';
-    document.getElementById('menuRetry').addEventListener('click', loadMenu);
-  }
-}
-loadMenu();
-
-// ===== Booking =====
-const bookDialog = document.getElementById('bookDialog');
-const bookForm = document.getElementById('bookForm');
-const bDate = document.getElementById('bDate');
-const bTime = document.getElementById('bTime');
-const bookError = document.getElementById('bookError');
-const todayIso = cafeNow().date;
-bDate.min = todayIso;
-const maxD = new Date(todayIso + 'T12:00:00Z'); maxD.setUTCDate(maxD.getUTCDate() + 60);
-bDate.max = maxD.toISOString().slice(0, 10);
-
-function fillTimes(preferred) {
-  const date = bDate.value;
-  if (!date) { bTime.innerHTML = '<option value="">Choose a date first</option>'; return; }
-  const hours = hoursFor(dayNameOf(date));
-  const now = cafeNow();
-  const opts = ['<option value="">Choose a time</option>'];
-  for (let m = toMinutes(hours.open); m <= toMinutes(hours.close) - 30; m += 30) {
-    if (date === now.date && m <= now.minutes) continue;
-    const v = `${String(Math.floor(m / 60)).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`;
-    opts.push(`<option value="${v}">${formatTime(m)}</option>`);
-  }
-  if (opts.length === 1) opts[0] = '<option value="">No times left that day</option>';
-  bTime.innerHTML = opts.join('');
-  if (preferred && [...bTime.options].some((o) => o.value === preferred)) bTime.value = preferred;
-}
-bDate.addEventListener('change', () => fillTimes());
-
-function openBooking({ date, time, note } = {}) {
-  bookError.hidden = true;
-  if (date) { bDate.value = date; fillTimes(time); }
-  if (note && !document.getElementById('bNotes').value) document.getElementById('bNotes').value = `Booking for ${note}`;
-  bookDialog.showModal();
-  document.getElementById('bName').focus();
-}
-document.addEventListener('click', (e) => {
-  const trigger = e.target.closest('[data-book]');
-  if (!trigger) return;
-  e.preventDefault();
-  closeNav();
-  openBooking({ date: trigger.dataset.date, time: trigger.dataset.time, note: trigger.dataset.note });
-});
-
-bookForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const data = new FormData(bookForm);
-  const name = String(data.get('name') || '').trim();
-  const phone = String(data.get('phone') || '').trim();
-  const missing = [];
-  if (!name) missing.push('your name');
-  if (!phone) missing.push('a phone number');
-  if (!bDate.value) missing.push('a date');
-  if (!bTime.value) missing.push('a time');
-  if (missing.length) { bookError.textContent = `Please add ${missing.join(', ')}.`; bookError.hidden = false; return; }
-
-  const btn = bookForm.querySelector('[type="submit"]');
-  btn.disabled = true; btn.textContent = 'Booking…'; bookError.hidden = true;
-  try {
-    const result = await supabaseFetch('/rest/v1/rpc/create_reservation', {
-      method: 'POST',
-      body: JSON.stringify({ p_name: name, p_phone: phone, p_date: bDate.value, p_time: bTime.value, p_guests: data.get('guests'), p_notes: String(data.get('notes') || '').trim() || null }),
-    });
-    const nice = new Date(bDate.value + 'T12:00:00Z').toLocaleDateString('en-NZ', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC' });
-    bookDialog.close();
-    bookForm.reset(); fillTimes();
-    showToast(`Table booked for ${result.guests} on ${nice} at ${result.time.toLowerCase().replace(' ', '')}. Your reference is ${result.reference}.`);
-  } catch (err) {
-    console.error('Booking failed', err);
-    bookError.textContent = err.status === 400 && err.message ? err.message : "We couldn't save your booking. Check your connection and try again.";
-    bookError.hidden = false;
-  } finally {
-    btn.disabled = false; btn.textContent = 'Book table';
-  }
-});
-
-// ===== Dialogs: close buttons, backdrop click, privacy =====
-document.querySelectorAll('dialog').forEach((d) => {
-  d.addEventListener('click', (e) => { if (e.target === d) d.close(); });
-  d.querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', () => d.close()));
-});
-const privacyDialog = document.getElementById('privacyDialog');
-document.getElementById('privacyLink').addEventListener('click', () => privacyDialog.showModal());
-document.querySelectorAll('[data-privacy]').forEach((b) => b.addEventListener('click', () => privacyDialog.showModal()));
-
-// ===== Photo viewer =====
-const photos = [...document.querySelectorAll('#strip button')];
-const lightbox = document.getElementById('lightbox');
-let photoIndex = 0;
-function showPhoto(i) {
-  photoIndex = (i + photos.length) % photos.length;
-  const b = photos[photoIndex];
-  const img = document.getElementById('lightboxImg');
-  img.src = b.dataset.full; img.alt = b.querySelector('img').alt;
-  document.getElementById('lightboxCaption').textContent = b.dataset.caption;
-}
-photos.forEach((b, i) => b.addEventListener('click', () => { showPhoto(i); lightbox.showModal(); }));
-document.getElementById('lbPrev').addEventListener('click', () => showPhoto(photoIndex - 1));
-document.getElementById('lbNext').addEventListener('click', () => showPhoto(photoIndex + 1));
-lightbox.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') showPhoto(photoIndex + 1); if (e.key === 'ArrowLeft') showPhoto(photoIndex - 1); });
-
-// ===== Navigation =====
-const header = document.getElementById('siteHeader');
-const nav = document.getElementById('siteNav');
-const toggle = document.getElementById('menuToggle');
-function closeNav() { nav.classList.remove('open'); toggle.setAttribute('aria-expanded', 'false'); toggle.textContent = 'Menu'; }
-toggle.addEventListener('click', () => {
-  const open = !nav.classList.contains('open');
-  nav.classList.toggle('open', open);
-  toggle.setAttribute('aria-expanded', String(open));
-  toggle.textContent = open ? 'Close' : 'Menu';
-});
-
-// One scroll handler, at most once per frame
-const navLinks = [...nav.querySelectorAll('a[href^="#"]')];
-const sections = navLinks.map((a) => document.querySelector(a.getAttribute('href'))).filter(Boolean);
-let ticking = false;
-function onScroll() {
-  ticking = false;
-  const y = window.scrollY;
-  header.classList.toggle('scrolled', y > 8);
-  let current = null;
-  sections.forEach((s) => { if (s.getBoundingClientRect().top <= 120) current = s.id; });
-  navLinks.forEach((a) => a.toggleAttribute('aria-current', a.getAttribute('href') === `#${current}`));
-  navLinks.forEach((a) => { if (a.hasAttribute('aria-current')) a.setAttribute('aria-current', 'true'); });
-}
-window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
-onScroll();
-
-// Smooth glide to sections (stops if the visitor scrolls themselves)
-const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-let glideFrame = null;
-function glideTo(targetY) {
-  const startY = window.scrollY, distance = targetY - startY;
-  if (glideFrame) cancelAnimationFrame(glideFrame);
-  if (reduceMotion.matches || Math.abs(distance) < 2) { window.scrollTo(0, targetY); return; }
-  const duration = Math.min(1100, Math.max(550, Math.abs(distance) * 0.45));
-  const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
-  const start = performance.now();
-  const step = (now) => {
-    const t = Math.min(1, (now - start) / duration);
-    window.scrollTo(0, startY + distance * ease(t));
-    glideFrame = t < 1 ? requestAnimationFrame(step) : null;
-  };
-  glideFrame = requestAnimationFrame(step);
-}
-['wheel', 'touchstart', 'keydown'].forEach((ev) => window.addEventListener(ev, () => { if (glideFrame) { cancelAnimationFrame(glideFrame); glideFrame = null; } }, { passive: true }));
-document.addEventListener('click', (e) => {
-  const link = e.target.closest('a[href^="#"]');
-  if (!link) return;
-  const id = link.getAttribute('href');
-  const target = id.length > 1 && document.querySelector(id);
-  if (!target) return;
-  e.preventDefault();
-  closeNav();
-  const top = id === '#top' ? 0 : target.getBoundingClientRect().top + window.scrollY - header.offsetHeight - 8;
-  glideTo(Math.max(0, top));
-  history.replaceState(null, '', id);
-});
-
-// Section entrances: once, just before they're fully in view
-if ('IntersectionObserver' in window) {
-  const io = new IntersectionObserver((entries) => entries.forEach((e) => {
-    if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
-  }), { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
-  document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
-} else {
-  document.querySelectorAll('.reveal').forEach((el) => el.classList.add('visible'));
-}
-</script>
 </body>
 </html>

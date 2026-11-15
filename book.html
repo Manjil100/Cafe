@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book a table | Hey Jude Cafe</title>
+<meta name="description" content="Book a table at Hey Jude Cafe in Brookfield, Tauranga.">
+<meta name="theme-color" content="#E2B33C">
+<link rel="canonical" href="https://cafe-n2mj.vercel.app/book">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Hey Jude Cafe">
+<meta property="og:title" content="Book a table | Hey Jude Cafe">
+<meta property="og:description" content="Book a table at Hey Jude Cafe in Brookfield, Tauranga.">
+<meta property="og:image" content="https://cafe-n2mj.vercel.app/images/reserved.webp">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23E2B33C'/%3E%3Cpath d='M16 24h26v14a11 11 0 0 1-11 11h-4a11 11 0 0 1-11-11z' fill='%232A1C14'/%3E%3Cpath d='M42 28h4a6 6 0 0 1 0 12h-4' stroke='%232A1C14' stroke-width='4' fill='none'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&amp;family=Figtree:ital,wght@0,400;0,500;0,600;1,400&amp;display=swap">
+<link rel="stylesheet" href="/assets/site.css">
+<script src="/assets/site.js" defer></script>
+<script src="/assets/book.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="proto" role="note"><p>Student prototype for Hey Jude Cafe. Menu prices are placeholders, and bookings and online orders don’t reach the café yet.</p></div>
+<header class="site-header" id="siteHeader">
+  <div class="wrap">
+    <a class="brand" href="/">Hey Jude</a>
+    <a class="now" href="/visit" data-status><span class="record" aria-hidden="true"></span><span class="now-text" data-status-text>Open every day, 7am to 3pm</span></a>
+    <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="siteNav">Menu</button>
+    <nav class="nav" id="siteNav" aria-label="Main">
+      <a href="/menu">Menu</a>
+      <a href="/about">About</a>
+      <a href="/visit">Visit</a>
+      <a href="https://smart-cafe-liard.vercel.app/menu">Order online</a>
+      <a class="btn btn-solid" href="/book" aria-current="page">Book a table</a>
+      <a class="now now-mobile" href="/visit" data-status><span class="record" aria-hidden="true"></span><span data-status-text>Open every day, 7am to 3pm</span></a>
+    </nav>
+  </div>
+</header>
+<main id="main" tabindex="-1">
+<section class="section" aria-labelledby="pageTitle">
+  <div class="wrap form-wrap">
+    <div>
+      <h1 id="pageTitle" style="font-size: var(--step-4); line-height: 0.95;">Book a table</h1>
+      <p class="lede">Pick a day and time and we’ll hold a table for you. Bookings open up to 60 days ahead.</p>
+      <dl class="info" style="grid-template-columns: 1fr;">
+        <div><dt>Hours</dt><dd>Every day, 7am to 3pm. Last booking 2:30pm.</dd></div>
+        <div><dt>Where</dt><dd>2 Jude Place, Brookfield, Tauranga</dd></div>
+      </dl>
+      <p class="fineprint" style="margin-top: 1.75rem;">We use your details only for this booking. <a class="link" href="/privacy">How we handle your details</a></p>
+    </div>
+
+    <div class="form-card">
+      <form id="bookForm" novalidate>
+        <p class="form-error" id="bookError" role="alert" tabindex="-1" hidden></p>
+        <div class="field">
+          <label for="bName">Name</label>
+          <input id="bName" name="name" autocomplete="name" maxlength="80" required>
+        </div>
+        <div class="field">
+          <label for="bPhone">Phone <span class="hint">in case we need to reach you</span></label>
+          <input id="bPhone" name="phone" type="tel" autocomplete="tel" inputmode="tel" maxlength="30" required>
+        </div>
+        <div class="row">
+          <div class="field">
+            <label for="bDate">Date</label>
+            <input id="bDate" name="date" type="date" required>
+          </div>
+          <div class="field">
+            <label for="bTime">Time</label>
+            <select id="bTime" name="time" required><option value="">Choose a date first</option></select>
+          </div>
+        </div>
+        <fieldset class="field">
+          <legend>Guests</legend>
+          <div class="guests">
+            <label><input type="radio" name="guests" value="1"><span>1</span></label>
+            <label><input type="radio" name="guests" value="2" checked><span>2</span></label>
+            <label><input type="radio" name="guests" value="3"><span>3</span></label>
+            <label><input type="radio" name="guests" value="4"><span>4</span></label>
+            <label><input type="radio" name="guests" value="5+"><span>5+</span></label>
+          </div>
+        </fieldset>
+        <div class="field">
+          <label for="bNotes">Notes <span class="hint">optional, like a high chair or a dog</span></label>
+          <textarea id="bNotes" name="notes" maxlength="300"></textarea>
+        </div>
+        <button class="btn btn-solid" type="submit" style="width: 100%;">Book table</button>
+      </form>
+
+      <div class="done" id="bookDone" hidden>
+        <h2 tabindex="-1">You’re booked in</h2>
+        <p class="ref" id="doneRef"></p>
+        <p id="doneText"></p>
+        <p class="fineprint" style="margin-top: 1rem;">Keep this reference in case you need to change your booking.</p>
+        <div class="actions">
+          <a class="btn btn-solid" href="/visit">Get directions</a>
+          <button class="btn btn-line" type="button" id="bookAnother">Make another booking</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+<footer class="site-footer dark">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <p class="footer-brand">Hey Jude</p>
+        <p>The locals’ café in Brookfield, Tauranga. Good coffee, proper food and a record on the go.</p>
+      </div>
+      <div>
+        <h2>Visit</h2>
+        <p style="margin-top:0">2 Jude Place<br>Brookfield, Tauranga</p>
+        <p>Every day<br>7am to 3pm</p>
+      </div>
+      <div>
+        <h2>The café</h2>
+        <ul>
+          <li><a href="/menu">Menu</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/visit">Visit</a></li>
+          <li><a href="/book" aria-current="page">Book a table</a></li>
+          <li><a href="https://smart-cafe-liard.vercel.app/menu">Order online</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Get in touch</h2>
+        <ul>
+          <li><a href="https://www.instagram.com/heyjudecafe_/" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="mailto:khatiwadamanjil51@gmail.com">Email us</a></li>
+          <li><a href="/privacy">Your details</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="footer-bottom">© 2026 Hey Jude Cafe. Website built by Manjil as a COMP.6207 student project at Toi Ohomai. Photos from <a href="https://www.instagram.com/heyjudecafe_/" target="_blank" rel="noopener">Hey Jude Cafe’s Instagram</a>, used with permission.</p>
+  </div>
+</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

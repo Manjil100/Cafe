@@ -1,0 +1,29 @@
+<section class="page-hero" aria-labelledby="pageTitle">
+  <img src="/images/menu/eggs-benedict.webp" srcset="/images/menu/eggs-benedict-sm.webp 600w, /images/menu/eggs-benedict.webp 1200w" sizes="100vw"
+       width="1200" height="900" alt="" fetchpriority="high">
+  <div class="wrap">
+    <h1 id="pageTitle">Menu</h1>
+    <p>Breakfast, lunch, cabinet food and Sacred Grounds coffee.</p>
+  </div>
+</section>
+
+<section class="section" aria-label="Today’s menu">
+  <div class="wrap">
+    <div class="section-head" style="margin-bottom: 2.25rem;">
+      <div>
+        <p class="lede" style="margin-top: 0;">This comes straight from the kitchen’s system, so everything listed is available today.</p>
+        <p class="wait" id="kitchenWait" aria-live="polite"></p>
+      </div>
+      <a class="btn btn-solid" href="{{ORDER_URL}}">Order online for pickup</a>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Menu categories" id="menuTabs"></div>
+    <div class="board-wrap" id="boardWrap">
+      <div class="board" id="menuBoard" role="tabpanel" aria-live="polite"><p class="board-msg">Loading today’s menu…</p></div>
+      <figure class="dish" id="dishPhoto" hidden>
+        <img alt="" width="1200" height="1500" decoding="async">
+        <figcaption></figcaption>
+      </figure>
+    </div>
+    <p class="menu-note">Ask at the counter about allergies and dietary needs.</p>
+  </div>
+</section>

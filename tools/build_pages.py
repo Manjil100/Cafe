@@ -37,13 +37,13 @@ REVIEWS = []
 # file, path, nav key, <title>, description, page script, social image
 PAGES = [
     ("index", "/", None, "Hey Jude Cafe, Brookfield, Tauranga",
-     "Hey Jude is the locals’ café in Brookfield, Tauranga. Sacred Grounds coffee, brunch and lunch, open every day 7am to 3pm.",
+     "Hey Jude Cafe in Brookfield, Tauranga: breakfast, brunch and lunch, Sacred Grounds coffee and music on the walls. Open every day, 7am to 3pm.",
      "home.js", "/images/reserved.webp"),
     ("menu", "/menu", "menu", "Menu | Hey Jude Cafe",
      "Today’s breakfast, lunch, cabinet food and Sacred Grounds coffee at Hey Jude Cafe in Brookfield, Tauranga.",
      "menu.js", "/images/menu/eggs-benedict.webp"),
     ("about", "/about", "about", "About | Hey Jude Cafe",
-     "How a morning cinnamon roll became Hey Jude, the music-loving locals’ café in Brookfield, Tauranga.",
+     "How a morning cinnamon roll and flat white led to Hey Jude, the music-filled café in Brookfield, Tauranga.",
      "gallery.js", "/images/menu/bookshelf.webp"),
     ("visit", "/visit", "visit", "Visit | Hey Jude Cafe",
      "Find Hey Jude at 2 Jude Place, Brookfield, Tauranga. Open every day 7am to 3pm. Dogs welcome.",
@@ -130,7 +130,7 @@ def footer(active):
     <div class="footer-grid">
       <div>
         <p class="footer-brand">Hey Jude</p>
-        <p>The locals’ café in Brookfield, Tauranga. Good coffee, proper food and a record on the go.</p>
+        <p>Coffee, food and the music greats on the walls. Brookfield, Tauranga.</p>
       </div>
       <div>
         <h2>Visit</h2>
